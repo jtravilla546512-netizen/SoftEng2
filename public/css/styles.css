@@ -1,0 +1,183 @@
+/* CoolSystem Specialist - Custom Styles */
+
+/* Typography */
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+.font-lato {
+    font-family: 'Lato', sans-serif;
+}
+
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Custom Colors */
+:root {
+    --brand-blue: #2B9DD1;
+    --brand-bg: #F5EEE7;
+}
+
+/* Navigation Header */
+header {
+    background-color: var(--brand-bg);
+}
+
+nav a {
+    color: var(--brand-blue);
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #1e7ba8;
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 100vh;
+    background-color: var(--brand-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-background {
+    position: absolute;
+    inset: 0;
+    background-image: url('Background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Responsive background positioning */
+@media (min-width: 768px) {
+    .hero-background {
+        background-position: left center;
+    }
+}
+
+@media (min-width: 1280px) {
+    .hero-background {
+        background-position: left;
+    }
+}
+
+.hero-content {
+    text-align: right;
+    max-width: 48rem;
+}
+
+.hero-content h1,
+.hero-content h2 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1.2;
+}
+
+.hero-content h1 {
+    margin-bottom: 0.25rem;
+}
+
+.hero-content h2 {
+    margin-bottom: 1.5rem;
+}
+
+.hero-content p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    text-align: right;
+}
+
+/* Glassmorphism effect for mobile/tablet (up to 13" iPad Pro / 1279px) */
+@media (max-width: 1279px) {
+    .backdrop-blur-sm {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--brand-blue);
+    color: white;
+    font-weight: bold;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    background-color: #1e7ba8;
+    transform: scale(1.05);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Menu */
+#mobile-menu {
+    background-color: var(--brand-bg);
+}
+
+/* Responsive Typography */
+@media (max-width: 640px) {
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.25rem;
+    }
+    
+    .hero-content p {
+        font-size: 0.75rem;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .hero-content p {
+        font-size: 0.875rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 1025px) {
+    .hero-content h1 {
+        font-size: 3.75rem;
+    }
+    
+    .hero-content h2 {
+        font-size: 2.25rem;
+    }
+    
+    .hero-content p {
+        font-size: 1.125rem;
+    }
+}
