@@ -589,12 +589,12 @@
 
                 <!-- Step 3: User Information -->
                 <div id="step3" class="step-content hidden">
-                    <div class="text-center mb-4 sm:mb-6">
-                        <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl text-black mb-2">Enter Your Contact Information</h2>
-                        <p class="font-roboto text-xs sm:text-sm md:text-base text-gray-600 px-4 sm:px-6">
-                            Please provide your details so we can effectively reach you and prepare for your service appointment
-                        </p>
-                    </div>
+                    <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl text-black mb-2 sm:mb-3 text-center">
+                        Enter Your Contact Information
+                    </h2>
+                    <p class="font-roboto text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 text-center">
+                        Please provide your details so we can effectively reach you and prepare for your service appointment
+                    </p>
 
                     <!-- Scrollable Form Area -->
                     <div class="max-w-2xl mx-auto overflow-y-auto pr-2" style="max-height: 320px;">
@@ -661,7 +661,7 @@
 
                 <!-- Step 4: Schedule -->
                 <div id="step4" class="step-content hidden">
-                    <div class="text-center mb-4 sm:mb-6">
+                    <div class="text-center mb-4 sm:mb-14">
                         <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl text-black">Select Date</h2>
                     </div>
 
@@ -748,7 +748,7 @@
 
                 <!-- Step 5: Booking Summary -->
                 <div id="step5" class="step-content hidden">
-                    <div class="text-center mb-6">
+                    <div class="text-center mb-12">
                         <h2 class="font-lato font-bold text-2xl sm:text-3xl text-black">Booking Summary</h2>
                     </div>
 
@@ -836,16 +836,24 @@
 
                 <!-- Step 6: Success -->
                 <div id="step6" class="step-content hidden">
-                    <div class="text-center mb-8">
-                        <h2 class="font-lato font-bold text-2xl sm:text-3xl text-black">Booking Confirmed!</h2>
+                    <!-- Success Icon and Header -->
+                    <div class="text-center mb-4 mt-2">
+                        <div class="flex justify-center mb-3">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                                <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h2 class="font-lato font-bold text-2xl sm:text-3xl text-black mb-2">Booking Confirmed!</h2>
+                        <p class="font-roboto text-base text-gray-700 leading-relaxed">
+                            Thank you for choosing Cool System Specialist. Your service request has been successfully received.
+                        </p>
                     </div>
 
                     <!-- Success Message Content -->
-                    <div class="mx-4 sm:mx-6 md:mx-8 lg:mx-12 space-y-6">
-                        <div class="text-center space-y-4">
-                            <p class="font-roboto text-base text-gray-700 leading-relaxed">
-                                Thank you for choosing Cool System Specialist. Your service request has been successfully received.
-                            </p>
+                    <div class="mx-4 sm:mx-6 md:mx-8 lg:mx-12 space-y-4">
+                        <div class="text-center">
                             <p class="font-roboto text-base text-gray-700 leading-relaxed">
                                 We're thrilled to confirm your booking for an appliance service.<br>
                                 Here's what happens next:
@@ -853,7 +861,7 @@
                         </div>
 
                         <!-- What Happens Next Section -->
-                        <div class="space-y-5 max-w-2xl mx-auto">
+                        <div class="space-y-3 max-w-2xl mx-auto">
                             <!-- Email Confirmation -->
                             <div class="flex items-start gap-4">
                                 <div class="flex-shrink-0 mt-1">
@@ -898,7 +906,7 @@
                         </div>
 
                         <!-- Closing Message -->
-                        <div class="text-center mt-8">
+                        <div class="text-center mt-4">
                             <p class="font-roboto text-base text-gray-700 leading-relaxed">
                                 We look forward to providing you with excellent service!
                             </p>
