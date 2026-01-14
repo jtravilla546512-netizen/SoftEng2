@@ -424,11 +424,11 @@
             <!-- Modal Content with Fixed Layout -->
             <div class="relative h-full flex flex-col">
                 <!-- Fixed Header: Progress Steps -->
-                <div class="flex-shrink-0 px-3 sm:px-8 md:px-10 lg:px-12 xl:px-16 pt-4 sm:pt-8 md:pt-10 lg:pt-12 xl:pt-16 pb-3 sm:pb-6 md:pb-8">
+                <div class="flex-shrink-0 px-3 sm:px-8 md:px-10 lg:px-12 xl:px-16 pt-4 sm:pt-8 md:pt-6 lg:pt-12 xl:pt-7 pb-3 sm:pb-6 md:pb-8">
                     <div class="flex items-center justify-between w-full">
                         <!-- Step 1 -->
                         <div class="flex flex-col items-center">
-                            <div class="px-2 sm:px-4 md:px-5 lg:px-6 py-1.5 sm:py-2 md:py-2.5 lg:py-3 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap" style="background-color: #046C9C; color: white;">
+                            <div class="px-1.5 sm:px-3 md:px-3.5 lg:px-4 py-1 sm:py-1.5 md:py-2 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap" style="background-color: #046C9C; color: white;">
                                 STEP 1
                             </div>
                             <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-1 sm:mt-2 whitespace-nowrap text-gray-700">
@@ -441,7 +441,7 @@
 
                         <!-- Step 2 -->
                         <div class="flex flex-col items-center">
-                            <div class="px-2 sm:px-4 md:px-5 lg:px-6 py-1.5 sm:py-2 md:py-2.5 lg:py-3 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
+                            <div class="px-1.5 sm:px-3 md:px-3.5 lg:px-4 py-1 sm:py-1.5 md:py-2 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
                                 STEP 2
                             </div>
                             <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-1 sm:mt-2 whitespace-nowrap text-gray-700">
@@ -454,7 +454,7 @@
 
                         <!-- Step 3 -->
                         <div class="flex flex-col items-center">
-                            <div class="px-2 sm:px-4 md:px-5 lg:px-6 py-1.5 sm:py-2 md:py-2.5 lg:py-3 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
+                            <div class="px-1.5 sm:px-3 md:px-3.5 lg:px-4 py-1 sm:py-1.5 md:py-2 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
                                 STEP 3
                             </div>
                             <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-1 sm:mt-2 whitespace-nowrap text-gray-700">
@@ -467,7 +467,7 @@
 
                         <!-- Step 4 -->
                         <div class="flex flex-col items-center">
-                            <div class="px-2 sm:px-4 md:px-5 lg:px-6 py-1.5 sm:py-2 md:py-2.5 lg:py-3 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
+                            <div class="px-1.5 sm:px-3 md:px-3.5 lg:px-4 py-1 sm:py-1.5 md:py-2 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
                                 STEP 4
                             </div>
                             <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-1 sm:mt-2 whitespace-nowrap text-gray-700">
@@ -480,7 +480,7 @@
 
                         <!-- Step 5 -->
                         <div class="flex flex-col items-center">
-                            <div class="px-2 sm:px-4 md:px-5 lg:px-6 py-1.5 sm:py-2 md:py-2.5 lg:py-3 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
+                            <div class="px-1.5 sm:px-3 md:px-3.5 lg:px-4 py-1 sm:py-1.5 md:py-2 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
                                 STEP 5
                             </div>
                             <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-1 sm:mt-2 whitespace-nowrap text-gray-700">
@@ -589,84 +589,360 @@
 
                 <!-- Step 3: User Information -->
                 <div id="step3" class="step-content hidden">
-                    <div class="text-center mb-6 sm:mb-8">
-                        <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl text-black mb-2 sm:mb-3">Enter Your Contact Information</h2>
-                        <p class="font-roboto text-xs sm:text-sm md:text-base text-gray-600 px-4 sm:px-6 md:px-8">
+                    <div class="text-center mb-4 sm:mb-6">
+                        <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl text-black mb-2">Enter Your Contact Information</h2>
+                        <p class="font-roboto text-xs sm:text-sm md:text-base text-gray-600 px-4 sm:px-6">
                             Please provide your details so we can effectively reach you and prepare for your service appointment
                         </p>
                     </div>
 
                     <!-- Scrollable Form Area -->
-                    <div class="max-w-2xl mx-auto overflow-y-auto" style="max-height: 400px;">
-                        <div class="space-y-4 sm:space-y-5 pr-2">
+                    <div class="max-w-2xl mx-auto overflow-y-auto pr-2" style="max-height: 320px;">
+                        <div class="space-y-3 sm:space-y-4">
                             <!-- Full Name -->
                             <div>
-                                <label for="fullName" class="block text-sm sm:text-base font-medium text-gray-700 mb-2">Full Name</label>
+                                <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
                                 <input
                                     type="text"
                                     id="fullName"
                                     placeholder="Your Full Name"
-                                    class="w-full px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm sm:text-base transition-all duration-300"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
                                 >
                             </div>
 
                             <!-- Location -->
                             <div>
-                                <label for="location" class="block text-sm sm:text-base font-medium text-gray-700 mb-2">Location</label>
+                                <label for="location" class="block text-sm font-medium text-gray-700 mb-1.5">Location</label>
                                 <input
                                     type="text"
                                     id="location"
-                                    placeholder="Your Full Name"
-                                    class="w-full px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm sm:text-base transition-all duration-300"
+                                    placeholder="Your Address"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
                                 >
                             </div>
 
                             <!-- Landmark (Optional) -->
                             <div>
-                                <label for="landmark" class="block text-sm sm:text-base font-medium text-gray-700 mb-2">Landmark (Optional)</label>
+                                <label for="landmark" class="block text-sm font-medium text-gray-700 mb-1.5">Landmark (Optional)</label>
                                 <input
                                     type="text"
                                     id="landmark"
-                                    placeholder="Your Full Name"
-                                    class="w-full px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm sm:text-base transition-all duration-300"
+                                    placeholder="Nearby Landmark"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
                                 >
                             </div>
 
                             <!-- Contact Number -->
                             <div>
-                                <label for="contactNumber" class="block text-sm sm:text-base font-medium text-gray-700 mb-2">Contact Number</label>
+                                <label for="contactNumber" class="block text-sm font-medium text-gray-700 mb-1.5">Contact Number</label>
                                 <input
                                     type="tel"
                                     id="contactNumber"
-                                    placeholder="Your Full Name"
-                                    class="w-full px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm sm:text-base transition-all duration-300"
+                                    placeholder="Your Phone Number"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
                                 >
                             </div>
 
                             <!-- Description of Appliance Issue -->
                             <div>
-                                <label for="applianceIssue" class="block text-sm sm:text-base font-medium text-gray-700 mb-2">Description of Appliance Issue</label>
+                                <label for="applianceIssue" class="block text-sm font-medium text-gray-700 mb-1.5">Description of Appliance Issue</label>
                                 <textarea
                                     id="applianceIssue"
-                                    rows="4"
+                                    rows="3"
+                                    maxlength="100"
                                     placeholder="Please describe the problem with your appliance in detail (e.g., 'Refrigerator not cooling', 'Aircon making strange noises')."
-                                    class="w-full px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm sm:text-base transition-all duration-300 resize-none"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300 resize-none"
                                 ></textarea>
+                                <p class="text-xs text-gray-500 mt-1">Maximum 100 characters</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Step 4: Schedule -->
+                <div id="step4" class="step-content hidden">
+                    <div class="text-center mb-4 sm:mb-6">
+                        <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl text-black">Select Date</h2>
+                    </div>
+
+                    <!-- Calendar and Timeslot Container - Fixed Height -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                        <!-- Left Column: Calendar -->
+                        <div class="flex flex-col">
+                            <h3 class="font-lato font-semibold text-base sm:text-lg text-black mb-3">Select a Date</h3>
+                            <div class="bg-white border border-gray-300 rounded-lg p-4" style="height: 350px;">
+                                <!-- Calendar Header -->
+                                <div class="flex items-center justify-between mb-4">
+                                    <button onclick="previousMonth()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                        </svg>
+                                    </button>
+                                    <span id="currentMonth" class="font-roboto font-medium text-base text-black">September 2025</span>
+                                    <button onclick="nextMonth()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <!-- Calendar Grid -->
+                                <div class="grid grid-cols-7 gap-1">
+                                    <!-- Day Headers -->
+                                    <div class="text-center text-xs font-medium text-gray-500 py-1.5">Su</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 py-1.5">Mo</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 py-1.5">Tu</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 py-1.5">We</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 py-1.5">Th</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 py-1.5">Fr</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 py-1.5">Sa</div>
+                                    
+                                    <!-- Calendar Days -->
+                                    <div id="calendarDays" class="contents">
+                                        <!-- Days will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Timeslots -->
+                        <div class="flex flex-col">
+                            <h3 class="font-lato font-semibold text-base sm:text-lg text-black mb-3">Select a Timeslot</h3>
+                            <div class="grid grid-cols-3 gap-3 content-start" style="height: 350px; overflow-y: auto;">
+                                <!-- Morning Slots -->
+                                <button onclick="selectTimeslot('09:00 AM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                    09:00 AM
+                                </button>
+                                <button onclick="selectTimeslot('10:00 AM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                    10:00 AM
+                                </button>
+                                <button onclick="selectTimeslot('11:00 AM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                    11:00 AM
+                                </button>
+                                
+                                <!-- Afternoon Slots -->
+                                <button onclick="selectTimeslot('01:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                    01:00 PM
+                                </button>
+                                <button onclick="selectTimeslot('02:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                    02:00 PM
+                                </button>
+                                <button onclick="selectTimeslot('03:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                    03:00 PM
+                                </button>
+                                
+                                <!-- Evening Slots -->
+                                <button onclick="selectTimeslot('04:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                    04:00 PM
+                                </button>
+                                <button onclick="selectTimeslot('05:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                    05:00 PM
+                                </button>
+                                <button onclick="selectTimeslot('06:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                    06:00 PM
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Booking Summary -->
+                <div id="step5" class="step-content hidden">
+                    <div class="text-center mb-6">
+                        <h2 class="font-lato font-bold text-2xl sm:text-3xl text-black">Booking Summary</h2>
+                    </div>
+
+                    <!-- Summary Content - Single Border Container with margin -->
+                    <div class="mx-4 sm:mx-6 md:mx-8 lg:mx-12 border border-gray-300 rounded-lg px-6 sm:px-8 py-6">
+                        <!-- Two Column Layout -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
+                            <!-- Left Column: Your Information -->
+                            <div>
+                                <div class="flex items-center gap-2 mb-6">
+                                    <svg class="w-5 h-5 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                    <h3 class="font-lato font-bold text-lg text-black">Your Information</h3>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <p class="font-roboto text-sm text-black mb-1">Full Name:</p>
+                                        <p id="summaryFullName" class="font-roboto text-base text-black">-</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-roboto text-sm text-black mb-1">Contact Number:</p>
+                                        <p id="summaryContactNumber" class="font-roboto text-base text-black">-</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-roboto text-sm text-black mb-1">Location:</p>
+                                        <p id="summaryLocation" class="font-roboto text-base text-black">-</p>
+                                    </div>
+                                    <div id="summaryLandmarkContainer">
+                                        <p class="font-roboto text-sm text-black mb-1">Landmark:</p>
+                                        <p id="summaryLandmark" class="font-roboto text-base text-black">-</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-roboto text-sm text-black mb-1">Issue Description:</p>
+                                        <p id="summaryIssue" class="font-roboto text-base text-black leading-relaxed break-words">-</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Appliance & Service Details + Appointment Details -->
+                            <div class="space-y-8">
+                                <!-- Appliance & Service Details -->
+                                <div>
+                                    <div class="flex items-center gap-2 mb-6">
+                                        <svg class="w-5 h-5 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                        </svg>
+                                        <h3 class="font-lato font-bold text-lg text-black">Appliance & Service Details</h3>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-6">
+                                        <div>
+                                            <p class="font-roboto text-sm text-black mb-1">Appliance:</p>
+                                            <p id="summaryAppliance" class="font-roboto text-base text-black capitalize">-</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-roboto text-sm text-black mb-1">Service Type:</p>
+                                            <p id="summaryService" class="font-roboto text-base text-black capitalize">-</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Appointment Details -->
+                                <div>
+                                    <div class="flex items-center gap-2 mb-6">
+                                        <svg class="w-5 h-5 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <h3 class="font-lato font-bold text-lg text-black">Appointment Details</h3>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-6">
+                                        <div>
+                                            <p class="font-roboto text-sm text-black mb-1">Date:</p>
+                                            <p id="summaryDate" class="font-roboto text-base text-black">-</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-roboto text-sm text-black mb-1">Time:</p>
+                                            <p id="summaryTime" class="font-roboto text-base text-black">-</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Success -->
+                <div id="step6" class="step-content hidden">
+                    <div class="text-center mb-8">
+                        <h2 class="font-lato font-bold text-2xl sm:text-3xl text-black">Booking Confirmed!</h2>
+                    </div>
+
+                    <!-- Success Message Content -->
+                    <div class="mx-4 sm:mx-6 md:mx-8 lg:mx-12 space-y-6">
+                        <div class="text-center space-y-4">
+                            <p class="font-roboto text-base text-gray-700 leading-relaxed">
+                                Thank you for choosing Cool System Specialist. Your service request has been successfully received.
+                            </p>
+                            <p class="font-roboto text-base text-gray-700 leading-relaxed">
+                                We're thrilled to confirm your booking for an appliance service.<br>
+                                Here's what happens next:
+                            </p>
+                        </div>
+
+                        <!-- What Happens Next Section -->
+                        <div class="space-y-5 max-w-2xl mx-auto">
+                            <!-- Email Confirmation -->
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 mt-1">
+                                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-roboto text-sm text-gray-700 leading-relaxed">
+                                        A confirmation email with all your booking details has been sent to your registered email address.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Technician Contact -->
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 mt-1">
+                                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-roboto text-sm text-gray-700 leading-relaxed">
+                                        Our technician will contact you within 24 hours to re-confirm the appointment time and address.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Service Reminder -->
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 mt-1">
+                                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-roboto text-sm text-gray-700 leading-relaxed">
+                                        Please ensure someone is available at the provided location during the scheduled service time.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Closing Message -->
+                        <div class="text-center mt-8">
+                            <p class="font-roboto text-base text-gray-700 leading-relaxed">
+                                We look forward to providing you with excellent service!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Fixed Footer: Navigation Buttons -->
-                <div class="flex-shrink-0 px-6 sm:px-8 md:px-10 lg:px-12 xl:px-16 pb-6 sm:pb-8 md:pb-10 lg:pb-12 xl:pb-16 pt-4 sm:pt-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-4">
-                        <button id="backButton" onclick="handleBackButton()" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 border-2 border-gray-300 text-gray-700 rounded-lg font-medium text-sm sm:text-base hover:bg-gray-50 transition-all duration-300">
+                <div class="flex-shrink-0 px-6 sm:px-8 md:px-10 lg:px-12 xl:px-16 pb-6 sm:pb-8 pt-4 sm:pt-5 mt-4">
+                    <div id="normalButtons" class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-4">
+                        <button id="backButton" onclick="handleBackButton()" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-medium text-sm sm:text-base hover:bg-gray-50 transition-all duration-300">
                             Back
                         </button>
-                        <button id="nextButton" onclick="nextStep()" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 bg-brand-blue text-white rounded-lg font-medium text-sm sm:text-base hover:bg-blue-600 transition-all duration-300">
+                        <button id="nextButton" onclick="nextStep()" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 bg-brand-blue text-white rounded-lg font-medium text-sm sm:text-base hover:bg-blue-600 transition-all duration-300">
                             Next
                         </button>
                     </div>
+                    <!-- Alternative buttons for Step 6 -->
+                    <div id="step6Buttons" class="hidden flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-4">
+                        <button onclick="resetAndOpenBooking()" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 bg-brand-blue text-white rounded-lg font-medium text-sm sm:text-base hover:bg-blue-600 transition-all duration-300">
+                            Book Another Service
+                        </button>
+                        <button onclick="closeBookingModal()" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-medium text-sm sm:text-base hover:bg-gray-50 transition-all duration-300">
+                            Go to Home
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[60] flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+            <h3 class="font-lato font-bold text-xl text-center text-white bg-brand-blue py-3 rounded-t-lg">Confirm Booking</h3>
+            <div class="p-6">
+                <p class="font-roboto text-base text-center text-gray-700 mb-6">Do you want to confirm this booking?</p>
+                <div class="flex gap-4 justify-center">
+                    <button onclick="cancelConfirmation()" class="px-8 py-2.5 border-2 border-gray-300 text-gray-700 rounded-lg font-medium text-base hover:bg-gray-50 transition-all duration-300">
+                        No
+                    </button>
+                    <button onclick="confirmBooking()" class="px-8 py-2.5 bg-brand-blue text-white rounded-lg font-medium text-base hover:bg-blue-600 transition-all duration-300">
+                        Yes
+                    </button>
                 </div>
             </div>
         </div>
@@ -687,6 +963,7 @@
             document.getElementById('bookingModal').classList.add('flex');
             document.body.style.overflow = 'hidden';
             updateProgressBar();
+            updateButtonVisibility();
         }
 
         function closeBookingModal() {
@@ -703,6 +980,22 @@
             };
             showStep(1);
             updateProgressBar();
+            updateButtonVisibility();
+            
+            // Clear form inputs
+            document.getElementById('fullName').value = '';
+            document.getElementById('location').value = '';
+            document.getElementById('landmark').value = '';
+            document.getElementById('contactNumber').value = '';
+            document.getElementById('applianceIssue').value = '';
+            
+            // Clear appliance and service selections
+            document.querySelectorAll('.appliance-option').forEach(option => {
+                option.classList.remove('border-brand-blue', 'bg-blue-50');
+            });
+            document.querySelectorAll('.service-option').forEach(option => {
+                option.classList.remove('border-brand-blue', 'bg-blue-50');
+            });
         }
 
         function selectAppliance(appliance) {
@@ -816,10 +1109,118 @@
                 };
             }
 
+            if (currentStep === 4) {
+                // Validate schedule
+                if (!bookingData.schedule.date || !bookingData.schedule.timeslot) {
+                    alert('Please select both a date and timeslot');
+                    return;
+                }
+            }
+
+            // Show confirmation modal when on step 5
+            if (currentStep === 5) {
+                showConfirmationModal();
+                return;
+            }
+
             if (currentStep < 6) {
                 currentStep++;
                 showStep(currentStep);
                 updateProgressBar();
+                updateButtonVisibility();
+                
+                // Initialize calendar when entering step 4
+                if (currentStep === 4) {
+                    initializeCalendar();
+                }
+                
+                // Populate summary when entering step 5
+                if (currentStep === 5) {
+                    populateSummary();
+                }
+            }
+        }
+
+        function showConfirmationModal() {
+            document.getElementById('confirmationModal').classList.remove('hidden');
+            document.getElementById('confirmationModal').classList.add('flex');
+        }
+
+        function cancelConfirmation() {
+            document.getElementById('confirmationModal').classList.add('hidden');
+            document.getElementById('confirmationModal').classList.remove('flex');
+        }
+
+        function confirmBooking() {
+            // Hide confirmation modal
+            cancelConfirmation();
+            
+            // Move to step 6
+            currentStep = 6;
+            showStep(currentStep);
+            updateProgressBar();
+            updateButtonVisibility();
+        }
+
+        function updateButtonVisibility() {
+            const normalButtons = document.getElementById('normalButtons');
+            const step6Buttons = document.getElementById('step6Buttons');
+            
+            if (currentStep === 6) {
+                normalButtons.classList.add('hidden');
+                step6Buttons.classList.remove('hidden');
+                step6Buttons.classList.add('flex');
+            } else {
+                normalButtons.classList.remove('hidden');
+                step6Buttons.classList.add('hidden');
+                step6Buttons.classList.remove('flex');
+            }
+        }
+
+        function resetAndOpenBooking() {
+            // Reset booking data and go to step 1
+            bookingData = {
+                appliance: '',
+                serviceType: '',
+                userInfo: {},
+                schedule: {}
+            };
+            currentStep = 1;
+            showStep(1);
+            updateProgressBar();
+            updateButtonVisibility();
+            
+            // Clear form inputs
+            document.getElementById('fullName').value = '';
+            document.getElementById('location').value = '';
+            document.getElementById('landmark').value = '';
+            document.getElementById('contactNumber').value = '';
+            document.getElementById('applianceIssue').value = '';
+        }
+
+        function populateSummary() {
+            // Appliance & Service
+            document.getElementById('summaryAppliance').textContent = bookingData.appliance || '-';
+            document.getElementById('summaryService').textContent = bookingData.serviceType || '-';
+            
+            // Appointment Details
+            document.getElementById('summaryDate').textContent = bookingData.schedule.date || '-';
+            document.getElementById('summaryTime').textContent = bookingData.schedule.timeslot || '-';
+            
+            // Your Information
+            document.getElementById('summaryFullName').textContent = bookingData.userInfo.fullName || '-';
+            document.getElementById('summaryLocation').textContent = bookingData.userInfo.location || '-';
+            document.getElementById('summaryContactNumber').textContent = bookingData.userInfo.contactNumber || '-';
+            document.getElementById('summaryIssue').textContent = bookingData.userInfo.applianceIssue || '-';
+            
+            // Landmark (hide if empty)
+            const landmark = bookingData.userInfo.landmark;
+            const landmarkContainer = document.getElementById('summaryLandmarkContainer');
+            if (landmark) {
+                document.getElementById('summaryLandmark').textContent = landmark;
+                landmarkContainer.style.display = 'block';
+            } else {
+                landmarkContainer.style.display = 'none';
             }
         }
 
@@ -828,6 +1229,7 @@
                 currentStep--;
                 showStep(currentStep);
                 updateProgressBar();
+                updateButtonVisibility();
             }
         }
 
@@ -837,6 +1239,114 @@
             } else {
                 prevStep();
             }
+        }
+
+        // Calendar functionality
+        let currentDate = new Date();
+        let selectedDate = null;
+
+        function initializeCalendar() {
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Update month display
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+            
+            const calendarDays = document.getElementById('calendarDays');
+            calendarDays.innerHTML = '';
+            
+            // Previous month's trailing days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const day = daysInPrevMonth - i;
+                const dayBtn = document.createElement('button');
+                dayBtn.className = 'p-1.5 text-center text-sm text-gray-400 cursor-not-allowed';
+                dayBtn.textContent = day;
+                dayBtn.disabled = true;
+                calendarDays.appendChild(dayBtn);
+            }
+            
+            // Current month's days
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayBtn = document.createElement('button');
+                const currentDateObj = new Date(year, month, day);
+                const isPast = currentDateObj < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                
+                dayBtn.textContent = day;
+                
+                if (isPast) {
+                    dayBtn.className = 'p-1.5 text-center text-sm text-gray-400 cursor-not-allowed';
+                    dayBtn.disabled = true;
+                } else {
+                    dayBtn.className = 'p-1.5 text-center text-sm text-gray-700 hover:bg-blue-50 rounded-lg transition-colors cursor-pointer';
+                    dayBtn.onclick = () => selectDate(year, month, day);
+                    
+                    // Highlight selected date
+                    if (selectedDate && 
+                        selectedDate.getDate() === day && 
+                        selectedDate.getMonth() === month && 
+                        selectedDate.getFullYear() === year) {
+                        dayBtn.className = 'p-1.5 text-center text-sm bg-brand-blue text-white rounded-lg font-medium';
+                    }
+                }
+                
+                calendarDays.appendChild(dayBtn);
+            }
+            
+            // Next month's leading days - Always fill to 42 total cells (6 rows)
+            const totalCells = calendarDays.children.length;
+            const targetCells = 42; // 6 rows x 7 days
+            const remainingCells = targetCells - totalCells;
+            
+            for (let day = 1; day <= remainingCells; day++) {
+                const dayBtn = document.createElement('button');
+                dayBtn.className = 'p-1.5 text-center text-sm text-gray-400 cursor-not-allowed';
+                dayBtn.textContent = day;
+                dayBtn.disabled = true;
+                calendarDays.appendChild(dayBtn);
+            }
+        }
+
+        function selectDate(year, month, day) {
+            selectedDate = new Date(year, month, day);
+            bookingData.schedule.date = selectedDate.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            renderCalendar();
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        }
+
+        function selectTimeslot(timeslot) {
+            bookingData.schedule.timeslot = timeslot;
+            // Add visual feedback
+            document.querySelectorAll('.timeslot-option').forEach(option => {
+                option.classList.remove('border-brand-blue', 'bg-blue-50', 'text-brand-blue');
+                option.classList.add('border-gray-300', 'text-gray-700');
+            });
+            event.target.classList.remove('border-gray-300', 'text-gray-700');
+            event.target.classList.add('border-brand-blue', 'bg-blue-50', 'text-brand-blue');
         }
 
         // Close modal when clicking outside - wait for DOM to load
