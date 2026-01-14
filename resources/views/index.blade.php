@@ -696,7 +696,7 @@
                                     <div class="text-center text-xs font-medium text-gray-500 py-1.5">Th</div>
                                     <div class="text-center text-xs font-medium text-gray-500 py-1.5">Fr</div>
                                     <div class="text-center text-xs font-medium text-gray-500 py-1.5">Sa</div>
-                                    
+
                                     <!-- Calendar Days -->
                                     <div id="calendarDays" class="contents">
                                         <!-- Days will be populated by JavaScript -->
@@ -719,7 +719,7 @@
                                 <button onclick="selectTimeslot('11:00 AM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
                                     11:00 AM
                                 </button>
-                                
+
                                 <!-- Afternoon Slots -->
                                 <button onclick="selectTimeslot('01:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
                                     01:00 PM
@@ -730,7 +730,7 @@
                                 <button onclick="selectTimeslot('03:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
                                     03:00 PM
                                 </button>
-                                
+
                                 <!-- Evening Slots -->
                                 <button onclick="selectTimeslot('04:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
                                     04:00 PM
@@ -989,14 +989,14 @@
             showStep(1);
             updateProgressBar();
             updateButtonVisibility();
-            
+
             // Clear form inputs
             document.getElementById('fullName').value = '';
             document.getElementById('location').value = '';
             document.getElementById('landmark').value = '';
             document.getElementById('contactNumber').value = '';
             document.getElementById('applianceIssue').value = '';
-            
+
             // Clear appliance and service selections
             document.querySelectorAll('.appliance-option').forEach(option => {
                 option.classList.remove('border-brand-blue', 'bg-blue-50');
@@ -1136,12 +1136,12 @@
                 showStep(currentStep);
                 updateProgressBar();
                 updateButtonVisibility();
-                
+
                 // Initialize calendar when entering step 4
                 if (currentStep === 4) {
                     initializeCalendar();
                 }
-                
+
                 // Populate summary when entering step 5
                 if (currentStep === 5) {
                     populateSummary();
@@ -1162,7 +1162,7 @@
         function confirmBooking() {
             // Hide confirmation modal
             cancelConfirmation();
-            
+
             // Move to step 6
             currentStep = 6;
             showStep(currentStep);
@@ -1173,7 +1173,7 @@
         function updateButtonVisibility() {
             const normalButtons = document.getElementById('normalButtons');
             const step6Buttons = document.getElementById('step6Buttons');
-            
+
             if (currentStep === 6) {
                 normalButtons.classList.add('hidden');
                 step6Buttons.classList.remove('hidden');
@@ -1197,7 +1197,7 @@
             showStep(1);
             updateProgressBar();
             updateButtonVisibility();
-            
+
             // Clear form inputs
             document.getElementById('fullName').value = '';
             document.getElementById('location').value = '';
@@ -1210,17 +1210,17 @@
             // Appliance & Service
             document.getElementById('summaryAppliance').textContent = bookingData.appliance || '-';
             document.getElementById('summaryService').textContent = bookingData.serviceType || '-';
-            
+
             // Appointment Details
             document.getElementById('summaryDate').textContent = bookingData.schedule.date || '-';
             document.getElementById('summaryTime').textContent = bookingData.schedule.timeslot || '-';
-            
+
             // Your Information
             document.getElementById('summaryFullName').textContent = bookingData.userInfo.fullName || '-';
             document.getElementById('summaryLocation').textContent = bookingData.userInfo.location || '-';
             document.getElementById('summaryContactNumber').textContent = bookingData.userInfo.contactNumber || '-';
             document.getElementById('summaryIssue').textContent = bookingData.userInfo.applianceIssue || '-';
-            
+
             // Landmark (hide if empty)
             const landmark = bookingData.userInfo.landmark;
             const landmarkContainer = document.getElementById('summaryLandmarkContainer');
@@ -1260,20 +1260,20 @@
         function renderCalendar() {
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
-            
+
             // Update month display
             const monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"];
             document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
-            
+
             // Get first day of month and number of days
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             const daysInPrevMonth = new Date(year, month, 0).getDate();
-            
+
             const calendarDays = document.getElementById('calendarDays');
             calendarDays.innerHTML = '';
-            
+
             // Previous month's trailing days
             for (let i = firstDay - 1; i >= 0; i--) {
                 const day = daysInPrevMonth - i;
@@ -1283,40 +1283,40 @@
                 dayBtn.disabled = true;
                 calendarDays.appendChild(dayBtn);
             }
-            
+
             // Current month's days
             const today = new Date();
             for (let day = 1; day <= daysInMonth; day++) {
                 const dayBtn = document.createElement('button');
                 const currentDateObj = new Date(year, month, day);
                 const isPast = currentDateObj < new Date(today.getFullYear(), today.getMonth(), today.getDate());
-                
+
                 dayBtn.textContent = day;
-                
+
                 if (isPast) {
                     dayBtn.className = 'p-1.5 text-center text-sm text-gray-400 cursor-not-allowed';
                     dayBtn.disabled = true;
                 } else {
                     dayBtn.className = 'p-1.5 text-center text-sm text-gray-700 hover:bg-blue-50 rounded-lg transition-colors cursor-pointer';
                     dayBtn.onclick = () => selectDate(year, month, day);
-                    
+
                     // Highlight selected date
-                    if (selectedDate && 
-                        selectedDate.getDate() === day && 
-                        selectedDate.getMonth() === month && 
+                    if (selectedDate &&
+                        selectedDate.getDate() === day &&
+                        selectedDate.getMonth() === month &&
                         selectedDate.getFullYear() === year) {
                         dayBtn.className = 'p-1.5 text-center text-sm bg-brand-blue text-white rounded-lg font-medium';
                     }
                 }
-                
+
                 calendarDays.appendChild(dayBtn);
             }
-            
+
             // Next month's leading days - Always fill to 42 total cells (6 rows)
             const totalCells = calendarDays.children.length;
             const targetCells = 42; // 6 rows x 7 days
             const remainingCells = targetCells - totalCells;
-            
+
             for (let day = 1; day <= remainingCells; day++) {
                 const dayBtn = document.createElement('button');
                 dayBtn.className = 'p-1.5 text-center text-sm text-gray-400 cursor-not-allowed';
@@ -1328,10 +1328,10 @@
 
         function selectDate(year, month, day) {
             selectedDate = new Date(year, month, day);
-            bookingData.schedule.date = selectedDate.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+            bookingData.schedule.date = selectedDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
             });
             renderCalendar();
         }
@@ -1367,6 +1367,155 @@
                     }
                 });
             }
+        });
+    </script>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4" style="backdrop-filter: blur(5px); z-index: 9999;">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden animate-modal">
+            <!-- Modal Content -->
+            <div class="relative z-10 p-8">
+                <!-- Logo and Title -->
+                <div class="text-center mb-8">
+                    <!-- Logo -->
+                    <div class="inline-block mb-4">
+                        <img src="{{ asset('images/Logo.png') }}" alt="CoolSystem Specialist Logo" class="h-16 w-auto mx-auto">
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-900 font-roboto">Admin Login</h3>
+                </div>
+
+                <!-- Login Form -->
+                <form action="{{ route('admin.login') }}" method="POST" class="space-y-5">
+                    @csrf
+                    <!-- Username/Email Field -->
+                    <div>
+                        <label for="admin-username" class="block text-sm font-bold text-gray-900 mb-2 text-left">Username or Email</label>
+                        <input
+                            type="text"
+                            id="admin-username"
+                            name="username"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent outline-none transition-all"
+                            placeholder="Enter your username or email"
+                            required
+                        >
+                    </div>
+
+                    <!-- Password Field -->
+                    <div>
+                        <label for="admin-password" class="block text-sm font-bold text-gray-900 mb-2 text-left">Password</label>
+                        <input
+                            type="password"
+                            id="admin-password"
+                            name="password"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent outline-none transition-all"
+                            placeholder="Enter your password"
+                            required
+                        >
+                    </div>
+
+                    <!-- Login Button -->
+                    <button
+                        type="submit"
+                        class="w-full bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white font-semibold py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+                    >
+                        Login
+                    </button>
+
+                    <!-- Forgot Password Link -->
+                    <div class="text-center">
+                        <a href="#" class="text-sm text-[#2B9DD1] hover:text-[#1e7ba8] hover:underline transition-colors">
+                            Forgot Password?
+                        </a>
+                    </div>
+                </form>
+
+                <!-- Close Button -->
+                <button id="closeAdminModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Modal Animation */
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .animate-modal {
+            animation: modalFadeIn 0.3s ease-out;
+        }
+    </style>
+
+    <script>
+        // Admin Login Modal
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Admin modal script loading...');
+
+            // Get all admin login links
+            const adminLinks = document.querySelectorAll('a[href="#admin"]');
+            const adminModal = document.getElementById('adminLoginModal');
+            const closeAdminBtn = document.getElementById('closeAdminModalBtn');
+
+            console.log('Admin links found:', adminLinks.length);
+            console.log('Admin modal:', adminModal);
+
+            // Open modal when any admin link is clicked
+            adminLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Admin link clicked!');
+                    if (adminModal) {
+                        adminModal.classList.remove('hidden');
+                        adminModal.classList.add('flex');
+                        document.body.style.overflow = 'hidden';
+                        console.log('Modal opened');
+                    }
+                });
+            });
+
+            // Close modal
+            if (closeAdminBtn) {
+                closeAdminBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (adminModal) {
+                        adminModal.classList.add('hidden');
+                        adminModal.classList.remove('flex');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+
+            // Close when clicking outside
+            if (adminModal) {
+                adminModal.addEventListener('click', function(e) {
+                    if (e.target === adminModal) {
+                        adminModal.classList.add('hidden');
+                        adminModal.classList.remove('flex');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+
+            // Close with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && adminModal && !adminModal.classList.contains('hidden')) {
+                    adminModal.classList.add('hidden');
+                    adminModal.classList.remove('flex');
+                    document.body.style.overflow = 'auto';
+                }
+            });
         });
     </script>
 
