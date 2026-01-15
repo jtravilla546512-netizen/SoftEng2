@@ -34,6 +34,43 @@
             }
         }
     </script>
+    <style>
+        /* Custom scrollbar styling for modal content */
+        [style*="scrollbar-width: thin"] {
+            scrollbar-color: #cbd5e1 #f1f5f9;
+        }
+
+        [style*="scrollbar-width: thin"]::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        [style*="scrollbar-width: thin"]::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
+        }
+
+        [style*="scrollbar-width: thin"]::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        [style*="scrollbar-width: thin"]::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Force step content spacing */
+        #step3, #step4, #step5, #step6 {
+            margin-top: -40px !important;
+            padding-top: 0 !important;
+        }
+
+        #step3 > h2,
+        #step4 > div:first-child,
+        #step5 > div:first-child,
+        #step6 > div:first-child {
+            margin-top: -20px !important;
+        }
+    </style>
 </head>
 <body class="font-lato antialiased bg-brand-bg">
     <!-- Navigation Header -->
@@ -424,79 +461,79 @@
             <!-- Modal Content with Fixed Layout -->
             <div class="relative h-full flex flex-col">
                 <!-- Fixed Header: Progress Steps -->
-                <div class="flex-shrink-0 px-3 sm:px-8 md:px-10 lg:px-12 xl:px-16 pt-4 sm:pt-8 md:pt-6 lg:pt-12 xl:pt-7 pb-3 sm:pb-6 md:pb-8">
+                <div class="flex-shrink-0 px-3 sm:px-8 md:px-10 lg:px-12 xl:px-16 pt-3 sm:pt-4 md:pt-4 lg:pt-5 xl:pt-5 pb-1 sm:pb-2 md:pb-2">
                     <div class="flex items-center justify-between w-full">
                         <!-- Step 1 -->
                         <div class="flex flex-col items-center">
                             <div class="px-1.5 sm:px-3 md:px-3.5 lg:px-4 py-1 sm:py-1.5 md:py-2 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap" style="background-color: #046C9C; color: white;">
                                 STEP 1
                             </div>
-                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-1 sm:mt-2 whitespace-nowrap text-gray-700">
+                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-0.5 sm:mt-1 whitespace-nowrap text-gray-700">
                                 Appliance
                             </div>
                         </div>
 
                         <!-- Connector Line 1 -->
-                        <div class="flex-1 h-0.5 bg-gray-300 mx-0.5 sm:mx-1 md:mx-2 self-center -mt-3 sm:-mt-4 md:-mt-5"></div>
+                        <div class="flex-1 h-0.5 bg-gray-300 mx-0.5 sm:mx-1 md:mx-2 self-center -mt-2 sm:-mt-3 md:-mt-4"></div>
 
                         <!-- Step 2 -->
                         <div class="flex flex-col items-center">
                             <div class="px-1.5 sm:px-3 md:px-3.5 lg:px-4 py-1 sm:py-1.5 md:py-2 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
                                 STEP 2
                             </div>
-                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-1 sm:mt-2 whitespace-nowrap text-gray-700">
+                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-0.5 sm:mt-1 whitespace-nowrap text-gray-700">
                                 Service Type
                             </div>
                         </div>
 
                         <!-- Connector Line 2 -->
-                        <div class="flex-1 h-0.5 bg-gray-300 mx-0.5 sm:mx-1 md:mx-2 self-center -mt-3 sm:-mt-4 md:-mt-5"></div>
+                        <div class="flex-1 h-0.5 bg-gray-300 mx-0.5 sm:mx-1 md:mx-2 self-center -mt-2 sm:-mt-3 md:-mt-4"></div>
 
                         <!-- Step 3 -->
                         <div class="flex flex-col items-center">
                             <div class="px-1.5 sm:px-3 md:px-3.5 lg:px-4 py-1 sm:py-1.5 md:py-2 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
                                 STEP 3
                             </div>
-                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-1 sm:mt-2 whitespace-nowrap text-gray-700">
+                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-0.5 sm:mt-1 whitespace-nowrap text-gray-700">
                                 User Info
                             </div>
                         </div>
 
                         <!-- Connector Line 3 -->
-                        <div class="flex-1 h-0.5 bg-gray-300 mx-0.5 sm:mx-1 md:mx-2 self-center -mt-3 sm:-mt-4 md:-mt-5"></div>
+                        <div class="flex-1 h-0.5 bg-gray-300 mx-0.5 sm:mx-1 md:mx-2 self-center -mt-2 sm:-mt-3 md:-mt-4"></div>
 
                         <!-- Step 4 -->
                         <div class="flex flex-col items-center">
                             <div class="px-1.5 sm:px-3 md:px-3.5 lg:px-4 py-1 sm:py-1.5 md:py-2 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
                                 STEP 4
                             </div>
-                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-1 sm:mt-2 whitespace-nowrap text-gray-700">
+                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-0.5 sm:mt-1 whitespace-nowrap text-gray-700">
                                 Schedule
                             </div>
                         </div>
 
                         <!-- Connector Line 4 -->
-                        <div class="flex-1 h-0.5 bg-gray-300 mx-0.5 sm:mx-1 md:mx-2 self-center -mt-3 sm:-mt-4 md:-mt-5"></div>
+                        <div class="flex-1 h-0.5 bg-gray-300 mx-0.5 sm:mx-1 md:mx-2 self-center -mt-2 sm:-mt-3 md:-mt-4"></div>
 
                         <!-- Step 5 -->
                         <div class="flex flex-col items-center">
                             <div class="px-1.5 sm:px-3 md:px-3.5 lg:px-4 py-1 sm:py-1.5 md:py-2 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
                                 STEP 5
                             </div>
-                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-1 sm:mt-2 whitespace-nowrap text-gray-700">
+                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-0.5 sm:mt-1 whitespace-nowrap text-gray-700">
                                 Summary
                             </div>
                         </div>
 
                         <!-- Connector Line 5 -->
-                        <div class="flex-1 h-0.5 bg-gray-300 mx-0.5 sm:mx-1 md:mx-2 self-center -mt-3 sm:-mt-4 md:-mt-5"></div>
+                        <div class="flex-1 h-0.5 bg-gray-300 mx-0.5 sm:mx-1 md:mx-2 self-center -mt-2 sm:-mt-3 md:-mt-4"></div>
 
                         <!-- Step 6 -->
                         <div class="flex flex-col items-center">
                             <div class="px-2 sm:px-4 md:px-5 lg:px-6 py-1.5 sm:py-2 md:py-2.5 lg:py-3 bg-gray-300 text-gray-700 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center font-bold text-[8px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap">
                                 STEP 6
                             </div>
-                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-1 sm:mt-2 whitespace-nowrap text-gray-700">
+                            <div class="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-normal text-center mt-0.5 sm:mt-1 whitespace-nowrap text-gray-700">
                                 Success
                             </div>
                         </div>
@@ -504,10 +541,10 @@
                 </div>
 
                 <!-- Flexible Middle: Step Content -->
-                <div id="stepContent" class="flex-grow px-6 sm:px-8 md:px-10 lg:px-12 xl:px-16 overflow-y-auto">
+                <div id="stepContent" class="flex-grow px-6 sm:px-8 md:px-10 lg:px-12 xl:px-16 overflow-y-auto" style="margin-top: -24px !important; padding-top: 0 !important;">
                     <!-- Step 1: Select Appliance -->
                     <div id="step1" class="step-content">
-                        <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-black mb-6 sm:mb-8 text-center">
+                        <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-black mb-3 sm:mb-4 text-center">
                             Select Your Appliance
                         </h2>
 
@@ -539,7 +576,7 @@
                         <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl text-black mb-2 sm:mb-3 text-center">
                             Select Service Type
                         </h2>
-                        <p class="font-roboto text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 text-center">
+                        <p class="font-roboto text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 text-center">
                             Choose the service that best suits your needs.
                         </p>
 
@@ -588,70 +625,70 @@
                 </div>
 
                 <!-- Step 3: User Information -->
-                <div id="step3" class="step-content hidden">
-                    <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl text-black mb-2 sm:mb-3 text-center">
+                <div id="step3" class="step-content hidden" style="padding-top: 0 !important; margin-top: -40px !important;">
+                    <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl text-black mb-1 sm:mb-2 text-center px-4" style="margin-top: -20px !important;">
                         Enter Your Contact Information
                     </h2>
-                    <p class="font-roboto text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 text-center">
+                    <p class="font-roboto text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 text-center px-4">
                         Please provide your details so we can effectively reach you and prepare for your service appointment
                     </p>
 
                     <!-- Scrollable Form Area -->
-                    <div class="max-w-2xl mx-auto overflow-y-auto pr-2" style="max-height: 320px;">
-                        <div class="space-y-3 sm:space-y-4">
+                    <div class="max-w-2xl mx-auto overflow-y-auto px-4 sm:px-6 md:px-8" style="max-height: 280px; scrollbar-width: thin;">
+                        <div class="space-y-3 sm:space-y-4 pb-2">
                             <!-- Full Name -->
                             <div>
-                                <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
+                                <label for="fullName" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
                                 <input
                                     type="text"
                                     id="fullName"
                                     placeholder="Your Full Name"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
+                                    class="w-full px-3 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
                                 >
                             </div>
 
                             <!-- Location -->
                             <div>
-                                <label for="location" class="block text-sm font-medium text-gray-700 mb-1.5">Location</label>
+                                <label for="location" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5">Location</label>
                                 <input
                                     type="text"
                                     id="location"
                                     placeholder="Your Address"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
+                                    class="w-full px-3 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
                                 >
                             </div>
 
                             <!-- Landmark (Optional) -->
                             <div>
-                                <label for="landmark" class="block text-sm font-medium text-gray-700 mb-1.5">Landmark (Optional)</label>
+                                <label for="landmark" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5">Landmark (Optional)</label>
                                 <input
                                     type="text"
                                     id="landmark"
                                     placeholder="Nearby Landmark"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
+                                    class="w-full px-3 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
                                 >
                             </div>
 
                             <!-- Contact Number -->
                             <div>
-                                <label for="contactNumber" class="block text-sm font-medium text-gray-700 mb-1.5">Contact Number</label>
+                                <label for="contactNumber" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5">Contact Number</label>
                                 <input
                                     type="tel"
                                     id="contactNumber"
                                     placeholder="Your Phone Number"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
+                                    class="w-full px-3 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300"
                                 >
                             </div>
 
                             <!-- Description of Appliance Issue -->
                             <div>
-                                <label for="applianceIssue" class="block text-sm font-medium text-gray-700 mb-1.5">Description of Appliance Issue</label>
+                                <label for="applianceIssue" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5">Description of Appliance Issue</label>
                                 <textarea
                                     id="applianceIssue"
                                     rows="3"
                                     maxlength="100"
                                     placeholder="Please describe the problem with your appliance in detail (e.g., 'Refrigerator not cooling', 'Aircon making strange noises')."
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300 resize-none"
+                                    class="w-full px-3 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm transition-all duration-300 resize-none"
                                 ></textarea>
                                 <p class="text-xs text-gray-500 mt-1">Maximum 100 characters</p>
                             </div>
@@ -660,17 +697,17 @@
                 </div>
 
                 <!-- Step 4: Schedule -->
-                <div id="step4" class="step-content hidden">
-                    <div class="text-center mb-4 sm:mb-14">
+                <div id="step4" class="step-content hidden" style="padding-top: 0 !important; margin-top: -40px !important;">
+                    <div class="text-center mb-2 sm:mb-3 px-4" style="margin-top: -20px !important;">
                         <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl text-black">Select Date</h2>
                     </div>
 
-                    <!-- Calendar and Timeslot Container - Fixed Height -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <!-- Calendar and Timeslot Container - Scrollable -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto px-4 sm:px-6 overflow-y-auto pb-2" style="max-height: 380px; scrollbar-width: thin;">
                         <!-- Left Column: Calendar -->
                         <div class="flex flex-col">
-                            <h3 class="font-lato font-semibold text-base sm:text-lg text-black mb-3">Select a Date</h3>
-                            <div class="bg-white border border-gray-300 rounded-lg p-4" style="height: 350px;">
+                            <h3 class="font-lato font-semibold text-sm sm:text-base md:text-lg text-black mb-2 sm:mb-3">Select a Date</h3>
+                            <div class="bg-white border border-gray-300 rounded-lg p-3 sm:p-4" style="min-height: 280px; height: auto;">
                                 <!-- Calendar Header -->
                                 <div class="flex items-center justify-between mb-4">
                                     <button onclick="previousMonth()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
@@ -707,38 +744,38 @@
 
                         <!-- Right Column: Timeslots -->
                         <div class="flex flex-col">
-                            <h3 class="font-lato font-semibold text-base sm:text-lg text-black mb-3">Select a Timeslot</h3>
-                            <div class="grid grid-cols-3 gap-3 content-start" style="height: 350px; overflow-y: auto;">
+                            <h3 class="font-lato font-semibold text-sm sm:text-base md:text-lg text-black mb-2 sm:mb-3">Select a Timeslot</h3>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 content-start auto-rows-max">
                                 <!-- Morning Slots -->
-                                <button onclick="selectTimeslot('09:00 AM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                <button onclick="selectTimeslot('09:00 AM')" class="timeslot-option px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg text-xs sm:text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300">
                                     09:00 AM
                                 </button>
-                                <button onclick="selectTimeslot('10:00 AM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                <button onclick="selectTimeslot('10:00 AM')" class="timeslot-option px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg text-xs sm:text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300">
                                     10:00 AM
                                 </button>
-                                <button onclick="selectTimeslot('11:00 AM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                <button onclick="selectTimeslot('11:00 AM')" class="timeslot-option px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg text-xs sm:text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300">
                                     11:00 AM
                                 </button>
 
                                 <!-- Afternoon Slots -->
-                                <button onclick="selectTimeslot('01:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                <button onclick="selectTimeslot('01:00 PM')" class="timeslot-option px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg text-xs sm:text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300">
                                     01:00 PM
                                 </button>
-                                <button onclick="selectTimeslot('02:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                <button onclick="selectTimeslot('02:00 PM')" class="timeslot-option px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg text-xs sm:text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300">
                                     02:00 PM
                                 </button>
-                                <button onclick="selectTimeslot('03:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                <button onclick="selectTimeslot('03:00 PM')" class="timeslot-option px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg text-xs sm:text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300">
                                     03:00 PM
                                 </button>
 
                                 <!-- Evening Slots -->
-                                <button onclick="selectTimeslot('04:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                <button onclick="selectTimeslot('04:00 PM')" class="timeslot-option px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg text-xs sm:text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300">
                                     04:00 PM
                                 </button>
-                                <button onclick="selectTimeslot('05:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                <button onclick="selectTimeslot('05:00 PM')" class="timeslot-option px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg text-xs sm:text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300">
                                     05:00 PM
                                 </button>
-                                <button onclick="selectTimeslot('06:00 PM')" class="timeslot-option px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300 h-fit">
+                                <button onclick="selectTimeslot('06:00 PM')" class="timeslot-option px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-gray-300 rounded-lg text-xs sm:text-sm font-medium text-gray-700 hover:border-brand-blue hover:bg-blue-50 transition-all duration-300">
                                     06:00 PM
                                 </button>
                             </div>
@@ -747,98 +784,100 @@
                 </div>
 
                 <!-- Step 5: Booking Summary -->
-                <div id="step5" class="step-content hidden">
-                    <div class="text-center mb-12">
-                        <h2 class="font-lato font-bold text-2xl sm:text-3xl text-black">Booking Summary</h2>
+                <div id="step5" class="step-content hidden" style="padding-top: 0 !important; margin-top: -40px !important;">
+                    <div class="text-center mb-2 sm:mb-3" style="margin-top: -20px !important;">
+                        <h2 class="font-lato font-bold text-xl sm:text-2xl md:text-3xl text-black">Booking Summary</h2>
                     </div>
 
-                    <!-- Summary Content - Single Border Container with margin -->
-                    <div class="mx-4 sm:mx-6 md:mx-8 lg:mx-12 border border-gray-300 rounded-lg px-6 sm:px-8 py-6">
-                        <!-- Two Column Layout -->
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
+                    <!-- Summary Content - Scrollable Container -->
+                    <div class="overflow-y-auto px-3 sm:px-4 md:px-6 lg:px-8" style="max-height: 380px; scrollbar-width: thin;">
+                        <div class="border border-gray-300 rounded-lg px-4 sm:px-6 py-4 sm:py-6">
+                            <!-- Two Column Layout -->
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 sm:gap-x-8 lg:gap-x-12 gap-y-4 sm:gap-y-6">
                             <!-- Left Column: Your Information -->
                             <div>
-                                <div class="flex items-center gap-2 mb-6">
-                                    <svg class="w-5 h-5 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="flex items-center gap-2 mb-3 sm:mb-4">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
-                                    <h3 class="font-lato font-bold text-lg text-black">Your Information</h3>
+                                    <h3 class="font-lato font-bold text-base sm:text-lg text-black">Your Information</h3>
                                 </div>
-                                <div class="space-y-4">
+                                <div class="space-y-2 sm:space-y-3">
                                     <div>
-                                        <p class="font-roboto text-sm text-black mb-1">Full Name:</p>
-                                        <p id="summaryFullName" class="font-roboto text-base text-black">-</p>
+                                        <p class="font-roboto text-xs sm:text-sm text-black mb-0.5 sm:mb-1">Full Name:</p>
+                                        <p id="summaryFullName" class="font-roboto text-sm sm:text-base text-black">-</p>
                                     </div>
                                     <div>
-                                        <p class="font-roboto text-sm text-black mb-1">Contact Number:</p>
-                                        <p id="summaryContactNumber" class="font-roboto text-base text-black">-</p>
+                                        <p class="font-roboto text-xs sm:text-sm text-black mb-0.5 sm:mb-1">Contact Number:</p>
+                                        <p id="summaryContactNumber" class="font-roboto text-sm sm:text-base text-black">-</p>
                                     </div>
                                     <div>
-                                        <p class="font-roboto text-sm text-black mb-1">Location:</p>
-                                        <p id="summaryLocation" class="font-roboto text-base text-black">-</p>
+                                        <p class="font-roboto text-xs sm:text-sm text-black mb-0.5 sm:mb-1">Location:</p>
+                                        <p id="summaryLocation" class="font-roboto text-sm sm:text-base text-black">-</p>
                                     </div>
                                     <div id="summaryLandmarkContainer">
-                                        <p class="font-roboto text-sm text-black mb-1">Landmark:</p>
-                                        <p id="summaryLandmark" class="font-roboto text-base text-black">-</p>
+                                        <p class="font-roboto text-xs sm:text-sm text-black mb-0.5 sm:mb-1">Landmark:</p>
+                                        <p id="summaryLandmark" class="font-roboto text-sm sm:text-base text-black">-</p>
                                     </div>
                                     <div>
-                                        <p class="font-roboto text-sm text-black mb-1">Issue Description:</p>
-                                        <p id="summaryIssue" class="font-roboto text-base text-black leading-relaxed break-words">-</p>
+                                        <p class="font-roboto text-xs sm:text-sm text-black mb-0.5 sm:mb-1">Issue Description:</p>
+                                        <p id="summaryIssue" class="font-roboto text-sm sm:text-base text-black leading-relaxed break-words">-</p>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Right Column: Appliance & Service Details + Appointment Details -->
-                            <div class="space-y-8">
+                            <div class="space-y-4 sm:space-y-6">
                                 <!-- Appliance & Service Details -->
                                 <div>
-                                    <div class="flex items-center gap-2 mb-6">
-                                        <svg class="w-5 h-5 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="flex items-center gap-2 mb-3 sm:mb-4">
+                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                                         </svg>
-                                        <h3 class="font-lato font-bold text-lg text-black">Appliance & Service Details</h3>
+                                        <h3 class="font-lato font-bold text-base sm:text-lg text-black">Appliance & Service Details</h3>
                                     </div>
-                                    <div class="grid grid-cols-2 gap-6">
+                                    <div class="grid grid-cols-2 gap-3 sm:gap-4">
                                         <div>
-                                            <p class="font-roboto text-sm text-black mb-1">Appliance:</p>
-                                            <p id="summaryAppliance" class="font-roboto text-base text-black capitalize">-</p>
+                                            <p class="font-roboto text-xs sm:text-sm text-black mb-0.5 sm:mb-1">Appliance:</p>
+                                            <p id="summaryAppliance" class="font-roboto text-sm sm:text-base text-black capitalize">-</p>
                                         </div>
                                         <div>
-                                            <p class="font-roboto text-sm text-black mb-1">Service Type:</p>
-                                            <p id="summaryService" class="font-roboto text-base text-black capitalize">-</p>
+                                            <p class="font-roboto text-xs sm:text-sm text-black mb-0.5 sm:mb-1">Service Type:</p>
+                                            <p id="summaryService" class="font-roboto text-sm sm:text-base text-black capitalize">-</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Appointment Details -->
                                 <div>
-                                    <div class="flex items-center gap-2 mb-6">
-                                        <svg class="w-5 h-5 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="flex items-center gap-2 mb-3 sm:mb-4">
+                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                         </svg>
-                                        <h3 class="font-lato font-bold text-lg text-black">Appointment Details</h3>
+                                        <h3 class="font-lato font-bold text-base sm:text-lg text-black">Appointment Details</h3>
                                     </div>
-                                    <div class="grid grid-cols-2 gap-6">
+                                    <div class="grid grid-cols-2 gap-3 sm:gap-4">
                                         <div>
-                                            <p class="font-roboto text-sm text-black mb-1">Date:</p>
-                                            <p id="summaryDate" class="font-roboto text-base text-black">-</p>
+                                            <p class="font-roboto text-xs sm:text-sm text-black mb-0.5 sm:mb-1">Date:</p>
+                                            <p id="summaryDate" class="font-roboto text-sm sm:text-base text-black">-</p>
                                         </div>
                                         <div>
-                                            <p class="font-roboto text-sm text-black mb-1">Time:</p>
-                                            <p id="summaryTime" class="font-roboto text-base text-black">-</p>
+                                            <p class="font-roboto text-xs sm:text-sm text-black mb-0.5 sm:mb-1">Time:</p>
+                                            <p id="summaryTime" class="font-roboto text-sm sm:text-base text-black">-</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Step 6: Success -->
-                <div id="step6" class="step-content hidden">
+                <div id="step6" class="step-content hidden" style="padding-top: 0 !important; margin-top: -40px !important;">
                     <!-- Success Icon and Header -->
-                    <div class="text-center mb-4 mt-2">
-                        <div class="flex justify-center mb-3">
+                    <div class="text-center mb-3" style="margin-top: -20px !important;">
+                        <div class="flex justify-center mb-2">
                             <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
                                 <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -915,8 +954,8 @@
                 </div>
 
                 <!-- Fixed Footer: Navigation Buttons -->
-                <div class="flex-shrink-0 px-6 sm:px-8 md:px-10 lg:px-12 xl:px-16 pb-6 sm:pb-8 pt-4 sm:pt-5 mt-4">
-                    <div id="normalButtons" class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-4">
+                <div class="flex-shrink-0 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 pb-4 sm:pb-6 md:pb-8 pt-3 sm:pt-4 mt-2 sm:mt-3 bg-white border-t border-gray-200">
+                    <div id="normalButtons" class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 sm:gap-3">
                         <button id="backButton" onclick="handleBackButton()" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-medium text-sm sm:text-base hover:bg-gray-50 transition-all duration-300">
                             Back
                         </button>

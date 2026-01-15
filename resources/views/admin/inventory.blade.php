@@ -9,17 +9,53 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
         body {
             font-family: 'Lato', sans-serif;
             background: url("{{ asset('images/Background.png') }}") no-repeat center center fixed;
             background-size: cover;
         }
+
+        /* Sidebar transition */
+        #sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Overlay */
+        #sidebarOverlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Custom scrollbar for mobile sidebar */
+        #sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #sidebar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        #sidebar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 2px;
+        }
+
+        #sidebar::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     </style>
 </head>
 <body class="bg-[#F5EEE7]">
-    <div class="flex h-screen">
+    <!-- Sidebar Overlay (Mobile/Tablet only) -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
+
+    <div class="flex h-screen overflow-hidden max-w-full">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-lg flex flex-col">
+        <aside id="sidebar" class="fixed lg:static top-0 left-0 h-full w-64 bg-white shadow-lg flex flex-col z-50 transform -translate-x-full lg:translate-x-0 overflow-y-auto">
             <!-- Logo -->
             <div class="p-6 border-b">
                 <img src="{{ asset('images/coolsystem-logo.png') }}" alt="CoolSystem Spec Admin" class="w-full">
@@ -41,14 +77,14 @@
                     <span class="font-bold" style="font-family: 'Roboto', sans-serif;">Inventory Management</span>
                 </a>
 
-                <a href="#" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                <a href="{{ route('admin.customers') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
                     <span class="font-medium" style="font-family: 'Roboto', sans-serif;">Customer Profiles</span>
                 </a>
 
-                <a href="#" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                <a href="{{ route('admin.reports') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
@@ -65,47 +101,59 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
+        <main class="flex-1 overflow-y-auto overflow-x-hidden max-w-full">
             <!-- Header -->
-            <header class="py-6">
-                <div class="inline-block bg-[#2B9DD1] text-white px-8 py-3 rounded-r-full shadow-lg">
-                    <h1 class="text-2xl font-bold whitespace-nowrap" style="font-family: 'Roboto', sans-serif;">Inventory Management Dashboard</h1>
+            <header class="py-4 sm:py-6">
+                <div class="flex items-center justify-between px-2 sm:px-0 gap-2">
+                    <!-- Hamburger Menu Button (Mobile/Tablet only) -->
+                    <button id="hamburgerBtn" class="lg:hidden ml-4 p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#2B9DD1]">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Title -->
+                    <div class="bg-[#2B9DD1] text-white px-4 sm:px-6 md:px-8 py-3 rounded-lg md:rounded-r-full shadow-lg mx-auto md:mx-0 md:inline-block">
+                        <h1 class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-center md:text-left whitespace-nowrap" style="font-family: 'Roboto', sans-serif;">Inventory Management Dashboard</h1>
+                    </div>
+
+                    <!-- Spacer removed for mobile center alignment -->
                 </div>
             </header>
 
-            <div class="p-8">
+            <div class="p-4 sm:p-6 md:p-8">
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-4 gap-6 mb-8">
-                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-6">
-                        <p class="text-sm opacity-90 mb-2" style="font-family: 'Lato', sans-serif;">Total Items</p>
-                        <p class="text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">8</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
+                        <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2" style="font-family: 'Lato', sans-serif;">Total Items</p>
+                        <p class="text-2xl sm:text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">8</p>
                     </div>
-                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-6">
-                        <p class="text-sm opacity-90 mb-2" style="font-family: 'Lato', sans-serif;">Low Stock</p>
-                        <p class="text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">1</p>
+                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
+                        <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2" style="font-family: 'Lato', sans-serif;">Low Stock</p>
+                        <p class="text-2xl sm:text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">1</p>
                     </div>
-                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-6">
-                        <p class="text-sm opacity-90 mb-2" style="font-family: 'Lato', sans-serif;">Out of Stock</p>
-                        <p class="text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">0</p>
+                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
+                        <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2" style="font-family: 'Lato', sans-serif;">Out of Stock</p>
+                        <p class="text-2xl sm:text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">0</p>
                     </div>
-                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-6">
-                        <p class="text-sm opacity-90 mb-2" style="font-family: 'Lato', sans-serif;">Total Value</p>
-                        <p class="text-2xl font-bold" style="font-family: 'Roboto', sans-serif;">₱1,387,000.00</p>
+                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
+                        <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2" style="font-family: 'Lato', sans-serif;">Total Value</p>
+                        <p class="text-lg sm:text-2xl font-bold" style="font-family: 'Roboto', sans-serif;">₱1,387,000.00</p>
                     </div>
                 </div>
 
                 <!-- Filters and Add Button -->
-                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="flex items-center space-x-4 flex-1">
-                            <input type="text" placeholder="Search by name" class="border border-gray-300 rounded-lg px-4 py-2 w-80 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                            <select class="border border-gray-300 rounded-lg px-4 py-2 w-64 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                <div class="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6">
+                    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6">
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full lg:flex-1">
+                            <input type="text" placeholder="Search by name" class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:w-64 lg:w-80 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                            <select class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:flex-1 lg:w-64 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
                                 <option>Search by Category</option>
                                 <option>Aircon Unit</option>
                                 <option>Spare Parts</option>
                                 <option>Refrigerator Unit</option>
                             </select>
-                            <select class="border border-gray-300 rounded-lg px-4 py-2 w-64 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                            <select class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:flex-1 lg:w-64 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
                                 <option>Search by Brand</option>
                                 <option>Carrier</option>
                                 <option>Samsung</option>
@@ -113,14 +161,14 @@
                                 <option>Daikin</option>
                             </select>
                         </div>
-                        <button onclick="openAddItemModal()" class="px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white font-semibold rounded-lg transition-colors flex items-center space-x-2" style="font-family: 'Roboto', sans-serif;">
+                        <button onclick="openAddItemModal()" class="w-full lg:w-auto px-4 sm:px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-sm sm:text-base font-semibold rounded-lg transition-colors flex items-center justify-center space-x-2" style="font-family: 'Roboto', sans-serif;">
                             <span class="text-lg">+</span>
                             <span>Add New Item</span>
                         </button>
                     </div>
 
                     <!-- Product Grid -->
-                    <div class="grid grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                         <!-- Product Card 1 -->
                         <div class="border border-gray-300 rounded-lg p-4 bg-white hover:shadow-lg transition-shadow">
                             <div class="flex items-start justify-between mb-4">
@@ -243,12 +291,21 @@
                     </div>
 
                     <!-- Pagination -->
-                    <div class="mt-6 flex items-center justify-center space-x-2">
-                        <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100" style="font-family: 'Roboto', sans-serif;">1</button>
-                        <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100" style="font-family: 'Roboto', sans-serif;">2</button>
-                        <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100" style="font-family: 'Roboto', sans-serif;">3</button>
-                        <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100" style="font-family: 'Roboto', sans-serif;">4</button>
-                        <button class="px-4 py-2 text-sm font-medium text-white bg-[#2B9DD1] rounded-md hover:bg-[#1e7ba8]" style="font-family: 'Roboto', sans-serif;">Next</button>
+                    <div class="mt-6 flex items-center justify-center gap-2">
+                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">1</button>
+                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">2</button>
+                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">3</button>
+                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">4</button>
+                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -832,6 +889,58 @@
     </div>
 
     <script>
+        // Hamburger Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('-translate-x-full');
+                sidebarOverlay.classList.toggle('hidden');
+            }
+
+            // Open sidebar
+            function openSidebar() {
+                sidebar.classList.remove('-translate-x-full');
+                sidebarOverlay.classList.remove('hidden');
+            }
+
+            // Close sidebar
+            function closeSidebar() {
+                sidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+            }
+
+            // Event listeners
+            if (hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', toggleSidebar);
+            }
+
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener('click', closeSidebar);
+            }
+
+            // Close sidebar when clicking on a navigation link (mobile only)
+            const navLinks = sidebar.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth < 1024) {
+                        closeSidebar();
+                    }
+                });
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 1024) {
+                    sidebar.classList.remove('-translate-x-full');
+                    sidebarOverlay.classList.add('hidden');
+                }
+            });
+        });
+
         // Toggle dropdown menu
         function toggleDropdown(dropdownId) {
             const dropdown = document.getElementById(dropdownId);

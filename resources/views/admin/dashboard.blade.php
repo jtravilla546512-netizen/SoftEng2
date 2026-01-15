@@ -24,6 +24,11 @@
         }
     </script>
     <style>
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
         body {
             background-image: url("{{ asset('images/Background.png') }}");
             background-size: cover;
@@ -31,12 +36,43 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
+
+        /* Sidebar transition */
+        #sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Overlay */
+        #sidebarOverlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Hide scrollbar for mobile sidebar */
+        #sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #sidebar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        #sidebar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 2px;
+        }
+
+        #sidebar::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     </style>
 </head>
 <body class="font-roboto">
-    <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar Overlay (Mobile/Tablet only) -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
+
+    <div class="flex h-screen overflow-hidden max-w-full">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-lg flex flex-col">
+        <aside id="sidebar" class="fixed lg:static top-0 left-0 h-full w-64 bg-white shadow-lg flex flex-col z-50 transform -translate-x-full lg:translate-x-0 overflow-y-auto">
             <!-- Logo -->
             <div class="p-6 border-b">
                 <img src="{{ asset('images/coolsystem-logo.png') }}" alt="CoolSystem SpecAdmin" class="w-full h-auto">
@@ -58,14 +94,14 @@
                     <span>Inventory Management</span>
                 </a>
 
-                <a href="#" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
+                <a href="{{ route('admin.customers') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                     </svg>
                     <span>Customer Profiles</span>
                 </a>
 
-                <a href="#" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
+                <a href="{{ route('admin.reports') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                     </svg>
@@ -82,23 +118,35 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
+        <main class="flex-1 overflow-y-auto overflow-x-hidden max-w-full">
             <!-- Header -->
-            <header class="py-6">
-                <div class="inline-block bg-[#2B9DD1] text-white px-8 py-3 rounded-r-full shadow-lg">
-                    <h1 class="text-2xl font-bold whitespace-nowrap">Sales Management Dashboard</h1>
+            <header class="py-4 sm:py-6">
+                <div class="flex items-center justify-between px-2 sm:px-0 gap-2">
+                    <!-- Hamburger Menu Button (Mobile/Tablet only) -->
+                    <button id="hamburgerBtn" class="lg:hidden ml-4 p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#2B9DD1]">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Title -->
+                    <div class="bg-[#2B9DD1] text-white px-4 sm:px-6 md:px-8 py-3 rounded-lg md:rounded-r-full shadow-lg mx-auto md:mx-0 md:inline-block">
+                        <h1 class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-center md:text-left whitespace-nowrap">Sales Management Dashboard</h1>
+                    </div>
+
+                    <!-- Spacer removed for mobile center alignment -->
                 </div>
             </header>
 
             <!-- Content Area -->
-            <div class="p-8">
+            <div class="p-4 sm:p-6 md:p-8">
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
                     <!-- Pending Bookings -->
-                    <div class="bg-[#2B9DD1] text-white rounded-lg p-6 shadow-lg">
-                        <div class="text-sm font-medium opacity-90 mb-2">Pending Bookings</div>
-                        <div class="text-4xl font-bold mb-2">6</div>
-                        <div class="flex items-center text-sm">
+                    <div class="bg-[#2B9DD1] text-white rounded-lg p-4 sm:p-6 shadow-lg">
+                        <div class="text-xs sm:text-sm font-medium opacity-90 mb-1 sm:mb-2">Pending Bookings</div>
+                        <div class="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2">6</div>
+                        <div class="flex items-center text-xs sm:text-sm">
                             <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                             </svg>
@@ -107,10 +155,10 @@
                     </div>
 
                     <!-- Services Completed -->
-                    <div class="bg-[#2B9DD1] text-white rounded-lg p-6 shadow-lg">
-                        <div class="text-sm font-medium opacity-90 mb-2">Services Completed</div>
-                        <div class="text-4xl font-bold mb-2">9</div>
-                        <div class="flex items-center text-sm">
+                    <div class="bg-[#2B9DD1] text-white rounded-lg p-4 sm:p-6 shadow-lg">
+                        <div class="text-xs sm:text-sm font-medium opacity-90 mb-1 sm:mb-2">Services Completed</div>
+                        <div class="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2">9</div>
+                        <div class="flex items-center text-xs sm:text-sm">
                             <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                             </svg>
@@ -119,10 +167,10 @@
                     </div>
 
                     <!-- Today's Revenue -->
-                    <div class="bg-[#2B9DD1] text-white rounded-lg p-6 shadow-lg">
-                        <div class="text-sm font-medium opacity-90 mb-2">Today's Revenue</div>
-                        <div class="text-4xl font-bold mb-2">₱0.00</div>
-                        <div class="flex items-center text-sm">
+                    <div class="bg-[#2B9DD1] text-white rounded-lg p-4 sm:p-6 shadow-lg">
+                        <div class="text-xs sm:text-sm font-medium opacity-90 mb-1 sm:mb-2">Today's Revenue</div>
+                        <div class="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2">₱0.00</div>
+                        <div class="flex items-center text-xs sm:text-sm">
                             <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                             </svg>
@@ -131,10 +179,10 @@
                     </div>
 
                     <!-- Total Revenue -->
-                    <div class="bg-[#2B9DD1] text-white rounded-lg p-6 shadow-lg">
-                        <div class="text-sm font-medium opacity-90 mb-2">Total Revenue</div>
-                        <div class="text-4xl font-bold mb-2">₱99,999.99</div>
-                        <div class="flex items-center text-sm">
+                    <div class="bg-[#2B9DD1] text-white rounded-lg p-4 sm:p-6 shadow-lg">
+                        <div class="text-xs sm:text-sm font-medium opacity-90 mb-1 sm:mb-2">Total Revenue</div>
+                        <div class="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2">₱99,999.99</div>
+                        <div class="flex items-center text-xs sm:text-sm">
                             <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                             </svg>
@@ -146,90 +194,90 @@
                 <!-- Bookings Table -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                     <!-- Tabs and New Booking Button -->
-                    <div class="flex items-center justify-between px-6 py-4 border-b">
-                        <div class="flex space-x-6">
-                            <button id="pendingTab" class="px-4 py-2 text-gray-900 font-semibold relative border-b-4 border-[#2B9DD1]">
-                                Pending Bookings <span class="ml-2 bg-yellow-400 text-white px-2.5 py-0.5 rounded-full text-xs font-bold">6</span>
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 sm:px-6 py-4 border-b gap-4 sm:gap-0">
+                        <div class="flex space-x-4 sm:space-x-6 overflow-x-auto w-full sm:w-auto">
+                            <button id="pendingTab" class="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-900 font-semibold relative border-b-4 border-[#2B9DD1] whitespace-nowrap">
+                                Pending Bookings <span class="ml-1 sm:ml-2 bg-yellow-400 text-white px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-bold">6</span>
                             </button>
-                            <button id="completedTab" class="px-4 py-2 text-gray-900 font-semibold relative">
+                            <button id="completedTab" class="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-900 font-semibold relative whitespace-nowrap">
                                 Completed Transactions
                             </button>
                         </div>
-                        <a href="/" class="px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white font-semibold rounded-lg shadow-md transition-colors inline-block">
+                        <a href="/" class="w-full sm:w-auto text-center px-4 sm:px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-sm sm:text-base font-semibold rounded-lg shadow-md transition-colors inline-block">
                             + New Booking
                         </a>
                     </div>
 
                     <!-- Completed Transactions Table (Hidden by default) -->
                     <div id="completedContent" class="overflow-x-auto hidden">
-                        <table class="w-full">
+                        <table class="w-full min-w-[600px]">
                             <thead class="bg-gray-200">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Booking #</th>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Client</th>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Technician</th>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Request</th>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Amount</th>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Action</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Booking #</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Client</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Technician</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Request</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Amount</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
                                 <tr class="border-b border-gray-200">
-                                    <td class="px-6 py-4 text-sm text-gray-900">RP001</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Robin Scherbatsky</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">James Caraan</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Repair</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">₱225.00</td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <button onclick="openCompletedDetailsModal()" class="px-4 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded transition-colors">
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">RP001</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Robin Scherbatsky</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">James Caraan</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">₱225.00</td>
+                                    <td class="px-3 sm:px-6 py-4 text-sm">
+                                        <button onclick="openCompletedDetailsModal()" class="px-3 sm:px-4 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded transition-colors">
                                             View Details
                                         </button>
                                     </td>
                                 </tr>
                                 <tr class="border-b border-gray-200">
-                                    <td class="px-6 py-4 text-sm text-gray-900">INS001</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Ted Mosby</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Ryan Rems</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Installation</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">₱80.00</td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <button onclick="openCompletedDetailsModal()" class="px-4 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded transition-colors">
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">INS001</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Ted Mosby</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Ryan Rems</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Installation</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">₱80.00</td>
+                                    <td class="px-3 sm:px-6 py-4 text-sm">
+                                        <button onclick="openCompletedDetailsModal()" class="px-3 sm:px-4 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded transition-colors">
                                             View Details
                                         </button>
                                     </td>
                                 </tr>
                                 <tr class="border-b border-gray-200">
-                                    <td class="px-6 py-4 text-sm text-gray-900">MN001</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Marshall Eriksen</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Nonong Balinan</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Maintenance</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">₱125.00</td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <button onclick="openCompletedDetailsModal()" class="px-4 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded transition-colors">
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">MN001</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Marshall Eriksen</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Nonong Balinan</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Maintenance</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">₱125.00</td>
+                                    <td class="px-3 sm:px-6 py-4 text-sm">
+                                        <button onclick="openCompletedDetailsModal()" class="px-3 sm:px-4 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded transition-colors">
                                             View Details
                                         </button>
                                     </td>
                                 </tr>
                                 <tr class="border-b border-gray-200">
-                                    <td class="px-6 py-4 text-sm text-gray-900">RP002</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Barnabas Stinson</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">James Caraan, GB Labrador</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Repair</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">₱275.00</td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <button onclick="openCompletedDetailsModal()" class="px-4 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded transition-colors">
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">RP002</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barnabas Stinson</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">James Caraan, GB Labrador</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">₱275.00</td>
+                                    <td class="px-3 sm:px-6 py-4 text-sm">
+                                        <button onclick="openCompletedDetailsModal()" class="px-3 sm:px-4 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded transition-colors">
                                             View Details
                                         </button>
                                     </td>
                                 </tr>
                                 <tr class="border-b border-gray-200">
-                                    <td class="px-6 py-4 text-sm text-gray-900">RP003</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Lily Aldrin</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">GB Labrador, Muman Reyes</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Repair</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">₱340.00</td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <button onclick="openCompletedDetailsModal()" class="px-4 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded transition-colors">
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">RP003</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Lily Aldrin</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">GB Labrador, Muman Reyes</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">₱340.00</td>
+                                    <td class="px-3 sm:px-6 py-4 text-sm">
+                                        <button onclick="openCompletedDetailsModal()" class="px-3 sm:px-4 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded transition-colors">
                                             View Details
                                         </button>
                                     </td>
@@ -240,30 +288,30 @@
 
                     <!-- Pending Bookings Table -->
                     <div id="pendingContent" class="overflow-x-auto">
-                        <table class="w-full">
+                        <table class="w-full min-w-[800px]">
                             <thead class="bg-gray-200">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Booking #</th>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Name</th>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Request</th>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Location</th>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Number</th>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Time</th>
-                                    <th class="px-6 py-3 text-left text-sm font-bold text-gray-900">Date</th>
-                                    <th class="px-6 py-3"></th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Booking #</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Name</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Request</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Location</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Number</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Time</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Date</th>
+                                    <th class="px-3 sm:px-6 py-3"></th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
                                 <tr class="border-b border-gray-200">
-                                    <td class="px-6 py-4 text-sm text-gray-900">RP001</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Robin Scherbatsky</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Repair</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Barangay 1-A</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">+63912-345-6789</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">10:00 AM</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Oct. 01, 2025</td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <select class="action-select border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this)">
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">RP001</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Robin Scherbatsky</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barangay 1-A</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63912-345-6789</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">10:00 AM</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Oct. 01, 2025</td>
+                                    <td class="px-3 sm:px-6 py-4 text-sm">
+                                        <select class="action-select border border-gray-300 rounded px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this)">
                                             <option value="" selected disabled hidden>Action</option>
                                             <option value="assign">Assign Tech</option>
                                             <option value="view">View Details</option>
@@ -271,15 +319,15 @@
                                     </td>
                                 </tr>
                                 <tr class="border-b border-gray-200">
-                                    <td class="px-6 py-4 text-sm text-gray-900">INS001</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Ted Mosby</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Installation</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Barangay 2-A</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">+63912-345-6789</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">12:00 PM</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Oct. 01, 2025</td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <select class="action-select border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this)">
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">INS001</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Ted Mosby</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Installation</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barangay 2-A</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63912-345-6789</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">12:00 PM</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Oct. 01, 2025</td>
+                                    <td class="px-3 sm:px-6 py-4 text-sm">
+                                        <select class="action-select border border-gray-300 rounded px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this)">
                                             <option value="" selected disabled hidden>Action</option>
                                             <option value="assign">Assign Tech</option>
                                             <option value="view">View Details</option>
@@ -287,15 +335,15 @@
                                     </td>
                                 </tr>
                                 <tr class="border-b border-gray-200">
-                                    <td class="px-6 py-4 text-sm text-gray-900">RP002</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Marshall Eriksen</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Repair</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Barangay 3-A</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">+63912-345-6789</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">01:00 PM</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Oct. 01, 2025</td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <select class="action-select border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this)">
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">RP002</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Marshall Eriksen</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barangay 3-A</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63912-345-6789</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">01:00 PM</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Oct. 01, 2025</td>
+                                    <td class="px-3 sm:px-6 py-4 text-sm">
+                                        <select class="action-select border border-gray-300 rounded px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this)">
                                             <option value="" selected disabled hidden>Action</option>
                                             <option value="assign">Assign Tech</option>
                                             <option value="view">View Details</option>
@@ -303,15 +351,15 @@
                                     </td>
                                 </tr>
                                 <tr class="border-b border-gray-200">
-                                    <td class="px-6 py-4 text-sm text-gray-900">MN001</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Barnabas Stinson</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Maintenance</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Barangay 4-A</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">+63912-345-6789</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">10:00 AM</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Oct. 02, 2025</td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <select class="action-select border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this)">
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">MN001</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barnabas Stinson</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Maintenance</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barangay 4-A</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63912-345-6789</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">10:00 AM</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Oct. 02, 2025</td>
+                                    <td class="px-3 sm:px-6 py-4 text-sm">
+                                        <select class="action-select border border-gray-300 rounded px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this)">
                                             <option value="" selected disabled hidden>Action</option>
                                             <option value="assign">Assign Tech</option>
                                             <option value="view">View Details</option>
@@ -319,15 +367,15 @@
                                     </td>
                                 </tr>
                                 <tr class="border-b border-gray-200">
-                                    <td class="px-6 py-4 text-sm text-gray-900">RP003</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Lily Aldrin</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Repair</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Barangay 5-A</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">+63912-345-6789</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">11:00 AM</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Oct. 02, 2025</td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <select class="action-select border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this)">
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">RP003</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Lily Aldrin</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barangay 5-A</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63912-345-6789</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">11:00 AM</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Oct. 02, 2025</td>
+                                    <td class="px-3 sm:px-6 py-4 text-sm">
+                                        <select class="action-select border border-gray-300 rounded px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this)">
                                             <option value="" selected disabled hidden>Action</option>
                                             <option value="assign">Assign Tech</option>
                                             <option value="view">View Details</option>
@@ -339,25 +387,29 @@
                     </div>
 
                     <!-- Pagination -->
-                    <div class="px-6 py-4 bg-gray-50 border-t flex items-center justify-center">
-                        <div class="flex items-center space-x-2">
-                            <button class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
-                                Prev
+                    <div class="px-4 sm:px-6 py-4 bg-gray-50 border-t flex items-center justify-center">
+                        <div class="flex items-center gap-2">
+                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
                             </button>
-                            <button class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">
                                 1
                             </button>
-                            <button class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                                 2
                             </button>
-                            <button class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                                 3
                             </button>
-                            <button class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                                 4
                             </button>
-                            <button class="px-4 py-2 bg-[#2B9DD1] text-white rounded-md text-sm font-medium hover:bg-[#1e7ba8]">
-                                Next
+                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                </svg>
                             </button>
                         </div>
                     </div>
@@ -459,24 +511,28 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="flex items-center justify-center mt-6 space-x-2">
-                    <button class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
-                        Prev
+                <div class="flex items-center justify-center mt-6 gap-2">
+                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
                     </button>
-                    <button class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">
                         1
                     </button>
-                    <button class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                         2
                     </button>
-                    <button class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                         3
                     </button>
-                    <button class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                         4
                     </button>
-                    <button class="px-4 py-2 bg-[#2B9DD1] text-white rounded-md text-sm font-medium hover:bg-[#1e7ba8]">
-                        Next
+                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -904,6 +960,57 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger Menu Toggle
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('-translate-x-full');
+                sidebarOverlay.classList.toggle('hidden');
+            }
+
+            // Open sidebar
+            function openSidebar() {
+                sidebar.classList.remove('-translate-x-full');
+                sidebarOverlay.classList.remove('hidden');
+            }
+
+            // Close sidebar
+            function closeSidebar() {
+                sidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+            }
+
+            // Event listeners
+            if (hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', toggleSidebar);
+            }
+
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener('click', closeSidebar);
+            }
+
+            // Close sidebar when clicking on a navigation link (mobile only)
+            const navLinks = sidebar.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth < 1024) {
+                        closeSidebar();
+                    }
+                });
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 1024) {
+                    sidebar.classList.remove('-translate-x-full');
+                    sidebarOverlay.classList.add('hidden');
+                }
+            });
+
+            // Tab switching functionality
             const pendingTab = document.getElementById('pendingTab');
             const completedTab = document.getElementById('completedTab');
             const pendingContent = document.getElementById('pendingContent');
