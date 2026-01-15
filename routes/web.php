@@ -10,6 +10,10 @@ Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->name('admin.dashboard');
 
+Route::get('/admin/inventory', function () {
+    return view('admin.inventory');
+})->name('admin.inventory');
+
 Route::post('/admin/login', function () {
     // For now, just redirect to dashboard
     // In production, add proper authentication logic here
