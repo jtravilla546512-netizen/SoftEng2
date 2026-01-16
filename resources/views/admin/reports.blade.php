@@ -98,11 +98,26 @@
                     <span>Customer Profiles</span>
                 </a>
 
+                <a href="{{ route('admin.technicians') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd" />
+                        <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+                    </svg>
+                    <span>Technician Management</span>
+                </a>
+
                 <a href="{{ route('admin.reports') }}" class="flex items-center space-x-3 px-4 py-3 bg-[#2B9DD1] text-white rounded-lg font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                     </svg>
                     <span>Reports and Analytics</span>
+                </a>
+
+                <a href="{{ route('admin.settings') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Settings</span>
                 </a>
             </nav>
 
@@ -722,6 +737,9 @@
             const sidebar = document.getElementById('sidebar');
             const sidebarOverlay = document.getElementById('sidebarOverlay');
 
+            // Load reports data when page loads
+            loadReportsData();
+
             // Toggle sidebar
             function toggleSidebar() {
                 sidebar.classList.toggle('-translate-x-full');
@@ -793,6 +811,78 @@
                 // Show/Hide content
                 salesAnalyticsContent.classList.add('hidden');
                 otherReportsContent.classList.remove('hidden');
+            }
+        }
+
+        // Load all reports data
+        async function loadReportsData() {
+            try {
+                await Promise.all([
+                    loadOverallStats(),
+                    loadRevenueData(),
+                    loadServiceAnalytics(),
+                    loadTechnicianPerformance()
+                ]);
+            } catch (error) {
+                console.error('Error loading reports data:', error);
+            }
+        }
+
+        // Load overall statistics
+        async function loadOverallStats() {
+            try {
+                const response = await fetch('/api/reports/overall');
+                const stats = await response.json();
+
+                // Update stats display if needed
+                console.log('Overall stats loaded:', stats);
+            } catch (error) {
+                console.error('Error loading overall stats:', error);
+            }
+        }
+
+        // Load revenue data by period
+        async function loadRevenueData() {
+            try {
+                // Load daily revenue
+                const dailyResponse = await fetch('/api/reports/revenue?period=daily');
+                const dailyData = await response.json();
+
+                // Load weekly revenue
+                const weeklyResponse = await fetch('/api/reports/revenue?period=weekly');
+                const weeklyData = await weeklyResponse.json();
+
+                // Load monthly revenue
+                const monthlyResponse = await fetch('/api/reports/revenue?period=monthly');
+                const monthlyData = await monthlyResponse.json();
+
+                console.log('Revenue data loaded');
+            } catch (error) {
+                console.error('Error loading revenue data:', error);
+            }
+        }
+
+        // Load service analytics
+        async function loadServiceAnalytics() {
+            try {
+                const response = await fetch('/api/reports/services');
+                const services = await response.json();
+
+                console.log('Service analytics loaded:', services);
+            } catch (error) {
+                console.error('Error loading service analytics:', error);
+            }
+        }
+
+        // Load technician performance
+        async function loadTechnicianPerformance() {
+            try {
+                const response = await fetch('/api/reports/technicians');
+                const technicians = await response.json();
+
+                console.log('Technician performance loaded:', technicians);
+            } catch (error) {
+                console.error('Error loading technician performance:', error);
             }
         }
     </script>

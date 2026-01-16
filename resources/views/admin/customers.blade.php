@@ -100,12 +100,25 @@
                     </svg>
                     <span>Customer Profiles</span>
                 </a>
-
+                <a href="{{ route('admin.technicians') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd" />
+                        <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+                    </svg>
+                    <span>Technician Management</span>
+                </a>
                 <a href="{{ route('admin.reports') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                     </svg>
                     <span>Reports and Analytics</span>
+                </a>
+
+                <a href="{{ route('admin.settings') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Settings</span>
                 </a>
             </nav>
 
@@ -144,19 +157,19 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
                     <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2">Total Customers</p>
-                        <p class="text-2xl sm:text-3xl font-bold">9</p>
+                        <p id="statTotalCustomers" class="text-2xl sm:text-3xl font-bold">0</p>
                     </div>
                     <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2">Pending Services</p>
-                        <p class="text-2xl sm:text-3xl font-bold">3</p>
+                        <p id="statPendingServices" class="text-2xl sm:text-3xl font-bold">0</p>
                     </div>
                     <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2">Completed Services</p>
-                        <p class="text-2xl sm:text-3xl font-bold">4</p>
+                        <p id="statCompletedServices" class="text-2xl sm:text-3xl font-bold">0</p>
                     </div>
                     <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2">Cancelled Services</p>
-                        <p class="text-2xl sm:text-3xl font-bold">2</p>
+                        <p id="statCancelledServices" class="text-2xl sm:text-3xl font-bold">0</p>
                     </div>
                 </div>
 
@@ -199,150 +212,8 @@
                                     <th class="px-3 sm:px-6 py-4 text-center text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <!-- Customer 1 -->
-                                <tr class="hover:bg-gray-50 transition-colors customer-row" data-name="clark darwin villanueva" data-status="Completed">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Clark Darwin Villanueva</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63123-456-7890</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex px-2 sm:px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                            Completed
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-center">
-                                        <a href="{{ route('admin.customer.details', 1) }}" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors inline-block">
-                                            View Details
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- Customer 2 -->
-                                <tr class="hover:bg-gray-50 transition-colors customer-row" data-name="robin scherbatsky" data-status="Cancelled">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Robin Scherbatsky</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63123-456-7890</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex px-2 sm:px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                            Cancelled
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-center">
-                                        <a href="{{ route('admin.customer.details', 2) }}" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors inline-block">
-                                            View Details
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- Customer 3 -->
-                                <tr class="hover:bg-gray-50 transition-colors customer-row" data-name="ted mosby" data-status="Pending">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Ted Mosby</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63123-456-7890</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex px-2 sm:px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                            Pending
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-center">
-                                        <a href="{{ route('admin.customer.details', 3) }}" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors inline-block">
-                                            View Details
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- Customer 4 -->
-                                <tr class="hover:bg-gray-50 transition-colors customer-row" data-name="barnabas stinson" data-status="Completed">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barnabas Stinson</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63123-456-7890</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex px-2 sm:px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                            Completed
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-center">
-                                        <a href="{{ route('admin.customer.details', 4) }}" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors inline-block">
-                                            View Details
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- Customer 5 -->
-                                <tr class="hover:bg-gray-50 transition-colors customer-row" data-name="marshall eriksen" data-status="Cancelled">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Marshall Eriksen</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63123-456-7890</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex px-2 sm:px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                            Cancelled
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-center">
-                                        <a href="{{ route('admin.customer.details', 5) }}" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors inline-block">
-                                            View Details
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- Customer 6 -->
-                                <tr class="hover:bg-gray-50 transition-colors customer-row" data-name="wing axl laranas" data-status="Pending">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Wing Axl Laranas</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63123-456-7890</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex px-2 sm:px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                            Pending
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-center">
-                                        <a href="{{ route('admin.customer.details', 6) }}" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors inline-block">
-                                            View Details
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- Customer 7 -->
-                                <tr class="hover:bg-gray-50 transition-colors customer-row" data-name="miro ballocanag" data-status="Completed">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Miro Ballocanag</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63123-456-7890</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex px-2 sm:px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                            Completed
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-center">
-                                        <a href="{{ route('admin.customer.details', 7) }}" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors inline-block">
-                                            View Details
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- Customer 8 -->
-                                <tr class="hover:bg-gray-50 transition-colors customer-row" data-name="lexie sanchez" data-status="Cancelled">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Lexie Sanchez</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63123-456-7890</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex px-2 sm:px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                            Cancelled
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-center">
-                                        <a href="{{ route('admin.customer.details', 8) }}" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors inline-block">
-                                            View Details
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- Customer 9 -->
-                                <tr class="hover:bg-gray-50 transition-colors customer-row" data-name="mirahil suarez" data-status="Pending">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Mirahil Suarez</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">+63123-456-7890</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex px-2 sm:px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                            Pending
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-center">
-                                        <a href="{{ route('admin.customer.details', 9) }}" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors inline-block">
-                                            View Details
-                                        </a>
-                                    </td>
-                                </tr>
+                            <tbody id="customersTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Customers will be loaded dynamically -->
                             </tbody>
                         </table>
                     </div>
@@ -440,68 +311,142 @@
         // Filter and Search Functionality
         const searchInput = document.getElementById('searchInput');
         const statusFilter = document.getElementById('statusFilter');
-        const customerRows = document.querySelectorAll('.customer-row');
+        const tableBody = document.getElementById('customersTableBody');
         const emptyState = document.getElementById('emptyState');
-        const tableBody = document.querySelector('tbody');
 
         // Pagination variables
         let currentPage = 1;
         const rowsPerPage = 5;
-        let filteredRows = Array.from(customerRows);
+        let allCustomers = [];
+        let filteredCustomers = [];
+
+        // Load customers from API
+        async function loadCustomers() {
+            try {
+                const response = await fetch('/api/customers');
+                if (!response.ok) throw new Error('Failed to load customers');
+
+                allCustomers = await response.json();
+                filteredCustomers = [...allCustomers];
+
+                displayCustomers();
+                updateCustomerStats();
+            } catch (error) {
+                console.error('Error loading customers:', error);
+                showError('Failed to load customers');
+            }
+        }
+
+        // Update customer statistics
+        async function updateCustomerStats() {
+            try {
+                const response = await fetch('/api/customers/stats');
+                if (!response.ok) throw new Error('Failed to load stats');
+
+                const stats = await response.json();
+
+                document.getElementById('statTotalCustomers').textContent = stats.total || allCustomers.length;
+                document.getElementById('statPendingServices').textContent = stats.pending || 0;
+                document.getElementById('statCompletedServices').textContent = stats.completed || 0;
+                document.getElementById('statCancelledServices').textContent = stats.cancelled || 0;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+                // Fallback to calculating from allCustomers
+                const total = allCustomers.length;
+                const pending = allCustomers.filter(c => c.latest_service_status === 'Pending').length;
+                const completed = allCustomers.filter(c => c.latest_service_status === 'Completed').length;
+                const cancelled = allCustomers.filter(c => c.latest_service_status === 'Cancelled').length;
+
+                document.getElementById('statTotalCustomers').textContent = total;
+                document.getElementById('statPendingServices').textContent = pending;
+                document.getElementById('statCompletedServices').textContent = completed;
+                document.getElementById('statCancelledServices').textContent = cancelled;
+            }
+        }
+
+        // Display customers in table
+        function displayCustomers() {
+            tableBody.innerHTML = '';
+
+            if (filteredCustomers.length === 0) {
+                emptyState.classList.remove('hidden');
+                tableBody.parentElement.classList.add('hidden');
+                document.querySelector('.border-t.bg-white').classList.add('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            tableBody.parentElement.classList.remove('hidden');
+            document.querySelector('.border-t.bg-white').classList.remove('hidden');
+
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const pageCustomers = filteredCustomers.slice(startIndex, endIndex);
+
+            // Render customer rows
+            pageCustomers.forEach(customer => {
+                const statusClass = getStatusClass(customer.latest_service_status);
+
+                const row = document.createElement('tr');
+                row.className = 'customer-row hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900">${customer.name}</td>
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900">${customer.phone}</td>
+                    <td class="px-4 sm:px-6 py-3 sm:py-4">
+                        <span class="${statusClass} px-2 py-1 text-xs font-medium rounded-full">
+                            ${customer.latest_service_status || 'No Service'}
+                        </span>
+                    </td>
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm">
+                        <a href="/admin/customers/${customer.id}"
+                           class="text-[#2B9DD1] hover:text-[#1e7ba8] font-medium transition-colors">
+                            View Details
+                        </a>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            updatePaginationInfo();
+            updatePagination();
+        }
+
+        // Get status badge class
+        function getStatusClass(status) {
+            const statusClasses = {
+                'Completed': 'bg-green-100 text-green-800',
+                'Pending': 'bg-yellow-100 text-yellow-800',
+                'Cancelled': 'bg-red-100 text-red-800',
+                'In Progress': 'bg-blue-100 text-blue-800'
+            };
+            return statusClasses[status] || 'bg-gray-100 text-gray-800';
+        }
 
         function filterCustomers() {
             const searchTerm = searchInput.value.toLowerCase();
             const statusValue = statusFilter.value;
 
-            filteredRows = Array.from(customerRows).filter(row => {
-                const customerName = row.getAttribute('data-name');
-                const customerStatus = row.getAttribute('data-status');
-
-                const matchesSearch = customerName.includes(searchTerm);
-                const matchesStatus = !statusValue || customerStatus === statusValue;
+            filteredCustomers = allCustomers.filter(customer => {
+                const matchesSearch = customer.name.toLowerCase().includes(searchTerm) ||
+                                    customer.phone.includes(searchTerm);
+                const matchesStatus = !statusValue || customer.latest_service_status === statusValue;
 
                 return matchesSearch && matchesStatus;
             });
 
             currentPage = 1;
-            updatePagination();
-            displayPage(currentPage);
-        }
-
-        function displayPage(page) {
-            // Hide all rows first
-            customerRows.forEach(row => row.style.display = 'none');
-
-            // Calculate pagination
-            const startIndex = (page - 1) * rowsPerPage;
-            const endIndex = startIndex + rowsPerPage;
-            const pageRows = filteredRows.slice(startIndex, endIndex);
-
-            // Show rows for current page
-            pageRows.forEach(row => row.style.display = '');
-
-            // Show/hide empty state
-            if (filteredRows.length === 0) {
-                emptyState.classList.remove('hidden');
-                tableBody.classList.add('hidden');
-                document.querySelector('.border-t.bg-white').classList.add('hidden'); // Hide pagination
-            } else {
-                emptyState.classList.add('hidden');
-                tableBody.classList.remove('hidden');
-                document.querySelector('.border-t.bg-white').classList.remove('hidden'); // Show pagination
-            }
-
-            updatePaginationInfo();
+            displayCustomers();
         }
 
         function updatePaginationInfo() {
-            const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+            const totalPages = Math.ceil(filteredCustomers.length / rowsPerPage);
             const startIndex = (currentPage - 1) * rowsPerPage + 1;
-            const endIndex = Math.min(currentPage * rowsPerPage, filteredRows.length);
+            const endIndex = Math.min(currentPage * rowsPerPage, filteredCustomers.length);
 
-            document.getElementById('showingStart').textContent = filteredRows.length > 0 ? startIndex : 0;
+            document.getElementById('showingStart').textContent = filteredCustomers.length > 0 ? startIndex : 0;
             document.getElementById('showingEnd').textContent = endIndex;
-            document.getElementById('totalResults').textContent = filteredRows.length;
+            document.getElementById('totalResults').textContent = filteredCustomers.length;
 
             // Update prev/next buttons
             document.getElementById('prevPage').disabled = currentPage === 1;
@@ -509,7 +454,7 @@
         }
 
         function updatePagination() {
-            const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+            const totalPages = Math.ceil(filteredCustomers.length / rowsPerPage);
             const pageNumbers = document.getElementById('pageNumbers');
             pageNumbers.innerHTML = '';
 
@@ -521,11 +466,15 @@
                 pageBtn.textContent = i;
                 pageBtn.addEventListener('click', () => {
                     currentPage = i;
-                    displayPage(currentPage);
-                    updatePagination();
+                    displayCustomers();
                 });
                 pageNumbers.appendChild(pageBtn);
             }
+        }
+
+        // Show error message
+        function showError(message) {
+            alert(message);
         }
 
         // Event listeners for filtering
@@ -536,17 +485,15 @@
         document.getElementById('prevPage').addEventListener('click', () => {
             if (currentPage > 1) {
                 currentPage--;
-                displayPage(currentPage);
-                updatePagination();
+                displayCustomers();
             }
         });
 
         document.getElementById('nextPage').addEventListener('click', () => {
-            const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+            const totalPages = Math.ceil(filteredCustomers.length / rowsPerPage);
             if (currentPage < totalPages) {
                 currentPage++;
-                displayPage(currentPage);
-                updatePagination();
+                displayCustomers();
             }
         });
 
@@ -557,9 +504,10 @@
             filterCustomers();
         }
 
-        // Initialize pagination on page load
-        displayPage(1);
-        updatePagination();
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCustomers();
+        });
     </script>
 </body>
 </html>

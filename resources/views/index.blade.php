@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>CoolSystem Specialist - Your Comfort, Our Priority</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1198,15 +1199,91 @@
             document.getElementById('confirmationModal').classList.remove('flex');
         }
 
-        function confirmBooking() {
+        async function confirmBooking() {
             // Hide confirmation modal
             cancelConfirmation();
 
-            // Move to step 6
-            currentStep = 6;
-            showStep(currentStep);
-            updateProgressBar();
-            updateButtonVisibility();
+            try {
+                // Transform appliance values to match backend
+                const applianceMap = {
+                    'air-conditioner': 'Aircon',
+                    'refrigerator': 'Refrigerator'
+                };
+
+                // Transform service type values to match backend
+                const serviceTypeMap = {
+                    'repair': 'Repair',
+                    'installation': 'Installation',
+                    'maintenance': 'Maintenance'
+                };
+
+                // Prepare booking data for API
+                const bookingPayload = {
+                    name: bookingData.userInfo.fullName,
+                    phone: bookingData.userInfo.contactNumber,
+                    address: bookingData.userInfo.location,
+                    appliance: applianceMap[bookingData.appliance] || bookingData.appliance,
+                    service_type: serviceTypeMap[bookingData.serviceType] || bookingData.serviceType,
+                    issue_description: bookingData.userInfo.applianceIssue || '',
+                    location: bookingData.userInfo.location,
+                    service_date: bookingData.schedule.date,
+                    service_time: bookingData.schedule.timeslot
+                };
+
+                console.log('Sending booking data:', bookingPayload);
+
+                // Submit to backend API
+                const response = await fetch('/api/bookings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    },
+                    body: JSON.stringify(bookingPayload)
+                });
+
+                console.log('Response status:', response.status);
+
+                // Get response text first to see what we're receiving
+                const responseText = await response.text();
+                console.log('Response text:', responseText);
+
+                // Try to parse as JSON
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch (e) {
+                    console.error('Failed to parse JSON:', e);
+                    throw new Error('Server returned invalid response. Please check if the API endpoint is correct.');
+                }
+
+                if (response.ok && result.success) {
+                    // Booking saved successfully, move to step 6
+                    currentStep = 6;
+                    showStep(currentStep);
+                    updateProgressBar();
+                    updateButtonVisibility();
+                } else {
+                    // Show error message
+                    const errorMsg = result.message || 'Failed to create booking. Please try again.';
+                    if (result.errors) {
+                        const errorDetails = Object.values(result.errors).flat().join('\n');
+                        alert(errorMsg + '\n\n' + errorDetails);
+                    } else {
+                        alert(errorMsg);
+                    }
+                    // Reopen confirmation modal
+                    document.getElementById('confirmationModal').classList.remove('hidden');
+                    document.getElementById('confirmationModal').classList.add('flex');
+                }
+            } catch (error) {
+                console.error('Booking error:', error);
+                alert('An error occurred while creating your booking: ' + error.message);
+                // Reopen confirmation modal
+                document.getElementById('confirmationModal').classList.remove('hidden');
+                document.getElementById('confirmationModal').classList.add('flex');
+            }
         }
 
         function updateButtonVisibility() {

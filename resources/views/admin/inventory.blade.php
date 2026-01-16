@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Inventory Management Dashboard - CoolSystem Spec Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,11 +85,27 @@
                     <span class="font-medium" style="font-family: 'Roboto', sans-serif;">Customer Profiles</span>
                 </a>
 
+                <a href="{{ route('admin.technicians') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd" />
+                        <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+                    </svg>
+                    <span class="font-medium" style="font-family: 'Roboto', sans-serif;">Technician Management</span>
+                </a>
+
                 <a href="{{ route('admin.reports') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
                     <span class="font-medium" style="font-family: 'Roboto', sans-serif;">Reports and Analytics</span>
+                </a>
+
+                <a href="{{ route('admin.settings') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <span class="font-medium" style="font-family: 'Roboto', sans-serif;">Settings</span>
                 </a>
             </nav>
 
@@ -126,19 +143,19 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
                     <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2" style="font-family: 'Lato', sans-serif;">Total Items</p>
-                        <p class="text-2xl sm:text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">8</p>
+                        <p id="statTotalItems" class="text-2xl sm:text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">0</p>
                     </div>
                     <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2" style="font-family: 'Lato', sans-serif;">Low Stock</p>
-                        <p class="text-2xl sm:text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">1</p>
+                        <p id="statLowStock" class="text-2xl sm:text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">0</p>
                     </div>
                     <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2" style="font-family: 'Lato', sans-serif;">Out of Stock</p>
-                        <p class="text-2xl sm:text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">0</p>
+                        <p id="statOutOfStock" class="text-2xl sm:text-3xl font-bold" style="font-family: 'Roboto', sans-serif;">0</p>
                     </div>
                     <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2" style="font-family: 'Lato', sans-serif;">Total Value</p>
-                        <p class="text-lg sm:text-2xl font-bold" style="font-family: 'Roboto', sans-serif;">₱1,387,000.00</p>
+                        <p id="statTotalValue" class="text-lg sm:text-2xl font-bold" style="font-family: 'Roboto', sans-serif;">₱0.00</p>
                     </div>
                 </div>
 
@@ -146,19 +163,25 @@
                 <div class="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6">
                     <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6">
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full lg:flex-1">
-                            <input type="text" placeholder="Search by name" class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:w-64 lg:w-80 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                            <select class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:flex-1 lg:w-64 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                                <option>Search by Category</option>
+                            <input type="text" id="searchInput" placeholder="Search by name" onkeyup="filterInventory()" class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:w-64 lg:w-80 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                            <select id="categoryFilter" onchange="filterInventory()" class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:flex-1 lg:w-64 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                                <option value="">All Categories</option>
                                 <option>Aircon Unit</option>
                                 <option>Spare Parts</option>
                                 <option>Refrigerator Unit</option>
                             </select>
-                            <select class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:flex-1 lg:w-64 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                                <option>Search by Brand</option>
+                            <select id="brandFilter" onchange="filterInventory()" class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:flex-1 lg:w-64 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                                <option value="">All Brands</option>
                                 <option>Carrier</option>
                                 <option>Samsung</option>
                                 <option>LG</option>
                                 <option>Daikin</option>
+                            </select>
+                            <select id="statusFilter" onchange="filterInventory()" class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:flex-1 lg:w-64 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                                <option value="">All Status</option>
+                                <option value="In Stock">In Stock</option>
+                                <option value="Low Stock">Low Stock</option>
+                                <option value="Out of Stock">Out of Stock</option>
                             </select>
                         </div>
                         <button onclick="openAddItemModal()" class="w-full lg:w-auto px-4 sm:px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-sm sm:text-base font-semibold rounded-lg transition-colors flex items-center justify-center space-x-2" style="font-family: 'Roboto', sans-serif;">
@@ -168,126 +191,8 @@
                     </div>
 
                     <!-- Product Grid -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-                        <!-- Product Card 1 -->
-                        <div class="border border-gray-300 rounded-lg p-4 bg-white hover:shadow-lg transition-shadow">
-                            <div class="flex items-start justify-between mb-4">
-                                <div class="flex-1">
-                                    <div class="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-lg mb-3">
-                                        <svg class="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                    </div>
-                                    <p class="text-xs text-gray-500 mb-1" style="font-family: 'Lato', sans-serif;">Aircon Unit</p>
-                                    <h3 class="font-bold text-gray-900 mb-2" style="font-family: 'Roboto', sans-serif;">Ceiling Cassette Air Conditioner 2HP</h3>
-                                    <p class="text-sm text-gray-600 mb-3" style="font-family: 'Lato', sans-serif;">Brand: Carrier</p>
-                                    <p class="text-2xl font-bold text-[#2B9DD1] mb-2" style="font-family: 'Roboto', sans-serif;">₱58,000.00</p>
-                                    <p class="text-sm text-gray-700" style="font-family: 'Lato', sans-serif;">Stock: <span class="font-semibold">3</span> <span class="text-green-600">(In Stock)</span></p>
-                                </div>
-                                <div class="relative">
-                                    <button onclick="toggleDropdown('dropdown1')" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                                        <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
-                                        </svg>
-                                    </button>
-                                    <div id="dropdown1" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-                                        <button onclick="openViewDetailsModal()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">View Details</button>
-                                        <button onclick="openEditModal()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">Edit Info</button>
-                                        <button onclick="confirmDelete()" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Product Card 2 -->
-                        <div class="border border-gray-300 rounded-lg p-4 bg-white hover:shadow-lg transition-shadow">
-                            <div class="flex items-start justify-between mb-4">
-                                <div class="flex-1">
-                                    <div class="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-lg mb-3">
-                                        <svg class="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                    </div>
-                                    <p class="text-xs text-gray-500 mb-1" style="font-family: 'Lato', sans-serif;">Aircon Unit</p>
-                                    <h3 class="font-bold text-gray-900 mb-2" style="font-family: 'Roboto', sans-serif;">Ceiling Cassette Air Conditioner 2HP</h3>
-                                    <p class="text-sm text-gray-600 mb-3" style="font-family: 'Lato', sans-serif;">Brand: Carrier</p>
-                                    <p class="text-2xl font-bold text-[#2B9DD1] mb-2" style="font-family: 'Roboto', sans-serif;">₱58,000.00</p>
-                                    <p class="text-sm text-gray-700" style="font-family: 'Lato', sans-serif;">Stock: <span class="font-semibold">3</span> <span class="text-green-600">(In Stock)</span></p>
-                                </div>
-                                <div class="relative">
-                                    <button onclick="toggleDropdown('dropdown2')" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                                        <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
-                                        </svg>
-                                    </button>
-                                    <div id="dropdown2" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-                                        <button onclick="openViewDetailsModal()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">View Details</button>
-                                        <button onclick="openEditModal()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">Edit Info</button>
-                                        <button onclick="confirmDelete()" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Product Card 3 -->
-                        <div class="border border-gray-300 rounded-lg p-4 bg-white hover:shadow-lg transition-shadow">
-                            <div class="flex items-start justify-between mb-4">
-                                <div class="flex-1">
-                                    <div class="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-lg mb-3">
-                                        <svg class="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
-                                        </svg>
-                                    </div>
-                                    <p class="text-xs text-gray-500 mb-1" style="font-family: 'Lato', sans-serif;">Spare Parts</p>
-                                    <h3 class="font-bold text-gray-900 mb-2" style="font-family: 'Roboto', sans-serif;">Refrigerant R410A 10kg</h3>
-                                    <p class="text-sm text-gray-600 mb-3" style="font-family: 'Lato', sans-serif;">Brand: Carrier</p>
-                                    <p class="text-2xl font-bold text-[#2B9DD1] mb-2" style="font-family: 'Roboto', sans-serif;">₱4,800.00</p>
-                                    <p class="text-sm text-gray-700" style="font-family: 'Lato', sans-serif;">Stock: <span class="font-semibold">25</span> <span class="text-green-600">(In Stock)</span></p>
-                                </div>
-                                <div class="relative">
-                                    <button onclick="toggleDropdown('dropdown3')" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                                        <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
-                                        </svg>
-                                    </button>
-                                    <div id="dropdown3" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-                                        <button onclick="openViewDetailsModal()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">View Details</button>
-                                        <button onclick="openEditModal()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">Edit Info</button>
-                                        <button onclick="confirmDelete()" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Product Card 4 -->
-                        <div class="border border-gray-300 rounded-lg p-4 bg-white hover:shadow-lg transition-shadow">
-                            <div class="flex items-start justify-between mb-4">
-                                <div class="flex-1">
-                                    <div class="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-lg mb-3">
-                                        <svg class="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                                        </svg>
-                                    </div>
-                                    <p class="text-xs text-gray-500 mb-1" style="font-family: 'Lato', sans-serif;">Refrigerator Unit</p>
-                                    <h3 class="font-bold text-gray-900 mb-2" style="font-family: 'Roboto', sans-serif;">Single Door Refrigerator 3.2 cu ft</h3>
-                                    <p class="text-sm text-gray-600 mb-3" style="font-family: 'Lato', sans-serif;">Brand: Samsung</p>
-                                    <p class="text-2xl font-bold text-[#2B9DD1] mb-2" style="font-family: 'Roboto', sans-serif;">₱16,500.00</p>
-                                    <p class="text-sm text-gray-700" style="font-family: 'Lato', sans-serif;">Stock: <span class="font-semibold">6</span> <span class="text-green-600">(In Stock)</span></p>
-                                </div>
-                                <div class="relative">
-                                    <button onclick="toggleDropdown('dropdown4')" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                                        <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
-                                        </svg>
-                                    </button>
-                                    <div id="dropdown4" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-                                        <button onclick="openViewDetailsModal()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">View Details</button>
-                                        <button onclick="openEditModal()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">Edit Info</button>
-                                        <button onclick="confirmDelete()" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors" style="font-family: 'Lato', sans-serif;">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="inventoryGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                        <!-- Items will be loaded dynamically -->
                     </div>
 
                     <!-- Pagination -->
@@ -317,7 +222,8 @@
         <div class="bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
             <!-- Modal Header -->
             <div class="bg-[#2B9DD1] text-white px-6 py-4">
-                <h2 class="text-xl font-bold" style="font-family: 'Roboto', sans-serif;">Ceiling Cassette Air Conditioner 2HP</h2>
+                <h2 id="viewItemName" class="text-xl font-bold" style="font-family: 'Roboto', sans-serif;">Item Name</h2>
+                <p id="viewItemBrand" class="text-sm opacity-90" style="font-family: 'Lato', sans-serif;">Brand</p>
             </div>
 
             <!-- Modal Content -->
@@ -329,40 +235,36 @@
                         <div class="space-y-3 text-sm">
                             <div class="flex justify-between">
                                 <span class="text-gray-700 font-semibold" style="font-family: 'Lato', sans-serif;">Name:</span>
-                                <span class="text-gray-900" style="font-family: 'Lato', sans-serif;">Air Filter Set</span>
+                                <span id="viewDetailName" class="text-gray-900" style="font-family: 'Lato', sans-serif;">-</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-700 font-semibold" style="font-family: 'Lato', sans-serif;">Category:</span>
-                                <span class="text-gray-900" style="font-family: 'Lato', sans-serif;">Aircon Unit</span>
+                                <span id="viewDetailCategory" class="text-gray-900" style="font-family: 'Lato', sans-serif;">-</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-700 font-semibold" style="font-family: 'Lato', sans-serif;">Brand:</span>
-                                <span class="text-gray-900" style="font-family: 'Lato', sans-serif;">Daikin</span>
+                                <span id="viewDetailBrand" class="text-gray-900" style="font-family: 'Lato', sans-serif;">-</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-700 font-semibold" style="font-family: 'Lato', sans-serif;">Stock Qty:</span>
-                                <span class="text-gray-900" style="font-family: 'Lato', sans-serif;">50</span>
+                                <span id="viewDetailStock" class="text-gray-900" style="font-family: 'Lato', sans-serif;">-</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-700 font-semibold" style="font-family: 'Lato', sans-serif;">Threshold:</span>
-                                <span class="text-gray-900" style="font-family: 'Lato', sans-serif;">50</span>
+                                <span id="viewDetailThreshold" class="text-gray-900" style="font-family: 'Lato', sans-serif;">-</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-700 font-semibold" style="font-family: 'Lato', sans-serif;">Item ID:</span>
-                                <span class="text-gray-900" style="font-family: 'Lato', sans-serif;">50</span>
+                                <span id="viewDetailItemCode" class="text-gray-900" style="font-family: 'Lato', sans-serif;">-</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-700 font-semibold" style="font-family: 'Lato', sans-serif;">Created:</span>
-                                <span class="text-gray-900" style="font-family: 'Lato', sans-serif;">Oct. 01, 2025</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-700 font-semibold" style="font-family: 'Lato', sans-serif;">Last Updated:</span>
-                                <span class="text-gray-900" style="font-family: 'Lato', sans-serif;">Oct. 01, 2025</span>
+                                <span class="text-gray-700 font-semibold" style="font-family: 'Lato', sans-serif;">Status:</span>
+                                <span id="viewDetailStatus" class="text-gray-900" style="font-family: 'Lato', sans-serif;">-</span>
                             </div>
                         </div>
                         <div class="mt-4 pt-4 border-t border-gray-300">
                             <span class="text-gray-700 font-semibold block mb-2" style="font-family: 'Lato', sans-serif;">Description:</span>
-                            <p class="text-sm text-gray-900" style="font-family: 'Lato', sans-serif;">A powerful and space-saving cooling solution ideal for offices, shops, and large rooms.</p>
+                            <p id="viewDetailDescription" class="text-sm text-gray-900" style="font-family: 'Lato', sans-serif;">-</p>
                         </div>
                     </div>
 
@@ -373,25 +275,25 @@
                             <div class="flex items-center justify-between">
                                 <div class="text-center flex-1">
                                     <p class="text-sm text-gray-700 mb-1" style="font-family: 'Lato', sans-serif;">Unit Price</p>
-                                    <p class="text-xl font-bold text-[#2B9DD1]" style="font-family: 'Roboto', sans-serif;">₱56,000.00</p>
+                                    <p id="viewDetailCostPrice" class="text-xl font-bold text-[#2B9DD1]" style="font-family: 'Roboto', sans-serif;">₱0.00</p>
                                 </div>
                                 <div class="text-center flex-1">
                                     <p class="text-sm text-gray-700 mb-1" style="font-family: 'Lato', sans-serif;">Selling Price</p>
-                                    <p class="text-xl font-bold text-[#2B9DD1]" style="font-family: 'Roboto', sans-serif;">₱58,000.00</p>
+                                    <p id="viewDetailSellingPrice" class="text-xl font-bold text-[#2B9DD1]" style="font-family: 'Roboto', sans-serif;">₱0.00</p>
                                 </div>
                                 <div class="text-center flex-1">
                                     <p class="text-sm text-gray-700 mb-1" style="font-family: 'Lato', sans-serif;">Profit Margin</p>
-                                    <p class="text-xl font-bold text-green-600" style="font-family: 'Roboto', sans-serif;">₱2,000.00</p>
+                                    <p id="viewDetailProfitMargin" class="text-xl font-bold text-green-600" style="font-family: 'Roboto', sans-serif;">₱0.00</p>
                                 </div>
                             </div>
                             <div class="pt-4 border-t border-gray-300">
                                 <div class="flex justify-between mb-2">
-                                    <span class="text-sm text-gray-700" style="font-family: 'Lato', sans-serif;">Total Stock Value (Unit Price) :</span>
-                                    <span class="text-sm font-bold text-gray-900" style="font-family: 'Lato', sans-serif;">₱168,000.00</span>
+                                    <span class="text-sm text-gray-700" style="font-family: 'Lato', sans-serif;">Total Stock Value (Unit Price):</span>
+                                    <span id="viewDetailTotalCost" class="text-sm font-bold text-gray-900" style="font-family: 'Lato', sans-serif;">₱0.00</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-sm text-gray-700" style="font-family: 'Lato', sans-serif;">Total Stock Value (Selling) :</span>
-                                    <span class="text-sm font-bold text-gray-900" style="font-family: 'Lato', sans-serif;">₱174,000.00</span>
+                                    <span class="text-sm text-gray-700" style="font-family: 'Lato', sans-serif;">Total Stock Value (Selling):</span>
+                                    <span id="viewDetailTotalSelling" class="text-sm font-bold text-gray-900" style="font-family: 'Lato', sans-serif;">₱0.00</span>
                                 </div>
                             </div>
                         </div>
@@ -439,6 +341,7 @@
             </div>
 
             <!-- Modal Content -->
+            <form id="addItemForm">
             <div class="p-6 overflow-y-auto" style="max-height: calc(90vh - 140px);">
                 <!-- Basic Information -->
                 <div class="mb-6">
@@ -446,18 +349,24 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Item Name <span class="text-red-500">*</span></label>
-                            <input type="text" placeholder="Enter Item Name" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                            <input type="text" id="itemName" placeholder="Enter Item Name" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Description</label>
-                            <textarea rows="3" placeholder="Enter Item Description" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
+                            <textarea rows="3" id="description" placeholder="Enter Item Description" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Product Image</label>
                             <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                                <p class="text-sm text-gray-500 mb-2" style="font-family: 'Lato', sans-serif;">Current Image</p>
-                                <p class="text-xs text-gray-400 mb-3" style="font-family: 'Lato', sans-serif;">Upload a new image to replace the one</p>
-                                <input type="file" class="hidden" id="productImage" accept="image/*">
+                                <div id="addImagePreview" class="hidden mb-3">
+                                    <img id="addPreviewImg" src="" alt="Preview" class="max-h-32 mx-auto rounded-lg">
+                                </div>
+                                <svg id="addImageIcon" xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p id="addImageText" class="text-sm text-gray-600 mb-2" style="font-family: 'Lato', sans-serif;">Click to upload image</p>
+                                <p id="addImageHint" class="text-xs text-gray-500 mb-3" style="font-family: 'Lato', sans-serif;">PNG, JPG, GIF up to 2MB</p>
+                                <input type="file" class="hidden" id="productImage" accept="image/*" onchange="previewAddImage(this)">
                                 <label for="productImage" class="inline-block px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg cursor-pointer transition-colors text-sm font-medium" style="font-family: 'Lato', sans-serif;">
                                     Choose File
                                 </label>
@@ -472,22 +381,16 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Category <span class="text-red-500">*</span></label>
-                            <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                                <option>Select Aircon Unit</option>
-                                <option>Aircon Unit</option>
-                                <option>Spare Parts</option>
-                                <option>Refrigerator Unit</option>
+                            <select id="category" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
+                                <option value="">Select Category</option>
+                                <option value="Aircon Unit">Aircon Unit</option>
+                                <option value="Spare Parts">Spare Parts</option>
+                                <option value="Refrigerator Unit">Refrigerator Unit</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Brand <span class="text-red-500">*</span></label>
-                            <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                                <option>Select Brand Name</option>
-                                <option>Carrier</option>
-                                <option>Daikin</option>
-                                <option>LG</option>
-                                <option>Samsung</option>
-                            </select>
+                            <input type="text" id="brand" placeholder="Enter Brand Name" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
                         </div>
                     </div>
                 </div>
@@ -500,14 +403,14 @@
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Cost Price <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <span class="absolute left-3 top-2 text-gray-600" style="font-family: 'Lato', sans-serif;">₱</span>
-                                <input type="number" placeholder="0.00" class="w-full border border-gray-300 rounded-lg pl-8 pr-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                                <input type="number" id="costPrice" placeholder="0.00" step="0.01" class="w-full border border-gray-300 rounded-lg pl-8 pr-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
                             </div>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Selling Price <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <span class="absolute left-3 top-2 text-gray-600" style="font-family: 'Lato', sans-serif;">₱</span>
-                                <input type="number" placeholder="0.00" class="w-full border border-gray-300 rounded-lg pl-8 pr-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                                <input type="number" id="sellingPrice" placeholder="0.00" step="0.01" class="w-full border border-gray-300 rounded-lg pl-8 pr-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
                             </div>
                         </div>
                     </div>
@@ -518,12 +421,12 @@
                     <h3 class="text-lg font-bold text-[#2B9DD1] mb-4" style="font-family: 'Roboto', sans-serif;">Stock</h3>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Stock Quantity <span class="text-red-500">*</span></label>
-                            <input type="number" placeholder="0" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                            <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Initial Stock <span class="text-red-500">*</span></label>
+                            <input type="number" id="initialStock" placeholder="0" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Minimum Stock Level <span class="text-red-500">*</span></label>
-                            <input type="number" placeholder="0" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                            <input type="number" id="minStock" placeholder="0" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
                         </div>
                     </div>
                 </div>
@@ -531,13 +434,14 @@
 
             <!-- Modal Footer -->
             <div class="border-t border-gray-200 px-6 py-4 flex justify-end space-x-3">
-                <button onclick="closeAddItemModal()" class="px-6 py-2 border border-gray-300 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Roboto', sans-serif;">
+                <button type="button" onclick="closeAddItemModal()" class="px-6 py-2 border border-gray-300 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Roboto', sans-serif;">
                     Back
                 </button>
-                <button class="px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-sm font-semibold rounded-md transition-colors" style="font-family: 'Roboto', sans-serif;">
+                <button type="button" onclick="saveNewItem()" class="px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-sm font-semibold rounded-md transition-colors" style="font-family: 'Roboto', sans-serif;">
                     Add Item
                 </button>
             </div>
+            </form>
         </div>
     </div>
 
@@ -557,18 +461,20 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Item Name <span class="text-red-500">*</span></label>
-                            <input type="text" value="Ceiling Cassette Air Conditioner 2HP" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                            <input type="text" id="editItemName" value="Ceiling Cassette Air Conditioner 2HP" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Description</label>
-                            <textarea rows="3" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">A powerful and space-saving cooling solution ideal for offices, shops, and large rooms.</textarea>
+                            <textarea rows="3" id="editDescription" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">A powerful and space-saving cooling solution ideal for offices, shops, and large rooms.</textarea>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Product Image</label>
                             <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                                <p class="text-sm text-gray-500 mb-2" style="font-family: 'Lato', sans-serif;">Current Image</p>
+                                <div id="editImagePreview" class="mb-3">
+                                    <img id="editPreviewImg" src="" alt="Current Image" class="max-h-32 mx-auto rounded-lg">
+                                </div>
                                 <p class="text-xs text-gray-400 mb-3" style="font-family: 'Lato', sans-serif;">Upload a new image to replace this one</p>
-                                <input type="file" class="hidden" id="editProductImage" accept="image/*">
+                                <input type="file" class="hidden" id="editProductImage" accept="image/*" onchange="previewEditImage(this)">
                                 <label for="editProductImage" class="inline-block px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg cursor-pointer transition-colors text-sm font-medium" style="font-family: 'Lato', sans-serif;">
                                     Choose File
                                 </label>
@@ -583,20 +489,15 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Category <span class="text-red-500">*</span></label>
-                            <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                                <option selected>Aircon Unit</option>
-                                <option>Spare Parts</option>
-                                <option>Refrigerator Unit</option>
+                            <select id="editCategory" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                                <option value="Aircon Unit">Aircon Unit</option>
+                                <option value="Spare Parts">Spare Parts</option>
+                                <option value="Refrigerator Unit">Refrigerator Unit</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Brand <span class="text-red-500">*</span></label>
-                            <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                                <option>Carrier</option>
-                                <option selected>Daikin</option>
-                                <option>LG</option>
-                                <option>Samsung</option>
-                            </select>
+                            <input type="text" id="editBrand" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
                         </div>
                     </div>
                 </div>
@@ -606,7 +507,7 @@
                     <h3 class="text-lg font-bold text-[#2B9DD1] mb-4" style="font-family: 'Roboto', sans-serif;">Stock Settings</h3>
                     <div>
                         <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Minimum Stock Level <span class="text-red-500">*</span></label>
-                        <input type="number" value="15" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                        <input type="number" id="editMinStock" value="15" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
                         <p class="text-xs text-gray-500 mt-1" style="font-family: 'Lato', sans-serif;">System will alert when stock falls below this level</p>
                     </div>
                 </div>
@@ -614,11 +515,11 @@
 
             <!-- Modal Footer -->
             <div class="border-t border-gray-200 px-6 py-4 flex justify-end space-x-3">
-                <button onclick="closeEditModal()" class="px-6 py-2 border border-gray-300 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Roboto', sans-serif;">
+                <button type="button" onclick="closeEditModal()" class="px-6 py-2 border border-gray-300 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Roboto', sans-serif;">
                     Back
                 </button>
-                <button class="px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-sm font-semibold rounded-md transition-colors" style="font-family: 'Roboto', sans-serif;">
-                    Edit Details
+                <button type="button" onclick="saveEditedItem()" class="px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-sm font-semibold rounded-md transition-colors" style="font-family: 'Roboto', sans-serif;">
+                    Save Changes
                 </button>
             </div>
         </div>
@@ -636,15 +537,15 @@
             <div class="p-6 overflow-y-auto" style="max-height: calc(90vh - 140px);">
                 <!-- Product Info Display -->
                 <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <h3 class="text-lg font-bold text-gray-900 mb-3" style="font-family: 'Roboto', sans-serif;">Ceiling Cassette Air Conditioner 2HP</h3>
+                    <h3 id="stockInItemName" class="text-lg font-bold text-gray-900 mb-3" style="font-family: 'Roboto', sans-serif;">Item Name</h3>
                     <div class="grid grid-cols-2 gap-4 text-sm">
-                        <div class="flex justify-between">
+                        <div>
                             <span class="text-gray-600" style="font-family: 'Lato', sans-serif;">Category:</span>
-                            <span class="text-gray-900 font-semibold" style="font-family: 'Lato', sans-serif;">Aircon Unit</span>
+                            <span id="stockInCategory" class="text-gray-900 font-semibold ml-2" style="font-family: 'Lato', sans-serif;">-</span>
                         </div>
-                        <div class="flex justify-between">
+                        <div>
                             <span class="text-gray-600" style="font-family: 'Lato', sans-serif;">Current Stock:</span>
-                            <span class="text-gray-900 font-semibold" style="font-family: 'Lato', sans-serif;">50 units</span>
+                            <span id="stockInCurrentStock" class="text-gray-900 font-semibold ml-2" style="font-family: 'Lato', sans-serif;">0 units</span>
                         </div>
                     </div>
                 </div>
@@ -653,46 +554,22 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Quantity to Add <span class="text-red-500">*</span></label>
-                        <input type="number" placeholder="0" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Supplier</label>
-                        <input type="text" placeholder="Enter supplier name (optional)" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Cost Price per Unit</label>
-                        <div class="relative">
-                            <span class="absolute left-3 top-2 text-gray-600" style="font-family: 'Lato', sans-serif;">₱</span>
-                            <input type="number" placeholder="0.00" step="0.01" class="w-full border border-gray-300 rounded-lg pl-8 pr-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1" style="font-family: 'Lato', sans-serif;">Cost price for this batch only (won't update product's base price)</p>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Reference Number</label>
-                        <input type="text" placeholder="PO#, Invoice#, or other reference" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Date</label>
-                        <input type="date" value="2026-01-15" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                        <input type="number" id="stockInQuantity" placeholder="0" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
                     </div>
 
                     <div>
                         <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Notes / Reason</label>
-                        <textarea rows="3" placeholder="Additional notes (optional)" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
+                        <textarea rows="3" id="stockInReason" placeholder="e.g., Purchase order #12345, Supplier: ABC Company" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
                     </div>
                 </div>
             </div>
 
             <!-- Modal Footer -->
             <div class="border-t border-gray-200 px-6 py-4 flex justify-end space-x-3">
-                <button onclick="closeStockInModal()" class="px-6 py-2 border border-gray-300 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Roboto', sans-serif;">
+                <button type="button" onclick="closeStockInModal()" class="px-6 py-2 border border-gray-300 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Roboto', sans-serif;">
                     Back
                 </button>
-                <button class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-md transition-colors" style="font-family: 'Roboto', sans-serif;">
+                <button type="button" onclick="confirmStockIn()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-md transition-colors" style="font-family: 'Roboto', sans-serif;">
                     Add Stock
                 </button>
             </div>
@@ -711,15 +588,15 @@
             <div class="p-6 overflow-y-auto" style="max-height: calc(90vh - 140px);">
                 <!-- Product Info Display -->
                 <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <h3 class="text-lg font-bold text-gray-900 mb-3" style="font-family: 'Roboto', sans-serif;">Ceiling Cassette Air Conditioner 2HP</h3>
+                    <h3 id="stockOutItemName" class="text-lg font-bold text-gray-900 mb-3" style="font-family: 'Roboto', sans-serif;">Item Name</h3>
                     <div class="grid grid-cols-2 gap-4 text-sm">
-                        <div class="flex justify-between">
+                        <div>
                             <span class="text-gray-600" style="font-family: 'Lato', sans-serif;">Category:</span>
-                            <span class="text-gray-900 font-semibold" style="font-family: 'Lato', sans-serif;">Aircon Unit</span>
+                            <span id="stockOutCategory" class="text-gray-900 font-semibold ml-2" style="font-family: 'Lato', sans-serif;">-</span>
                         </div>
-                        <div class="flex justify-between">
+                        <div>
                             <span class="text-gray-600" style="font-family: 'Lato', sans-serif;">Current Stock:</span>
-                            <span class="text-gray-900 font-semibold" style="font-family: 'Lato', sans-serif;">50 units</span>
+                            <span id="stockOutCurrentStock" class="text-gray-900 font-semibold ml-2" style="font-family: 'Lato', sans-serif;">0 units</span>
                         </div>
                     </div>
                 </div>
@@ -728,36 +605,18 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Quantity to Remove <span class="text-red-500">*</span></label>
-                        <input type="number" placeholder="0" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                        <input type="number" id="stockOutQuantity" placeholder="0" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Reason <span class="text-red-500">*</span></label>
-                        <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                            <option value="">Select reason</option>
-                            <option>Used for Service</option>
-                            <option>Damaged</option>
-                            <option>Expired</option>
-                            <option>Returned to Supplier</option>
-                            <option>Lost/Stolen</option>
-                            <option>Other</option>
-                        </select>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Booking ID (Optional)</label>
+                        <input type="text" id="stockOutBookingId" placeholder="Enter booking ID if used for service" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;">
+                        <p class="text-xs text-gray-500 mt-1" style="font-family: 'Lato', sans-serif;">Link this stock movement to a specific booking</p>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Reference Number</label>
-                        <input type="text" placeholder="Booking ID, Ticket#, or other reference" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                        <p class="text-xs text-gray-500 mt-1" style="font-family: 'Lato', sans-serif;">If used for customer service, enter the booking ID</p>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Date</label>
-                        <input type="date" value="2026-01-15" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Notes</label>
-                        <textarea rows="3" placeholder="Additional notes (optional)" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Reason</label>
+                        <textarea rows="3" id="stockOutReason" placeholder="e.g., Used for service booking #12345, Damaged item, etc." class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
                     </div>
                 </div>
 
@@ -771,10 +630,10 @@
 
             <!-- Modal Footer -->
             <div class="border-t border-gray-200 px-6 py-4 flex justify-end space-x-3">
-                <button onclick="closeStockOutModal()" class="px-6 py-2 border border-gray-300 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Roboto', sans-serif;">
+                <button type="button" onclick="closeStockOutModal()" class="px-6 py-2 border border-gray-300 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors" style="font-family: 'Roboto', sans-serif;">
                     Back
                 </button>
-                <button class="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-md transition-colors" style="font-family: 'Roboto', sans-serif;">
+                <button type="button" onclick="confirmStockOut()" class="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-md transition-colors" style="font-family: 'Roboto', sans-serif;">
                     Remove Stock
                 </button>
             </div>
@@ -967,6 +826,22 @@
 
         function closeAddItemModal() {
             document.getElementById('addItemModal').classList.add('hidden');
+
+            // Reset form
+            const form = document.getElementById('addItemForm');
+            if (form) form.reset();
+
+            // Clear image preview
+            const preview = document.getElementById('addImagePreview');
+            const icon = document.getElementById('addImageIcon');
+            const text = document.getElementById('addImageText');
+            const hint = document.getElementById('addImageHint');
+
+            if (preview) preview.classList.add('hidden');
+            if (icon) icon.classList.remove('hidden');
+            if (text) text.classList.remove('hidden');
+            if (hint) hint.classList.remove('hidden');
+            document.getElementById('addPreviewImg').src = '';
         }
 
         function openViewDetailsModal() {
@@ -979,8 +854,32 @@
         }
 
         function openEditModal() {
+            // Fetch current item details first
+            if (!currentItemId) {
+                alert('No item selected');
+                return;
+            }
+
+            // Open modal first
             document.querySelectorAll('[id^="dropdown"]').forEach(d => d.classList.add('hidden'));
+            closeViewDetailsModal();
             document.getElementById('editModal').classList.remove('hidden');
+
+            // Then fetch and populate data
+            fetch(`/api/inventory/${currentItemId}`)
+                .then(response => response.json())
+                .then(item => {
+                    document.getElementById('editItemName').value = item.name;
+                    document.getElementById('editBrand').value = item.brand || '';
+                    document.getElementById('editCategory').value = item.category;
+                    document.getElementById('editDescription').value = item.description || '';
+                    document.getElementById('editMinStock').value = item.minimum_stock;
+                })
+                .catch(error => {
+                    console.error('Error loading item for editing:', error);
+                    alert('Failed to load item for editing.');
+                    closeEditModal();
+                });
         }
 
         function closeEditModal() {
@@ -988,23 +887,96 @@
         }
 
         function openStockInModal() {
+            // Fetch current item details first
+            if (currentItemId) {
+                fetch(`/api/inventory/${currentItemId}`)
+                    .then(response => response.json())
+                    .then(item => {
+                        document.getElementById('stockInItemName').textContent = item.name;
+                        document.getElementById('stockInCategory').textContent = item.category;
+                        document.getElementById('stockInCurrentStock').textContent = item.stock_quantity + ' units';
+                    });
+            }
+
             closeViewDetailsModal();
             document.getElementById('stockInModal').classList.remove('hidden');
         }
 
         function closeStockInModal() {
             document.getElementById('stockInModal').classList.add('hidden');
-            openViewDetailsModal();
+            // Clear form
+            document.getElementById('stockInQuantity').value = '';
+            document.getElementById('stockInReason').value = '';
         }
 
         function openStockOutModal() {
+            // Fetch current item details first
+            if (currentItemId) {
+                fetch(`/api/inventory/${currentItemId}`)
+                    .then(response => response.json())
+                    .then(item => {
+                        document.getElementById('stockOutItemName').textContent = item.name;
+                        document.getElementById('stockOutCategory').textContent = item.category;
+                        document.getElementById('stockOutCurrentStock').textContent = item.stock_quantity + ' units';
+                        document.getElementById('stockOutQuantity').setAttribute('max', item.stock_quantity);
+                    });
+            }
+
             closeViewDetailsModal();
             document.getElementById('stockOutModal').classList.remove('hidden');
         }
 
         function closeStockOutModal() {
             document.getElementById('stockOutModal').classList.add('hidden');
-            openViewDetailsModal();
+            // Clear form
+            document.getElementById('stockOutQuantity').value = '';
+            document.getElementById('stockOutBookingId').value = '';
+            document.getElementById('stockOutReason').value = '';
+        }
+
+        async function confirmStockOut() {
+            try {
+                const quantity = parseInt(document.getElementById('stockOutQuantity').value);
+                const bookingId = document.getElementById('stockOutBookingId').value;
+                const reason = document.getElementById('stockOutReason').value;
+
+                if (!quantity || quantity <= 0) {
+                    alert('Please enter a valid quantity');
+                    return;
+                }
+
+                const data = {
+                    quantity,
+                    reason: reason || 'Stock removed'
+                };
+
+                if (bookingId) {
+                    data.booking_id = parseInt(bookingId);
+                }
+
+                const response = await fetch(`/api/inventory/${currentItemId}/remove-stock`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(`Stock removed successfully! New quantity: ${result.item.stock_quantity}`);
+                    closeStockOutModal();
+                    await loadInventory();
+                } else {
+                    alert('Failed to remove stock: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error removing stock:', error);
+                alert('Failed to remove stock.');
+            }
         }
 
         function openUpdatePriceModal() {
@@ -1040,6 +1012,454 @@
             if (event.target.id === 'stockInModal') closeStockInModal();
             if (event.target.id === 'stockOutModal') closeStockOutModal();
             if (event.target.id === 'updatePriceModal') closeUpdatePriceModal();
+        });
+
+        // ========== INVENTORY API INTEGRATION ==========
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let currentItemId = null;
+        let allInventoryItems = []; // Store all items for filtering
+
+        // Filter inventory based on search and filters
+        function filterInventory() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const brandFilter = document.getElementById('brandFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            const filteredItems = allInventoryItems.filter(item => {
+                const matchesSearch = item.name.toLowerCase().includes(searchTerm);
+                const matchesCategory = !categoryFilter || item.category === categoryFilter;
+                const matchesBrand = !brandFilter || item.brand === brandFilter;
+                const matchesStatus = !statusFilter || item.status === statusFilter;
+
+                return matchesSearch && matchesCategory && matchesBrand && matchesStatus;
+            });
+
+            // Update display with filtered items
+            renderInventoryItems(filteredItems);
+            updateStats(filteredItems);
+        }
+
+        // Render inventory items to grid
+        function renderInventoryItems(items) {
+            const grid = document.getElementById('inventoryGrid');
+            grid.innerHTML = '';
+
+            if (items.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center py-8 text-gray-500">No items found matching your filters</div>';
+                return;
+            }
+
+            items.forEach(item => {
+                const statusColor = item.status === 'In Stock' ? 'green' : item.status === 'Low Stock' ? 'yellow' : 'red';
+                const statusText = item.status === 'In Stock' ? 'text-green-700' : item.status === 'Low Stock' ? 'text-yellow-700' : 'text-red-700';
+                const statusBg = item.status === 'In Stock' ? 'bg-green-100' : item.status === 'Low Stock' ? 'bg-yellow-100' : 'bg-red-100';
+
+                const card = `
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                        <div class="p-4 sm:p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="px-3 py-1 text-xs font-semibold rounded-full ${statusBg} ${statusText}">${item.category}</span>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown('dropdown${item.id}')" class="p-1 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                                        </svg>
+                                    </button>
+                                    <div id="dropdown${item.id}" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 border border-gray-200">
+                                        <a href="#" onclick="viewItemDetails(${item.id}); return false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">View Details</a>
+                                        <a href="#" onclick="openEditItemModal(${item.id}); return false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Edit</a>
+                                        <a href="#" onclick="confirmDeleteItem(${item.id}); return false;" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-50 transition-colors">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mb-4">
+                                <div class="w-20 h-20 mx-auto mb-3 flex items-center justify-center bg-gray-100 rounded-full overflow-hidden">
+                                    ${item.image ?
+                                        `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` :
+                                        `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                        </svg>`
+                                    }
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-800">${item.name}</h3>
+                                <p class="text-sm text-gray-500">${item.brand || 'Generic'}</p>
+                            </div>
+                            <div class="space-y-2 border-t pt-4">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Price:</span>
+                                    <span class="font-semibold text-gray-800">₱${parseFloat(item.price).toFixed(2)}</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Stock:</span>
+                                    <span class="font-semibold ${statusText}">${item.stock_quantity} units</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        // Update statistics cards
+        async function updateStats(items = null) {
+            try {
+                // If items not provided, fetch stats from API
+                if (!items) {
+                    const response = await fetch('/api/inventory/stats');
+                    const stats = await response.json();
+
+                    document.getElementById('statTotalItems').textContent = stats.total_items || 0;
+                    document.getElementById('statLowStock').textContent = stats.low_stock_count || 0;
+                    document.getElementById('statOutOfStock').textContent = stats.out_of_stock_count || 0;
+                    document.getElementById('statTotalValue').textContent = '₱' + (stats.total_value ? parseFloat(stats.total_value).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '0.00');
+                } else {
+                    // Calculate from provided items
+                    const totalItems = items.length;
+                    const lowStock = items.filter(item => item.status === 'Low Stock').length;
+                    const outOfStock = items.filter(item => item.status === 'Out of Stock').length;
+                    const totalValue = items.reduce((sum, item) => sum + (parseFloat(item.price) * item.stock_quantity), 0);
+
+                    document.getElementById('statTotalItems').textContent = totalItems;
+                    document.getElementById('statLowStock').textContent = lowStock;
+                    document.getElementById('statOutOfStock').textContent = outOfStock;
+                    document.getElementById('statTotalValue').textContent = '₱' + totalValue.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                }
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+
+        // Load inventory items
+        async function loadInventory() {
+            try {
+                const response = await fetch('/api/inventory');
+                const items = await response.json();
+
+                allInventoryItems = items; // Store for filtering
+                renderInventoryItems(items);
+                updateStats(items);
+            } catch (error) {
+                console.error('Error loading inventory:', error);
+                document.getElementById('inventoryGrid').innerHTML = '<div class="col-span-full text-center py-8 text-red-500">Failed to load inventory items</div>';
+            }
+        }
+                grid.innerHTML = '';
+
+                items.forEach(item => {
+                    const statusColor = item.status === 'In Stock' ? 'green' : item.status === 'Low Stock' ? 'yellow' : 'red';
+                    const statusText = item.status === 'In Stock' ? 'text-green-700' : item.status === 'Low Stock' ? 'text-yellow-700' : 'text-red-700';
+                    const statusBg = item.status === 'In Stock' ? 'bg-green-100' : item.status === 'Low Stock' ? 'bg-yellow-100' : 'bg-red-100';
+
+                    const card = `
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                            <div class="p-4 sm:p-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span class="px-3 py-1 text-xs font-semibold rounded-full ${statusBg} ${statusText}">${item.category}</span>
+                                    <div class="relative">
+                                        <button onclick="toggleDropdown('dropdown${item.id}')" class="p-1 hover:bg-gray-100 rounded-lg transition-colors">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                                            </svg>
+                                        </button>
+                                        <div id="dropdown${item.id}" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 border border-gray-200">
+                                            <a href="#" onclick="viewItemDetails(${item.id}); return false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">View Details</a>
+                                            <a href="#" onclick="openEditItemModal(${item.id}); return false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Edit</a>
+                                            <a href="#" onclick="confirmDeleteItem(${item.id}); return false;" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-50 transition-colors">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center mb-4">
+                                    <div class="w-20 h-20 mx-auto mb-3 flex items-center justify-center bg-gray-100 rounded-full overflow-hidden">
+                                        ${item.image ?
+                                            `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` :
+                                            `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                            </svg>`
+                                        }
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-gray-800">${item.name}</h3>
+                                    <p class="text-sm text-gray-500">${item.brand || 'Generic'}</p>
+                                </div>
+                                <div class="space-y-2 border-t pt-4">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-600">Price:</span>
+                                        <span class="font-semibold text-gray-800">₱${parseFloat(item.price).toFixed(2)}</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-600">Stock:</span>
+                                        <span class="font-semibold ${statusText}">${item.stock_quantity} units</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    grid.innerHTML += card;
+                // Update stats cards
+                updateStats(items);
+            } catch (error) {
+                console.error('Error loading inventory:', error);
+                alert('Failed to load inventory items.');
+            }
+        }
+
+        // View item details
+        async function viewItemDetails(itemId) {
+            try {
+                currentItemId = itemId;
+                const response = await fetch(`/api/inventory/${itemId}`);
+                const item = await response.json();
+
+                console.log('Item data:', item); // Debug log
+
+                // Populate modal header
+                document.getElementById('viewItemName').textContent = item.name;
+                document.getElementById('viewItemBrand').textContent = item.brand || 'Generic';
+
+                // Populate left column - Item Details
+                document.getElementById('viewDetailName').textContent = item.name;
+                document.getElementById('viewDetailCategory').textContent = item.category;
+                document.getElementById('viewDetailBrand').textContent = item.brand || 'Generic';
+                document.getElementById('viewDetailStock').textContent = item.stock_quantity;
+                document.getElementById('viewDetailThreshold').textContent = item.minimum_stock;
+                document.getElementById('viewDetailItemCode').textContent = item.item_code || 'N/A';
+                document.getElementById('viewDetailStatus').textContent = item.status;
+                document.getElementById('viewDetailDescription').textContent = item.description || 'No description available';
+
+                // Populate right column - Pricing Value
+                const costPrice = parseFloat(item.cost_price);
+                const sellingPrice = parseFloat(item.price);
+                const profitMargin = sellingPrice - costPrice;
+                const totalCost = costPrice * item.stock_quantity;
+                const totalSelling = sellingPrice * item.stock_quantity;
+
+                document.getElementById('viewDetailCostPrice').textContent = '₱' + costPrice.toFixed(2);
+                document.getElementById('viewDetailSellingPrice').textContent = '₱' + sellingPrice.toFixed(2);
+                document.getElementById('viewDetailProfitMargin').textContent = '₱' + profitMargin.toFixed(2);
+                document.getElementById('viewDetailTotalCost').textContent = '₱' + totalCost.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                document.getElementById('viewDetailTotalSelling').textContent = '₱' + totalSelling.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+                openViewDetailsModal();
+            } catch (error) {
+                console.error('Error loading item details:', error);
+                alert('Failed to load item details.');
+            }
+        }
+
+        // Open edit modal
+        async function openEditItemModal(itemId) {
+            try {
+                currentItemId = itemId;
+                const response = await fetch(`/api/inventory/${itemId}`);
+                const item = await response.json();
+
+                // Open modal first
+                openEditModal();
+
+                // Populate edit form
+                document.getElementById('editItemName').value = item.name;
+                document.getElementById('editBrand').value = item.brand || '';
+                document.getElementById('editCategory').value = item.category;
+                document.getElementById('editDescription').value = item.description || '';
+                document.getElementById('editMinStock').value = item.minimum_stock;
+
+                // Show current image if exists
+                const editPreviewImg = document.getElementById('editPreviewImg');
+                if (item.image) {
+                    editPreviewImg.src = item.image;
+                    editPreviewImg.style.display = 'block';
+                } else {
+                    editPreviewImg.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error loading item for edit:', error);
+                alert('Failed to load item for editing.');
+            }
+        }
+
+        // Save edited item
+        async function saveEditedItem() {
+            try {
+                const formData = new FormData();
+                formData.append('_method', 'PUT');
+                formData.append('name', document.getElementById('editItemName').value);
+                formData.append('brand', document.getElementById('editBrand').value);
+                formData.append('category', document.getElementById('editCategory').value);
+                formData.append('description', document.getElementById('editDescription').value);
+                formData.append('minimum_stock', parseInt(document.getElementById('editMinStock').value));
+
+                // Add image if selected
+                const imageFile = document.getElementById('editProductImage').files[0];
+                if (imageFile) {
+                    formData.append('image', imageFile);
+                }
+
+                const response = await fetch(`/api/inventory/${currentItemId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Item updated successfully!');
+                    closeEditModal();
+                    await loadInventory();
+                } else {
+                    alert('Failed to update item: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error updating item:', error);
+                alert('Failed to update item.');
+            }
+        }
+
+        // Delete item
+        async function confirmDeleteItem(itemId) {
+            if (!confirm('Are you sure you want to delete this item? This action cannot be undone.')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/inventory/${itemId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Item deleted successfully!');
+                    await loadInventory();
+                } else {
+                    alert('Failed to delete item: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error deleting item:', error);
+                alert('Failed to delete item.');
+            }
+        }
+
+        // Add stock in
+        async function confirmStockIn() {
+            try {
+                const quantity = parseInt(document.getElementById('stockInQuantity').value);
+                const reason = document.getElementById('stockInReason').value;
+
+                const response = await fetch(`/api/inventory/${currentItemId}/add-stock`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({ quantity, reason })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(`Stock added successfully! New quantity: ${result.item.stock_quantity}`);
+                    closeStockInModal();
+                    await loadInventory();
+                    await viewItemDetails(currentItemId);
+                } else {
+                    alert('Failed to add stock: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error adding stock:', error);
+                alert('Failed to add stock.');
+            }
+        }
+
+        // Add new item
+        async function saveNewItem() {
+            try {
+                const formData = new FormData();
+                formData.append('name', document.getElementById('itemName').value);
+                formData.append('brand', document.getElementById('brand').value);
+                formData.append('category', document.getElementById('category').value);
+                formData.append('description', document.getElementById('description').value);
+                formData.append('cost_price', parseFloat(document.getElementById('costPrice').value));
+                formData.append('price', parseFloat(document.getElementById('sellingPrice').value));
+                formData.append('stock_quantity', parseInt(document.getElementById('initialStock').value));
+                formData.append('minimum_stock', parseInt(document.getElementById('minStock').value));
+
+                // Add image if selected
+                const imageFile = document.getElementById('productImage').files[0];
+                if (imageFile) {
+                    formData.append('image', imageFile);
+                }
+
+                const response = await fetch('/api/inventory', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Item added successfully!');
+                    closeAddItemModal();
+                    document.getElementById('addItemForm').reset();
+                    await loadInventory();
+                } else {
+                    alert('Failed to add item: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error adding item:', error);
+                alert('Failed to add item.');
+            }
+        }
+
+        // Image preview functions
+        function previewAddImage(input) {
+            const preview = document.getElementById('addImagePreview');
+            const previewImg = document.getElementById('addPreviewImg');
+            const icon = document.getElementById('addImageIcon');
+            const text = document.getElementById('addImageText');
+            const hint = document.getElementById('addImageHint');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    if (icon) icon.classList.add('hidden');
+                    if (text) text.classList.add('hidden');
+                    if (hint) hint.classList.add('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function previewEditImage(input) {
+            const previewImg = document.getElementById('editPreviewImg');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Load inventory on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInventory();
         });
     </script>
 </body>
