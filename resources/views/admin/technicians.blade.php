@@ -261,26 +261,8 @@
                     </div>
 
                     <!-- Pagination -->
-                    <div class="flex items-center justify-center px-6 py-4 border-t border-gray-200 gap-2">
-                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-400 cursor-not-allowed disabled:opacity-50" disabled>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1]">
-                            1
-                        </button>
-                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                            2
-                        </button>
-                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                            3
-                        </button>
-                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
+                    <div id="paginationContainer" class="flex items-center justify-center px-6 py-4 border-t border-gray-200 gap-2">
+                        <!-- Pagination will be rendered dynamically -->
                     </div>
                 </div>
             </div>
@@ -334,16 +316,12 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Specialization *</label>
                             <div class="flex flex-wrap gap-4">
                                 <label class="flex items-center">
-                                    <input type="checkbox" id="addSpecRepair" class="w-4 h-4 text-[#2B9DD1] border-gray-300 rounded focus:ring-[#2B9DD1]" value="Repair">
-                                    <span class="ml-2 text-sm text-gray-700">Repair</span>
+                                    <input type="checkbox" id="addSpecAircon" class="w-4 h-4 text-[#2B9DD1] border-gray-300 rounded focus:ring-[#2B9DD1]" value="Aircon">
+                                    <span class="ml-2 text-sm text-gray-700">Aircon</span>
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" id="addSpecInstallation" class="w-4 h-4 text-[#2B9DD1] border-gray-300 rounded focus:ring-[#2B9DD1]" value="Installation">
-                                    <span class="ml-2 text-sm text-gray-700">Installation</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="addSpecMaintenance" class="w-4 h-4 text-[#2B9DD1] border-gray-300 rounded focus:ring-[#2B9DD1]" value="Maintenance">
-                                    <span class="ml-2 text-sm text-gray-700">Maintenance</span>
+                                    <input type="checkbox" id="addSpecRefrigerator" class="w-4 h-4 text-[#2B9DD1] border-gray-300 rounded focus:ring-[#2B9DD1]" value="Refrigerator">
+                                    <span class="ml-2 text-sm text-gray-700">Refrigerator</span>
                                 </label>
                             </div>
                         </div>
@@ -427,16 +405,12 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Specialization *</label>
                             <div class="flex flex-wrap gap-4">
                                 <label class="flex items-center">
-                                    <input type="checkbox" id="editSpecRepair" class="w-4 h-4 text-[#2B9DD1] border-gray-300 rounded focus:ring-[#2B9DD1]" value="Repair">
-                                    <span class="ml-2 text-sm text-gray-700">Repair</span>
+                                    <input type="checkbox" id="editSpecAircon" class="w-4 h-4 text-[#2B9DD1] border-gray-300 rounded focus:ring-[#2B9DD1]" value="Aircon">
+                                    <span class="ml-2 text-sm text-gray-700">Aircon</span>
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" id="editSpecInstallation" class="w-4 h-4 text-[#2B9DD1] border-gray-300 rounded focus:ring-[#2B9DD1]" value="Installation">
-                                    <span class="ml-2 text-sm text-gray-700">Installation</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="editSpecMaintenance" class="w-4 h-4 text-[#2B9DD1] border-gray-300 rounded focus:ring-[#2B9DD1]" value="Maintenance">
-                                    <span class="ml-2 text-sm text-gray-700">Maintenance</span>
+                                    <input type="checkbox" id="editSpecRefrigerator" class="w-4 h-4 text-[#2B9DD1] border-gray-300 rounded focus:ring-[#2B9DD1]" value="Refrigerator">
+                                    <span class="ml-2 text-sm text-gray-700">Refrigerator</span>
                                 </label>
                             </div>
                         </div>
@@ -492,6 +466,8 @@
         const tableBody = document.getElementById('techniciansTableBody');
         let allTechnicians = [];
         let filteredTechnicians = [];
+        let currentPage = 1;
+        const itemsPerPage = 10;
 
         // Load technicians from API
         async function loadTechnicians() {
@@ -549,10 +525,16 @@
                         </td>
                     </tr>
                 `;
+                renderPagination();
                 return;
             }
 
-            filteredTechnicians.forEach(tech => {
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedTechnicians = filteredTechnicians.slice(startIndex, endIndex);
+
+            paginatedTechnicians.forEach(tech => {
                 const statusClass = getStatusClass(tech.status);
                 const statusDot = tech.status === 'Available' ? 'bg-green-500' : 'bg-gray-500';
 
@@ -591,6 +573,8 @@
                 `;
                 tableBody.appendChild(row);
             });
+
+            renderPagination();
         }
 
         // Get status badge class
@@ -614,6 +598,67 @@
                 return true;
             });
 
+            currentPage = 1; // Reset to first page when filtering
+            displayTechnicians();
+        }
+
+        // Render pagination controls
+        function renderPagination() {
+            const container = document.getElementById('paginationContainer');
+            const totalPages = Math.ceil(filteredTechnicians.length / itemsPerPage);
+
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = '';
+
+            // Previous button
+            paginationHTML += `
+                <button onclick="changePage(${currentPage - 1})" 
+                    class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-50'} transition-colors"
+                    ${currentPage === 1 ? 'disabled' : ''}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    paginationHTML += `
+                        <button onclick="changePage(${i})" 
+                            class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium ${i === currentPage ? 'text-white bg-[#2B9DD1]' : 'text-gray-700 hover:bg-gray-50'} transition-colors">
+                            ${i}
+                        </button>
+                    `;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    paginationHTML += '<span class="px-2 text-gray-500">...</span>';
+                }
+            }
+
+            // Next button
+            paginationHTML += `
+                <button onclick="changePage(${currentPage + 1})" 
+                    class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-50'} transition-colors"
+                    ${currentPage === totalPages ? 'disabled' : ''}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            container.innerHTML = paginationHTML;
+        }
+
+        // Change page
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredTechnicians.length / itemsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
             displayTechnicians();
         }
 
@@ -653,9 +698,8 @@
 
                 // Get specializations
                 const specializations = [];
-                if (document.getElementById('addSpecRepair').checked) specializations.push('Repair');
-                if (document.getElementById('addSpecInstallation').checked) specializations.push('Installation');
-                if (document.getElementById('addSpecMaintenance').checked) specializations.push('Maintenance');
+                if (document.getElementById('addSpecAircon').checked) specializations.push('Aircon');
+                if (document.getElementById('addSpecRefrigerator').checked) specializations.push('Refrigerator');
 
                 // Validate
                 if (!firstName || !lastName || !phone || !email || !address || !dateHired) {
@@ -739,9 +783,8 @@
                 document.getElementById('editDateHired').value = tech.date_hired;
 
                 // Set specializations checkboxes
-                document.getElementById('editSpecRepair').checked = tech.specializations?.includes('Repair') || false;
-                document.getElementById('editSpecInstallation').checked = tech.specializations?.includes('Installation') || false;
-                document.getElementById('editSpecMaintenance').checked = tech.specializations?.includes('Maintenance') || false;
+                document.getElementById('editSpecAircon').checked = tech.specializations?.includes('Aircon') || false;
+                document.getElementById('editSpecRefrigerator').checked = tech.specializations?.includes('Refrigerator') || false;
 
                 // Show modal
                 document.getElementById('editTechnicianModal').classList.remove('hidden');
@@ -769,9 +812,8 @@
 
                 // Get specializations
                 const specializations = [];
-                if (document.getElementById('editSpecRepair').checked) specializations.push('Repair');
-                if (document.getElementById('editSpecInstallation').checked) specializations.push('Installation');
-                if (document.getElementById('editSpecMaintenance').checked) specializations.push('Maintenance');
+                if (document.getElementById('editSpecAircon').checked) specializations.push('Aircon');
+                if (document.getElementById('editSpecRefrigerator').checked) specializations.push('Refrigerator');
 
                 // Validate
                 if (!firstName || !lastName || !phone || !address) {

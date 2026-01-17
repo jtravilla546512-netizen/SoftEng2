@@ -215,18 +215,18 @@
                     </div>
 
                     <!-- Save/Cancel Buttons (Hidden by default) -->
-                    <div id="editActions" class="hidden mt-8 flex flex-col sm:flex-row gap-3">
-                        <button onclick="saveChanges()" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors shadow-sm hover:shadow-md">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
-                            </svg>
-                            Save Changes
-                        </button>
-                        <button onclick="cancelEdit()" class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-lg font-semibold transition-colors shadow-sm hover:shadow-md">
+                    <div id="editActions" class="hidden mt-8 pt-6 border-t border-gray-200 flex-col sm:flex-row gap-3 justify-end">
+                        <button onclick="cancelEdit()" class="px-8 py-3 bg-white hover:bg-gray-50 text-gray-700 border-2 border-gray-300 rounded-lg font-semibold transition-all shadow-sm hover:shadow-md order-2 sm:order-1">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                             Cancel
+                        </button>
+                        <button onclick="saveChanges()" id="saveButton" class="px-8 py-3 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg order-1 sm:order-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span id="saveButtonText">Save Changes</span>
                         </button>
                     </div>
                 </div>
@@ -294,6 +294,26 @@
         </main>
     </div>
 
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 z-50 hidden transition-all duration-300 transform translate-x-0">
+        <div class="bg-white rounded-lg shadow-2xl border-l-4 p-4 max-w-md">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <svg id="toastIcon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"></svg>
+                </div>
+                <div class="ml-3 flex-1">
+                    <p id="toastTitle" class="text-sm font-semibold"></p>
+                    <p id="toastMessage" class="text-sm mt-1"></p>
+                </div>
+                <button onclick="hideToast()" class="ml-4 flex-shrink-0 text-gray-400 hover:text-gray-600">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Hamburger Menu Toggle
         document.addEventListener('DOMContentLoaded', function() {
@@ -343,31 +363,52 @@
 
         // Edit Mode Functionality
         function toggleEditMode() {
-            const fields = ['fullName', 'phone', 'address', 'serviceStatus'];
+            const fields = ['fullName', 'phone', 'address'];
             const editActions = document.getElementById('editActions');
+            const editButton = document.querySelector('button[onclick="toggleEditMode()"]');
 
             fields.forEach(field => {
                 const element = document.getElementById(field);
-                element.disabled = false;
-                element.classList.remove('bg-gray-50', 'disabled:opacity-75');
-                element.classList.add('bg-white', 'focus:ring-2', 'focus:ring-blue-500');
+                if (element) {
+                    element.disabled = false;
+                    element.classList.remove('bg-gray-50', 'disabled:opacity-75');
+                    element.classList.add('bg-white', 'focus:ring-2', 'focus:ring-[#2B9DD1]', 'focus:border-[#2B9DD1]');
+                }
             });
 
             editActions.classList.remove('hidden');
+            editActions.classList.add('flex');
+            
+            // Hide edit button
+            if (editButton) {
+                editButton.classList.add('hidden');
+            }
         }
 
         function cancelEdit() {
-            const fields = ['fullName', 'phone', 'address', 'serviceStatus'];
+            const fields = ['fullName', 'phone', 'address'];
             const editActions = document.getElementById('editActions');
+            const editButton = document.querySelector('button[onclick="toggleEditMode()"]');
 
             fields.forEach(field => {
                 const element = document.getElementById(field);
-                element.disabled = true;
-                element.classList.add('bg-gray-50', 'disabled:opacity-75');
-                element.classList.remove('bg-white', 'focus:ring-2', 'focus:ring-blue-500');
+                if (element) {
+                    element.disabled = true;
+                    element.classList.add('bg-gray-50', 'disabled:opacity-75');
+                    element.classList.remove('bg-white', 'focus:ring-2', 'focus:ring-[#2B9DD1]', 'focus:border-[#2B9DD1]');
+                    
+                    // Reset to original values
+                    element.value = element.defaultValue;
+                }
             });
 
             editActions.classList.add('hidden');
+            editActions.classList.remove('flex');
+            
+            // Show edit button again
+            if (editButton) {
+                editButton.classList.remove('hidden');
+            }
         }
 
         function saveChanges() {
@@ -378,9 +419,16 @@
 
             // Validate inputs
             if (!name || !phone || !address) {
-                alert('Please fill in all required fields');
+                showToast('Error', 'Please fill in all required fields', 'error');
                 return;
             }
+
+            // Show loading state
+            const saveButton = document.getElementById('saveButton');
+            const saveButtonText = document.getElementById('saveButtonText');
+            const originalText = saveButtonText.textContent;
+            saveButton.disabled = true;
+            saveButtonText.innerHTML = '<svg class="animate-spin h-5 w-5 inline-block mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Saving...';
 
             // Send update request to API
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
@@ -399,19 +447,68 @@
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success || data.id) {
-                    alert('Changes saved successfully!');
+                if (data.success || data.customer) {
+                    showToast('Success!', 'Customer information has been updated successfully', 'success');
                     cancelEdit();
-                    // Optionally reload page to show updated data
-                    // location.reload();
+                    
+                    // Update displayed values
+                    document.getElementById('fullName').value = name;
+                    document.getElementById('phone').value = phone;
+                    document.getElementById('address').value = address;
                 } else {
-                    alert('Error saving changes: ' + (data.message || 'Unknown error'));
+                    showToast('Error', data.message || 'Failed to save changes', 'error');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Failed to save changes. Please try again.');
+                showToast('Error', 'Failed to save changes. Please try again.', 'error');
+            })
+            .finally(() => {
+                // Reset button state
+                saveButton.disabled = false;
+                saveButtonText.textContent = originalText;
             });
+        }
+
+        // Toast notification functions
+        function showToast(title, message, type) {
+            const toast = document.getElementById('toast');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastContainer = toast.querySelector('div');
+
+            // Set content
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+
+            // Set icon and colors based on type
+            if (type === 'success') {
+                toastContainer.classList.remove('border-red-500');
+                toastContainer.classList.add('border-green-500');
+                toastIcon.classList.remove('text-red-500');
+                toastIcon.classList.add('text-green-500');
+                toastIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />';
+            } else {
+                toastContainer.classList.remove('border-green-500');
+                toastContainer.classList.add('border-red-500');
+                toastIcon.classList.remove('text-green-500');
+                toastIcon.classList.add('text-red-500');
+                toastIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />';
+            }
+
+            // Show toast
+            toast.classList.remove('hidden');
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                hideToast();
+            }, 5000);
+        }
+
+        function hideToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('hidden');
         }
     </script>
 </body>

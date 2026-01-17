@@ -166,10 +166,10 @@
                             <input type="text" id="searchInput" placeholder="Search by name" onkeyup="filterInventory()" class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:w-64 lg:w-80 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
                             <select id="categoryFilter" onchange="filterInventory()" class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:flex-1 lg:w-64 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
                                 <option value="">All Categories</option>
-                                <option>Aircon Unit</option>
-                                <option>Aircon Spare Parts</option>
-                                <option>Refrigerator Unit</option>
-                                <option>Refrigerator Spare Parts</option>
+                                <option value="Aircon Unit">Aircon Unit</option>
+                                <option value="Aircon Spare Parts">Aircon Spare Parts</option>
+                                <option value="Refrigerator Unit">Refrigerator Unit</option>
+                                <option value="Refrigerator Spare Parts">Refrigerator Spare Parts</option>
                             </select>
                             <select id="brandFilter" onchange="filterInventory()" class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:flex-1 lg:w-64 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
                                 <option value="">All Brands</option>
@@ -1166,6 +1166,22 @@
             const paginatedItems = items.slice(startIdx, endIdx);
 
             paginatedItems.forEach(item => {
+                // Determine stock status based on stock_quantity and minimum_stock (reorder_point)
+                let stockStatusText, stockStatusBg;
+                if (item.stock_quantity <= 0) {
+                    // Out of stock - RED
+                    stockStatusText = 'text-red-700';
+                    stockStatusBg = 'bg-red-100';
+                } else if (item.stock_quantity <= item.minimum_stock) {
+                    // Low stock - CUSTOM YELLOW
+                    stockStatusText = 'font-semibold';
+                    stockStatusBg = 'bg-yellow-100';
+                } else {
+                    // In stock - GREEN
+                    stockStatusText = 'text-green-700';
+                    stockStatusBg = 'bg-green-100';
+                }
+
                 const statusColor = item.status === 'In Stock' ? 'green' : item.status === 'Low Stock' ? 'yellow' : 'red';
                 const statusText = item.status === 'In Stock' ? 'text-green-700' : item.status === 'Low Stock' ? 'text-yellow-700' : 'text-red-700';
                 const statusBg = item.status === 'In Stock' ? 'bg-green-100' : item.status === 'Low Stock' ? 'bg-yellow-100' : 'bg-red-100';
@@ -1222,7 +1238,7 @@
                                 </div>
                                 <div class="flex justify-between text-sm">
                                     <span class="text-gray-600">Stock:</span>
-                                    <span class="font-semibold ${statusText}">${item.stock_quantity} units</span>
+                                    <span class="${stockStatusText}" ${item.stock_quantity > 0 && item.stock_quantity <= item.minimum_stock ? 'style="color: rgb(255, 206, 27);"' : ''}>${item.stock_quantity} units</span>
                                 </div>
                             </div>
                         </div>
@@ -1245,10 +1261,10 @@
                     document.getElementById('statOutOfStock').textContent = stats.out_of_stock_count || 0;
                     document.getElementById('statTotalValue').textContent = '₱' + (stats.total_value ? parseFloat(stats.total_value).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '0.00');
                 } else {
-                    // Calculate from provided items
+                    // Calculate from provided items - use minimum_stock (reorder_point) to determine low stock
                     const totalItems = items.length;
-                    const lowStock = items.filter(item => item.status === 'Low Stock').length;
-                    const outOfStock = items.filter(item => item.status === 'Out of Stock').length;
+                    const lowStock = items.filter(item => item.stock_quantity > 0 && item.stock_quantity <= item.minimum_stock).length;
+                    const outOfStock = items.filter(item => item.stock_quantity <= 0).length;
                     const totalValue = items.reduce((sum, item) => sum + (parseFloat(item.price) * item.stock_quantity), 0);
 
                     document.getElementById('statTotalItems').textContent = totalItems;

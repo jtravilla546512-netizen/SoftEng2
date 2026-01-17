@@ -76,6 +76,125 @@ class ReportsController extends Controller
     }
 
     /**
+     * Get daily sales by day of week
+     */
+    public function getDailySales()
+    {
+        // Get data for the current week (Monday to Sunday)
+        $startOfWeek = now()->startOfWeek();
+        $endOfWeek = now()->endOfWeek();
+
+        $dailySales = [];
+        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+        foreach ($daysOfWeek as $index => $day) {
+            $date = $startOfWeek->copy()->addDays($index);
+            
+            $revenue = Booking::where('status', 'Completed')
+                ->whereDate('completed_at', $date)
+                ->sum('total_amount');
+
+            $dailySales[] = [
+                'day' => $day,
+                'date' => $date->format('Y-m-d'),
+                'revenue' => floatval($revenue),
+            ];
+        }
+
+        $total = array_sum(array_column($dailySales, 'revenue'));
+
+        return response()->json([
+            'daily_sales' => $dailySales,
+            'total' => $total,
+        ]);
+    }
+
+    /**
+     * Get completed bookings for detailed sales report
+     */
+    public function getCompletedBookings(Request $request)
+    {
+        $perPage = $request->input('per_page', 10);
+        
+        $bookings = Booking::where('status', 'Completed')
+            ->with(['customer', 'technician'])
+            ->orderBy('completed_at', 'desc')
+            ->paginate($perPage);
+
+        return response()->json($bookings);
+    }
+
+    /**
+     * Get weekly sales starting from current week as Week 1
+     */
+    public function getWeeklySales()
+    {
+        $weeklySales = [];
+        $numberOfWeeks = 4; // Show last 4 weeks
+        
+        // Build weeks from oldest to newest
+        for ($i = $numberOfWeeks - 1; $i >= 0; $i--) {
+            $startOfWeek = now()->startOfWeek()->subWeeks($i);
+            $endOfWeek = $startOfWeek->copy()->endOfWeek();
+            
+            $revenue = Booking::where('status', 'Completed')
+                ->whereBetween('completed_at', [$startOfWeek, $endOfWeek])
+                ->sum('total_amount');
+
+            $weeklySales[] = [
+                'week_label' => 'Week ' . ($numberOfWeeks - $i),
+                'week_number' => $numberOfWeeks - $i,
+                'start_date' => $startOfWeek->format('Y-m-d'),
+                'end_date' => $endOfWeek->format('Y-m-d'),
+                'revenue' => floatval($revenue),
+                'is_current_week' => $i === 0,
+            ];
+        }
+        
+        $total = array_sum(array_column($weeklySales, 'revenue'));
+
+        return response()->json([
+            'weekly_sales' => $weeklySales,
+            'total' => $total,
+        ]);
+    }
+
+    /**
+     * Get monthly sales starting from current month
+     */
+    public function getMonthlySales()
+    {
+        $monthlySales = [];
+        $numberOfMonths = 7; // Show last 7 months
+        
+        // Build months from oldest to newest
+        for ($i = $numberOfMonths - 1; $i >= 0; $i--) {
+            $monthStart = now()->startOfMonth()->subMonths($i);
+            $monthEnd = $monthStart->copy()->endOfMonth();
+            
+            $revenue = Booking::where('status', 'Completed')
+                ->whereBetween('completed_at', [$monthStart, $monthEnd])
+                ->sum('total_amount');
+
+            $monthlySales[] = [
+                'month_label' => $monthStart->format('F'),
+                'month_year' => $monthStart->format('F Y'),
+                'month_number' => $monthStart->month,
+                'year' => $monthStart->year,
+                'revenue' => floatval($revenue),
+                'is_current_month' => $i === 0,
+            ];
+        }
+        
+        $total = array_sum(array_column($monthlySales, 'revenue'));
+
+        return response()->json([
+            'monthly_sales' => $monthlySales,
+            'total' => $total,
+        ]);
+    }
+
+    /**
      * Get service type analytics
      */
     public function getServiceAnalytics()
@@ -147,6 +266,55 @@ class ReportsController extends Controller
     }
 
     /**
+     * Get most used parts with pagination (for Other Reports section)
+     */
+    public function getMostUsedParts(Request $request)
+    {
+        $perPage = $request->input('per_page', 5);
+        
+        $parts = DB::table('booking_parts')
+            ->join('inventory_items', 'booking_parts.inventory_item_id', '=', 'inventory_items.id')
+            ->join('bookings', 'booking_parts.booking_id', '=', 'bookings.id')
+            ->where('bookings.status', 'Completed')
+            ->select(
+                'inventory_items.id',
+                'inventory_items.name',
+                'inventory_items.category',
+                DB::raw('SUM(booking_parts.quantity) as usage_count'),
+                DB::raw('MAX(bookings.completed_at) as last_used')
+            )
+            ->groupBy('inventory_items.id', 'inventory_items.name', 'inventory_items.category')
+            ->orderBy('usage_count', 'desc')
+            ->paginate($perPage);
+
+        return response()->json($parts);
+    }
+
+    /**
+     * Get top services of the current month with pagination
+     */
+    public function getTopServicesOfMonth(Request $request)
+    {
+        $perPage = $request->input('per_page', 5);
+        $startOfMonth = now()->startOfMonth();
+        $endOfMonth = now()->endOfMonth();
+        
+        $services = Booking::where('status', 'Completed')
+            ->whereBetween('completed_at', [$startOfMonth, $endOfMonth])
+            ->select(
+                'service_type',
+                'appliance',
+                DB::raw('COUNT(*) as bookings_count'),
+                DB::raw('SUM(total_amount) as revenue')
+            )
+            ->groupBy('service_type', 'appliance')
+            ->orderBy('revenue', 'desc')
+            ->paginate($perPage);
+
+        return response()->json($services);
+    }
+
+    /**
      * Get customer analytics
      */
     public function getCustomerAnalytics()
@@ -205,6 +373,29 @@ class ReportsController extends Controller
         ];
 
         return response()->json($stats);
+    }
+
+    /**
+     * Get top performing technicians based on completed bookings
+     */
+    public function getTopPerformingTechnicians(Request $request)
+    {
+        $perPage = $request->get('per_page', 5);
+
+        $technicians = DB::table('bookings')
+            ->join('technicians', 'bookings.technician_id', '=', 'technicians.id')
+            ->where('bookings.status', 'Completed')
+            ->select(
+                'technicians.id',
+                'technicians.name as technician_name',
+                DB::raw('COUNT(bookings.id) as jobs_completed'),
+                DB::raw('SUM(bookings.total_amount) as revenue_generated')
+            )
+            ->groupBy('technicians.id', 'technicians.name')
+            ->orderBy('revenue_generated', 'DESC')
+            ->paginate($perPage);
+
+        return response()->json($technicians);
     }
 
     /**

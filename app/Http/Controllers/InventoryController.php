@@ -301,8 +301,8 @@ class InventoryController extends Controller
         $stats = [
             'total_items' => InventoryItem::count(),
             'in_stock' => InventoryItem::where('status', 'In Stock')->count(),
-            'low_stock' => InventoryItem::where('status', 'Low Stock')->count(),
-            'out_of_stock' => InventoryItem::where('status', 'Out of Stock')->count(),
+            'low_stock_count' => InventoryItem::whereRaw('quantity > 0 AND quantity <= reorder_point')->count(),
+            'out_of_stock_count' => InventoryItem::where('quantity', '<=', 0)->count(),
             'total_value' => InventoryItem::sum(DB::raw('quantity * cost_price')),
         ];
 

@@ -159,7 +159,7 @@
                 <!-- Stats Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
                     <!-- Pending Bookings -->
-                    <div class="bg-[#2B9DD1] text-white rounded-lg p-4 sm:p-6 shadow-lg">
+                    <div class="bg-gradient-to-r from-[#1e7ba8] to-[#5ec4f0] text-white rounded-lg p-4 sm:p-6 shadow-lg">
                         <div class="text-xs sm:text-sm font-medium opacity-90 mb-1 sm:mb-2">Pending Bookings</div>
                         <div id="statPendingBookings" class="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2">0</div>
                         <div class="flex items-center text-xs sm:text-sm">
@@ -171,7 +171,7 @@
                     </div>
 
                     <!-- Services Completed -->
-                    <div class="bg-[#2B9DD1] text-white rounded-lg p-4 sm:p-6 shadow-lg">
+                    <div class="bg-gradient-to-r from-[#1e7ba8] to-[#5ec4f0] text-white rounded-lg p-4 sm:p-6 shadow-lg">
                         <div class="text-xs sm:text-sm font-medium opacity-90 mb-1 sm:mb-2">Services Completed</div>
                         <div id="statServicesCompleted" class="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2">0</div>
                         <div class="flex items-center text-xs sm:text-sm">
@@ -183,7 +183,7 @@
                     </div>
 
                     <!-- Today's Revenue -->
-                    <div class="bg-[#2B9DD1] text-white rounded-lg p-4 sm:p-6 shadow-lg">
+                    <div class="bg-gradient-to-r from-[#1e7ba8] to-[#5ec4f0] text-white rounded-lg p-4 sm:p-6 shadow-lg">
                         <div class="text-xs sm:text-sm font-medium opacity-90 mb-1 sm:mb-2">Today's Revenue</div>
                         <div id="statTodayRevenue" class="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2">₱0.00</div>
                         <div class="flex items-center text-xs sm:text-sm">
@@ -195,7 +195,7 @@
                     </div>
 
                     <!-- Total Revenue -->
-                    <div class="bg-[#2B9DD1] text-white rounded-lg p-4 sm:p-6 shadow-lg">
+                    <div class="bg-gradient-to-r from-[#1e7ba8] to-[#5ec4f0] text-white rounded-lg p-4 sm:p-6 shadow-lg">
                         <div class="text-xs sm:text-sm font-medium opacity-90 mb-1 sm:mb-2">Total Revenue</div>
                         <div id="statTotalRevenue" class="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2">₱0.00</div>
                         <div class="flex items-center text-xs sm:text-sm">
@@ -216,7 +216,7 @@
                                 Pending Bookings <span id="pendingCount" class="ml-1 sm:ml-2 bg-yellow-400 text-white px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-bold">0</span>
                             </button>
                             <button id="completedTab" class="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-900 font-semibold relative whitespace-nowrap">
-                                Completed Transactions
+                                Completed Transactions <span id="completedCount" class="ml-1 sm:ml-2 bg-green-500 text-white px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-bold">0</span>
                             </button>
                             <button id="cancelledTab" class="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-900 font-semibold relative whitespace-nowrap">
                                 Cancelled Bookings <span id="cancelledCount" class="ml-1 sm:ml-2 bg-red-500 text-white px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-bold">0</span>
@@ -631,7 +631,7 @@
                                 </div>
                                 <div class="flex justify-between py-1">
                                     <span class="text-gray-700">Labor Cost:</span>
-                                    <span class="text-gray-900 font-semibold">₱ 80.00</span>
+                                    <span class="text-gray-900 font-semibold" id="laborCostDisplay">₱ 80.00</span>
                                 </div>
                             </div>
 
@@ -1383,8 +1383,9 @@
             // Update subtotal
             document.getElementById('partsSubtotal').textContent = `₱ ${partsSubtotal.toFixed(2)}`;
 
-            // Update grand total (parts + labor ₱80.00)
-            const laborCost = 80.00;
+            // Update labor cost display and grand total (parts + current labor cost)
+            const laborCost = window.currentBookingLaborCost || 80.00;
+            document.getElementById('laborCostDisplay').textContent = `₱ ${laborCost.toFixed(2)}`;
             const grandTotal = partsSubtotal + laborCost;
             document.getElementById('grandTotal').textContent = `₱ ${grandTotal.toFixed(2)}`;
         }
@@ -1733,6 +1734,12 @@
             if (isCompletedTabActive) {
                 renderTablePagination(currentCompletedPage, allCompletedBookings.length, bookingsPerPage, 'mainTablePagination', 'changeCompletedPage');
             }
+
+            // Update completed bookings count in tab
+            const completedCount = document.getElementById('completedCount');
+            if (completedCount) {
+                completedCount.textContent = allCompletedBookings.length;
+            }
         }
 
         // Render cancelled bookings
@@ -1851,6 +1858,12 @@
                 const response = await fetch(`/api/bookings/${bookingId}`);
                 const booking = await response.json();
 
+                // Fetch current labor cost based on service type
+                const laborCostResponse = await fetch('/api/settings/labor-costs');
+                const laborCosts = await laborCostResponse.json();
+                const currentLaborCost = laborCosts.find(lc => lc.service_type === booking.service_type);
+                const laborCostAmount = currentLaborCost ? parseFloat(currentLaborCost.cost) : parseFloat(booking.labor_cost);
+
                 // Populate Booking Information
                 document.getElementById('completedBookingNumber').textContent = booking.booking_number;
                 document.getElementById('completedCustomerName').textContent = booking.customer.name;
@@ -1897,8 +1910,11 @@
                 });
 
                 document.getElementById('completedPartsSubtotal').textContent = `₱ ${partsSubtotal.toFixed(2)}`;
-                document.getElementById('completedLaborCost').textContent = `₱ ${parseFloat(booking.labor_cost).toFixed(2)}`;
-                document.getElementById('completedGrandTotal').textContent = `₱ ${parseFloat(booking.total_amount).toFixed(2)}`;
+                document.getElementById('completedLaborCost').textContent = `₱ ${laborCostAmount.toFixed(2)}`;
+                
+                // Recalculate grand total with current labor cost
+                const grandTotal = partsSubtotal + laborCostAmount;
+                document.getElementById('completedGrandTotal').textContent = `₱ ${grandTotal.toFixed(2)}`;
 
                 openCompletedDetailsModal();
             } catch (error) {
@@ -2055,12 +2071,21 @@
                 const bookingResponse = await fetch(`/api/bookings/${bookingId}`);
                 const booking = await bookingResponse.json();
 
+                // Fetch current labor cost based on service type
+                const laborCostResponse = await fetch('/api/settings/labor-costs');
+                const laborCosts = await laborCostResponse.json();
+                const currentLaborCost = laborCosts.find(lc => lc.service_type === booking.service_type);
+                const laborCostAmount = currentLaborCost ? parseFloat(currentLaborCost.cost) : parseFloat(booking.labor_cost);
+                
+                // Store globally for updateReceipt function
+                window.currentBookingLaborCost = laborCostAmount;
+
                 // Populate service information
                 document.getElementById('recordServiceType').textContent = booking.service_type;
                 document.getElementById('recordBookingNumber').textContent = booking.booking_number;
                 document.getElementById('recordCustomerName').textContent = booking.customer.name;
                 document.getElementById('recordAppliance').textContent = booking.appliance;
-                document.getElementById('recordLaborCost').textContent = '₱' + parseFloat(booking.labor_cost).toFixed(2);
+                document.getElementById('recordLaborCost').textContent = '₱' + laborCostAmount.toFixed(2);
 
                 // Load available parts for this booking
                 const partsResponse = await fetch(`/api/bookings/${bookingId}/parts`);

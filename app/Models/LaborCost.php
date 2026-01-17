@@ -20,7 +20,7 @@ class LaborCost extends Model
     protected $casts = [
         'cost' => 'decimal:2',
         'previous_cost' => 'decimal:2',
-        'effective_date' => 'date',
+        'effective_date' => 'datetime',
     ];
 
     /**

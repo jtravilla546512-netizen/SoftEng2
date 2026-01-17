@@ -18,13 +18,10 @@ return new class extends Migration
             $table->string('brand')->nullable();
             $table->string('image')->nullable();
             $table->enum('category', [
-                'Aircon Spare Parts',
-                'Refrigerator Spare Parts',
-                'Aircon Units',
-                'Refrigerator Units',
                 'Aircon Unit',
-                'Spare Parts',
-                'Refrigerator Unit'
+                'Aircon Spare Parts',
+                'Refrigerator Unit',
+                'Refrigerator Spare Parts'
             ]);
             $table->text('description')->nullable();
             $table->integer('quantity')->default(0);

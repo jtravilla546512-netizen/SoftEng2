@@ -185,40 +185,15 @@
                                                 <th class="py-2 text-right text-xs font-bold text-gray-700 uppercase">Revenue</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-gray-100">
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">Monday</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱2,100</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">Tuesday</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱2,250</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">Wednesday</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱2,500</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">Thursday</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱2,350</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">Friday</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱1,950</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">Saturday</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱2,450</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50 bg-blue-50">
-                                                <td class="py-2 text-gray-700">Sunday</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱2,750</td>
+                                        <tbody id="dailySalesTableBody" class="divide-y divide-gray-100">
+                                            <tr>
+                                                <td colspan="2" class="py-4 text-center text-gray-500">Loading...</td>
                                             </tr>
                                         </tbody>
                                         <tfoot class="border-t-2 border-gray-300">
                                             <tr>
                                                 <td class="py-2 font-bold text-gray-900">Total</td>
-                                                <td class="py-2 text-right font-bold text-[#2B9DD1] text-lg">₱16,350</td>
+                                                <td id="dailySalesTotal" class="py-2 text-right font-bold text-[#2B9DD1] text-lg">₱0.00</td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -243,28 +218,15 @@
                                                 <th class="py-2 text-right text-xs font-bold text-gray-700 uppercase">Revenue</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-gray-100">
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">Week 32</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱16,200</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">Week 33</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱17,850</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">Week 34</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱16,750</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50 bg-blue-50">
-                                                <td class="py-2 text-gray-700">Week 35</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱18,500</td>
+                                        <tbody id="weeklySalesTableBody" class="divide-y divide-gray-100">
+                                            <tr>
+                                                <td colspan="2" class="py-4 text-center text-gray-500">Loading...</td>
                                             </tr>
                                         </tbody>
                                         <tfoot class="border-t-2 border-gray-300">
                                             <tr>
                                                 <td class="py-2 font-bold text-gray-900">Total</td>
-                                                <td class="py-2 text-right font-bold text-[#2B9DD1] text-lg">₱69,300</td>
+                                                <td id="weeklySalesTotal" class="py-2 text-right font-bold text-[#2B9DD1] text-lg">₱0.00</td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -289,40 +251,15 @@
                                                 <th class="py-2 text-right text-xs font-bold text-gray-700 uppercase">Revenue</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-gray-100">
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">April</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱68,200</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">May</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱71,850</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">June</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱69,500</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">July</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱66,750</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">August</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱67,200</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50">
-                                                <td class="py-2 text-gray-700">September</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱70,450</td>
-                                            </tr>
-                                            <tr class="hover:bg-gray-50 bg-blue-50">
-                                                <td class="py-2 text-gray-700">October</td>
-                                                <td class="py-2 text-right font-semibold text-gray-900">₱72,300</td>
+                                        <tbody id="monthlySalesTableBody" class="divide-y divide-gray-100">
+                                            <tr>
+                                                <td colspan="2" class="py-4 text-center text-gray-500">Loading...</td>
                                             </tr>
                                         </tbody>
                                         <tfoot class="border-t-2 border-gray-300">
                                             <tr>
                                                 <td class="py-2 font-bold text-gray-900">Total</td>
-                                                <td class="py-2 text-right font-bold text-[#2B9DD1] text-lg">₱486,250</td>
+                                                <td id="monthlySalesTotal" class="py-2 text-right font-bold text-[#2B9DD1] text-lg">₱0.00</td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -348,66 +285,9 @@
                                         <th class="px-4 py-3 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-medium">RP001</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900">Robin Scherbatsky</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">James Caraan</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Repair</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱225.00</td>
-                                        <td class="px-4 py-3 text-center">
-                                            <button class="px-3 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded-lg transition-colors">
-                                                View Details
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-medium">INS001</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900">Ted Mosby</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Ryan Rems</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Installation</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱80.00</td>
-                                        <td class="px-4 py-3 text-center">
-                                            <button class="px-3 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded-lg transition-colors">
-                                                View Details
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-medium">MN001</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900">Marshall Eriksen</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Nonong Ballman</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Maintenance</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱125.00</td>
-                                        <td class="px-4 py-3 text-center">
-                                            <button class="px-3 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded-lg transition-colors">
-                                                View Details
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-medium">RP002</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900">Lily Aldrin</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">James Caraan</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Repair</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱350.00</td>
-                                        <td class="px-4 py-3 text-center">
-                                            <button class="px-3 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded-lg transition-colors">
-                                                View Details
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-medium">CL001</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900">Barney Stinson</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">GB Labrador</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Cleaning</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱150.00</td>
-                                        <td class="px-4 py-3 text-center">
-                                            <button class="px-3 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded-lg transition-colors">
-                                                View Details
-                                            </button>
-                                        </td>
+                                <tbody id="detailedSalesTableBody" class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td colspan="6" class="px-4 py-8 text-center text-gray-500">Loading...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -453,55 +333,15 @@
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Last Used</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">Compressor Unit(2HP)</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Air Conditioner</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">85</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Oct. 12, 2025</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">Fan Motor</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Refrigerator</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">52</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Oct. 10, 2025</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">Capacitor 45uF</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Air Conditioner</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">42</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Oct. 13, 2025</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">Thermostat Sensor</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Refrigerator</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">37</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Oct. 09, 2025</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">Filter Dryer</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Refrigerator</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">25</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Oct. 08, 2025</td>
+                                <tbody id="mostUsedPartsTableBody" class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td colspan="4" class="px-4 py-8 text-center text-gray-500">Loading...</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="px-4 py-3 bg-white border-t flex items-center justify-center gap-2">
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">1</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">2</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">3</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">4</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
+                        <div id="mostUsedPartsPagination" class="px-4 py-3 bg-white border-t flex items-center justify-center gap-2">
+                            <!-- Pagination will be generated dynamically -->
                         </div>
                     </div>
 
@@ -523,55 +363,15 @@
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Bookings</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">AC General Cleaning</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Air Conditioner</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱125,000.00</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">300</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">Refrigerator Repair</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Refrigerator</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱92,500.00</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">220</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">AC Installation</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Air Conditioner</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱85,992.00</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">195</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">AC Repair</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Air Conditioner</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱73,293.00</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">180</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">Refrigerator Cleaning</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Refrigerator</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱69,203.00</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">90</td>
+                                <tbody id="topServicesTableBody" class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td colspan="4" class="px-4 py-3 text-center text-gray-500">Loading...</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="px-4 py-3 bg-white border-t flex items-center justify-center gap-2">
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">1</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">2</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">3</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">4</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
+                        <div id="topServicesPagination" class="px-4 py-3 bg-white border-t flex items-center justify-center gap-2">
+                            <!-- Pagination will be generated dynamically -->
                         </div>
                     </div>
 
@@ -592,50 +392,15 @@
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Jobs Completed</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">James Caraan</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱125,000.00</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">52</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">Nonong Ballman</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱92,500.00</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">47</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">GB Labrador</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱85,992.00</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">43</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">Ryan Rems</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱73,293.00</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">39</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">Muman Reyes</td>
-                                        <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱69,203.00</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">35</td>
+                                <tbody id="topTechniciansTableBody" class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td colspan="3" class="px-4 py-3 text-center text-gray-500">Loading...</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="px-4 py-3 bg-white border-t flex items-center justify-center gap-2">
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">1</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">2</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">3</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">4</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
+                        <div id="topTechniciansPagination" class="px-4 py-3 bg-white border-t flex items-center justify-center gap-2">
+                            <!-- Pagination will be generated dynamically -->
                         </div>
                     </div>
 
@@ -811,6 +576,11 @@
                 // Show/Hide content
                 salesAnalyticsContent.classList.add('hidden');
                 otherReportsContent.classList.remove('hidden');
+
+                // Load most used parts, top services, and top technicians when switching to Other Reports tab
+                loadMostUsedParts(1);
+                loadTopServicesOfMonth(1);
+                loadTopPerformingTechnicians(1);
             }
         }
 
@@ -818,6 +588,10 @@
         async function loadReportsData() {
             try {
                 await Promise.all([
+                    loadDailySales(),
+                    loadWeeklySales(),
+                    loadMonthlySales(),
+                    loadCompletedBookings(),
                     loadOverallStats(),
                     loadRevenueData(),
                     loadServiceAnalytics(),
@@ -825,6 +599,115 @@
                 ]);
             } catch (error) {
                 console.error('Error loading reports data:', error);
+            }
+        }
+
+        // Load daily sales by day of week
+        async function loadDailySales() {
+            try {
+                const response = await fetch('/api/reports/daily-sales');
+                const data = await response.json();
+
+                const tbody = document.getElementById('dailySalesTableBody');
+                const totalElement = document.getElementById('dailySalesTotal');
+
+                tbody.innerHTML = '';
+
+                if (data.daily_sales && data.daily_sales.length > 0) {
+                    data.daily_sales.forEach((item, index) => {
+                        const isToday = new Date(item.date).toDateString() === new Date().toDateString();
+                        const rowClass = isToday ? 'hover:bg-gray-50 bg-blue-50' : 'hover:bg-gray-50';
+                        
+                        const row = `
+                            <tr class="${rowClass}">
+                                <td class="py-2 text-gray-700">${item.day}</td>
+                                <td class="py-2 text-right font-semibold text-gray-900">₱${parseFloat(item.revenue).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+
+                    totalElement.textContent = '₱' + parseFloat(data.total).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="2" class="py-4 text-center text-gray-500">No sales data available</td></tr>';
+                    totalElement.textContent = '₱0.00';
+                }
+            } catch (error) {
+                console.error('Error loading daily sales:', error);
+                const tbody = document.getElementById('dailySalesTableBody');
+                tbody.innerHTML = '<tr><td colspan="2" class="py-4 text-center text-red-500">Failed to load daily sales</td></tr>';
+            }
+        }
+
+        // Load weekly sales starting from current week as Week 1
+        async function loadWeeklySales() {
+            try {
+                const response = await fetch('/api/reports/weekly-sales');
+                const data = await response.json();
+
+                const tbody = document.getElementById('weeklySalesTableBody');
+                const totalElement = document.getElementById('weeklySalesTotal');
+
+                tbody.innerHTML = '';
+
+                if (data.weekly_sales && data.weekly_sales.length > 0) {
+                    data.weekly_sales.forEach((item) => {
+                        const rowClass = item.is_current_week ? 'hover:bg-gray-50 bg-blue-50' : 'hover:bg-gray-50';
+                        
+                        const row = `
+                            <tr class="${rowClass}">
+                                <td class="py-2 text-gray-700">${item.week_label}</td>
+                                <td class="py-2 text-right font-semibold text-gray-900">₱${parseFloat(item.revenue).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+
+                    totalElement.textContent = '₱' + parseFloat(data.total).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="2" class="py-4 text-center text-gray-500">No weekly sales data available</td></tr>';
+                    totalElement.textContent = '₱0.00';
+                }
+            } catch (error) {
+                console.error('Error loading weekly sales:', error);
+                const tbody = document.getElementById('weeklySalesTableBody');
+                tbody.innerHTML = '<tr><td colspan="2" class="py-4 text-center text-red-500">Failed to load weekly sales</td></tr>';
+            }
+        }
+
+        // Load monthly sales starting from current month
+        async function loadMonthlySales() {
+            try {
+                const response = await fetch('/api/reports/monthly-sales');
+                const data = await response.json();
+
+                const tbody = document.getElementById('monthlySalesTableBody');
+                const totalElement = document.getElementById('monthlySalesTotal');
+
+                tbody.innerHTML = '';
+
+                if (data.monthly_sales && data.monthly_sales.length > 0) {
+                    data.monthly_sales.forEach((item) => {
+                        const rowClass = item.is_current_month ? 'hover:bg-gray-50 bg-blue-50' : 'hover:bg-gray-50';
+                        
+                        const row = `
+                            <tr class="${rowClass}">
+                                <td class="py-2 text-gray-700">${item.month_label}</td>
+                                <td class="py-2 text-right font-semibold text-gray-900">₱${parseFloat(item.revenue).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+
+                    totalElement.textContent = '₱' + parseFloat(data.total).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="2" class="py-4 text-center text-gray-500">No monthly sales data available</td></tr>';
+                    totalElement.textContent = '₱0.00';
+                }
+            } catch (error) {
+                console.error('Error loading monthly sales:', error);
+                const tbody = document.getElementById('monthlySalesTableBody');
+                tbody.innerHTML = '<tr><td colspan="2" class="py-4 text-center text-red-500">Failed to load monthly sales</td></tr>';
             }
         }
 
@@ -884,6 +767,315 @@
             } catch (error) {
                 console.error('Error loading technician performance:', error);
             }
+        }
+
+        // Load completed bookings for detailed sales table
+        async function loadCompletedBookings() {
+            try {
+                const response = await fetch('/api/reports/completed-bookings?per_page=10');
+                const data = await response.json();
+
+                const tbody = document.getElementById('detailedSalesTableBody');
+                tbody.innerHTML = '';
+
+                if (data.data && data.data.length > 0) {
+                    data.data.forEach(booking => {
+                        const technicianName = booking.technician ? booking.technician.name : 'N/A';
+                        const customerName = booking.customer ? booking.customer.name : 'N/A';
+                        
+                        const row = `
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3 text-sm text-gray-900 font-medium">${booking.booking_number}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">${customerName}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">${technicianName}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">${booking.service_type}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱${parseFloat(booking.total_amount).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                <td class="px-4 py-3 text-center">
+                                    <button onclick="viewBookingDetails('${booking.id}')" class="px-3 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded-lg transition-colors">
+                                        View Details
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">No completed bookings found</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading completed bookings:', error);
+                const tbody = document.getElementById('detailedSalesTableBody');
+                tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-red-500">Failed to load bookings</td></tr>';
+            }
+        }
+
+        // Load most used parts with pagination
+        let currentMostUsedPartsPage = 1;
+        async function loadMostUsedParts(page = 1) {
+            try {
+                currentMostUsedPartsPage = page;
+                const response = await fetch(`/api/reports/most-used-parts?per_page=5&page=${page}`);
+                const data = await response.json();
+
+                const tbody = document.getElementById('mostUsedPartsTableBody');
+                tbody.innerHTML = '';
+
+                if (data.data && data.data.length > 0) {
+                    data.data.forEach(part => {
+                        const lastUsed = part.last_used ? new Date(part.last_used).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                        }) : 'N/A';
+                        
+                        const row = `
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3 text-sm text-gray-900">${part.name}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">${part.category}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900 font-semibold">${part.usage_count}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">${lastUsed}</td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+
+                    // Update pagination
+                    renderMostUsedPartsPagination(data);
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" class="px-4 py-8 text-center text-gray-500">No parts usage data available</td></tr>';
+                    document.getElementById('mostUsedPartsPagination').innerHTML = '';
+                }
+            } catch (error) {
+                console.error('Error loading most used parts:', error);
+                const tbody = document.getElementById('mostUsedPartsTableBody');
+                tbody.innerHTML = '<tr><td colspan="4" class="px-4 py-8 text-center text-red-500">Failed to load parts data</td></tr>';
+            }
+        }
+
+        // Render pagination for most used parts
+        function renderMostUsedPartsPagination(data) {
+            const paginationDiv = document.getElementById('mostUsedPartsPagination');
+            
+            if (data.last_page <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = '';
+
+            // Previous button
+            paginationHTML += `
+                <button onclick="loadMostUsedParts(${data.current_page - 1})" 
+                        class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" 
+                        ${data.current_page === 1 ? 'disabled' : ''}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            // Page numbers
+            for (let i = 1; i <= data.last_page; i++) {
+                const activeClass = i === data.current_page 
+                    ? 'text-white bg-[#2B9DD1] hover:bg-[#1e7ba8]' 
+                    : 'text-gray-700 hover:bg-gray-50';
+                
+                paginationHTML += `
+                    <button onclick="loadMostUsedParts(${i})" 
+                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium ${activeClass} transition-colors">
+                        ${i}
+                    </button>
+                `;
+            }
+
+            // Next button
+            paginationHTML += `
+                <button onclick="loadMostUsedParts(${data.current_page + 1})" 
+                        class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" 
+                        ${data.current_page === data.last_page ? 'disabled' : ''}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            paginationDiv.innerHTML = paginationHTML;
+        }
+
+        // Load Top Services of the Month (with pagination)
+        async function loadTopServicesOfMonth(page = 1) {
+            try {
+                const response = await fetch(`/api/reports/top-services-month?per_page=5&page=${page}`);
+                const data = await response.json();
+
+                const tbody = document.getElementById('topServicesTableBody');
+                tbody.innerHTML = '';
+
+                if (data.data && data.data.length > 0) {
+                    data.data.forEach((service) => {
+                        const row = `
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3 text-sm text-gray-900">${service.service_type || 'N/A'}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">${service.appliance || 'N/A'}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱${parseFloat(service.revenue).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">${service.bookings_count}</td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+
+                    // Render pagination
+                    renderTopServicesPagination(data);
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" class="px-4 py-4 text-center text-gray-500">No services data available for this month</td></tr>';
+                    document.getElementById('topServicesPagination').innerHTML = '';
+                }
+            } catch (error) {
+                console.error('Error loading top services:', error);
+                const tbody = document.getElementById('topServicesTableBody');
+                tbody.innerHTML = '<tr><td colspan="4" class="px-4 py-4 text-center text-red-500">Failed to load top services</td></tr>';
+            }
+        }
+
+        // Render pagination for Top Services of the Month
+        function renderTopServicesPagination(data) {
+            const paginationDiv = document.getElementById('topServicesPagination');
+            
+            if (data.last_page <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = '';
+
+            // Previous button
+            paginationHTML += `
+                <button onclick="loadTopServicesOfMonth(${data.current_page - 1})" 
+                        class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" 
+                        ${data.current_page === 1 ? 'disabled' : ''}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            // Page numbers
+            for (let i = 1; i <= data.last_page; i++) {
+                const activeClass = i === data.current_page 
+                    ? 'text-white bg-[#2B9DD1] hover:bg-[#1e7ba8]' 
+                    : 'text-gray-700 hover:bg-gray-50';
+                
+                paginationHTML += `
+                    <button onclick="loadTopServicesOfMonth(${i})" 
+                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium ${activeClass} transition-colors">
+                        ${i}
+                    </button>
+                `;
+            }
+
+            // Next button
+            paginationHTML += `
+                <button onclick="loadTopServicesOfMonth(${data.current_page + 1})" 
+                        class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" 
+                        ${data.current_page === data.last_page ? 'disabled' : ''}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            paginationDiv.innerHTML = paginationHTML;
+        }
+
+        // Load Top Performing Technicians (with pagination)
+        async function loadTopPerformingTechnicians(page = 1) {
+            try {
+                const response = await fetch(`/api/reports/top-technicians?per_page=5&page=${page}`);
+                const data = await response.json();
+
+                const tbody = document.getElementById('topTechniciansTableBody');
+                tbody.innerHTML = '';
+
+                if (data.data && data.data.length > 0) {
+                    data.data.forEach((technician) => {
+                        const row = `
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3 text-sm text-gray-900">${technician.technician_name || 'N/A'}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900 font-semibold">₱${parseFloat(technician.revenue_generated).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">${technician.jobs_completed}</td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+
+                    // Render pagination
+                    renderTopTechniciansPagination(data);
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-4 text-center text-gray-500">No technician performance data available</td></tr>';
+                    document.getElementById('topTechniciansPagination').innerHTML = '';
+                }
+            } catch (error) {
+                console.error('Error loading top technicians:', error);
+                const tbody = document.getElementById('topTechniciansTableBody');
+                tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-4 text-center text-red-500">Failed to load top technicians</td></tr>';
+            }
+        }
+
+        // Render pagination for Top Performing Technicians
+        function renderTopTechniciansPagination(data) {
+            const paginationDiv = document.getElementById('topTechniciansPagination');
+            
+            if (data.last_page <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = '';
+
+            // Previous button
+            paginationHTML += `
+                <button onclick="loadTopPerformingTechnicians(${data.current_page - 1})" 
+                        class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" 
+                        ${data.current_page === 1 ? 'disabled' : ''}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            // Page numbers
+            for (let i = 1; i <= data.last_page; i++) {
+                const activeClass = i === data.current_page 
+                    ? 'text-white bg-[#2B9DD1] hover:bg-[#1e7ba8]' 
+                    : 'text-gray-700 hover:bg-gray-50';
+                
+                paginationHTML += `
+                    <button onclick="loadTopPerformingTechnicians(${i})" 
+                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium ${activeClass} transition-colors">
+                        ${i}
+                    </button>
+                `;
+            }
+
+            // Next button
+            paginationHTML += `
+                <button onclick="loadTopPerformingTechnicians(${data.current_page + 1})" 
+                        class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" 
+                        ${data.current_page === data.last_page ? 'disabled' : ''}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            paginationDiv.innerHTML = paginationHTML;
+        }
+
+        // View booking details (placeholder function)
+        function viewBookingDetails(bookingId) {
+            console.log('View booking details:', bookingId);
+            // This can be implemented to show a modal with full booking details
+            alert('Booking details feature - Coming soon!');
         }
     </script>
 </body>

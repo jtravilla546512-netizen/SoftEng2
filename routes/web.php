@@ -83,6 +83,13 @@ Route::prefix('api/customers')->group(function () {
 // Reports API routes
 Route::prefix('api/reports')->group(function () {
     Route::get('/revenue', [ReportsController::class, 'getRevenueAnalytics']); // Revenue analytics
+    Route::get('/daily-sales', [ReportsController::class, 'getDailySales']); // Daily sales by day of week
+    Route::get('/weekly-sales', [ReportsController::class, 'getWeeklySales']); // Weekly sales
+    Route::get('/monthly-sales', [ReportsController::class, 'getMonthlySales']); // Monthly sales
+    Route::get('/completed-bookings', [ReportsController::class, 'getCompletedBookings']); // Completed bookings
+    Route::get('/most-used-parts', [ReportsController::class, 'getMostUsedParts']); // Most used parts with pagination
+    Route::get('/top-services-month', [ReportsController::class, 'getTopServicesOfMonth']); // Top services of the month
+    Route::get('/top-technicians', [ReportsController::class, 'getTopPerformingTechnicians']); // Top performing technicians
     Route::get('/services', [ReportsController::class, 'getServiceAnalytics']); // Service analytics
     Route::get('/appliances', [ReportsController::class, 'getApplianceAnalytics']); // Appliance analytics
     Route::get('/technicians', [ReportsController::class, 'getTechnicianPerformance']); // Technician performance

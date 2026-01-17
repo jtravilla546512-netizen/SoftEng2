@@ -246,7 +246,7 @@
 
                 <div class="mb-4">
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Current Rate</label>
-                    <input type="text" id="currentRate" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600" readonly>
+                    <input type="text" id="currentRate" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 font-semibold cursor-not-allowed" readonly>
                 </div>
 
                 <div class="mb-6">
@@ -400,12 +400,12 @@
         function openEditModal(serviceType) {
             currentService = serviceType;
 
-            // Find the cost by service type (case insensitive)
+            // Find the cost by exact service type match
             const cost = Object.values(laborCosts).find(c =>
-                c.service_type.toLowerCase().includes(serviceType.toLowerCase())
+                c.service_type === serviceType
             );
 
-            console.log('Opening modal for:', serviceType, 'Found cost:', cost); // Debug
+            console.log('Opening modal for:', serviceType, 'Found cost:', cost, 'All costs:', laborCosts); // Debug
 
             document.getElementById('serviceType').value = serviceType;
             document.getElementById('currentRate').value = '₱' + (cost ? parseFloat(cost.cost).toFixed(2) : '0.00');

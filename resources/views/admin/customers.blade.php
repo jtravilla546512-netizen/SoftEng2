@@ -155,19 +155,19 @@
             <div class="p-4 sm:p-6 md:p-8">
                 <!-- Stats Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
+                    <div class="bg-gradient-to-r from-[#1e7ba8] to-[#5ec4f0] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2">Total Customers</p>
                         <p id="statTotalCustomers" class="text-2xl sm:text-3xl font-bold">0</p>
                     </div>
-                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
+                    <div class="bg-gradient-to-r from-[#1e7ba8] to-[#5ec4f0] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2">Pending Services</p>
                         <p id="statPendingServices" class="text-2xl sm:text-3xl font-bold">0</p>
                     </div>
-                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
+                    <div class="bg-gradient-to-r from-[#1e7ba8] to-[#5ec4f0] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2">Completed Services</p>
                         <p id="statCompletedServices" class="text-2xl sm:text-3xl font-bold">0</p>
                     </div>
-                    <div class="bg-[#2B9DD1] text-white rounded-lg shadow-lg p-4 sm:p-6">
+                    <div class="bg-gradient-to-r from-[#1e7ba8] to-[#5ec4f0] text-white rounded-lg shadow-lg p-4 sm:p-6">
                         <p class="text-xs sm:text-sm opacity-90 mb-1 sm:mb-2">Cancelled Services</p>
                         <p id="statCancelledServices" class="text-2xl sm:text-3xl font-bold">0</p>
                     </div>

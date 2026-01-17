@@ -98,7 +98,7 @@
                     </a>
                 </div>
 
-                <!-- Spacer to push Admin Login to the right -->
+                <!-- Spacer to push                                                      Login to the right -->
                 <div class="flex-grow"></div>
 
                 <!-- Admin Login Button -->

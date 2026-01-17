@@ -98,9 +98,9 @@ class CustomerController extends Controller
     {
         $stats = [
             'total' => Customer::count(),
-            'new' => Customer::where('total_bookings', '<=', 1)->count(),
-            'returning' => Customer::where('total_bookings', '>=', 2)->count(),
-            'total_revenue' => Customer::sum('total_spent'),
+            'pending' => \App\Models\Booking::where('status', 'Pending')->count(),
+            'completed' => \App\Models\Booking::where('status', 'Completed')->count(),
+            'cancelled' => \App\Models\Booking::where('status', 'Cancelled')->count(),
         ];
 
         return response()->json($stats);
