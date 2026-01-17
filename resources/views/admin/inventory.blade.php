@@ -167,8 +167,9 @@
                             <select id="categoryFilter" onchange="filterInventory()" class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:flex-1 lg:w-64 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
                                 <option value="">All Categories</option>
                                 <option>Aircon Unit</option>
-                                <option>Spare Parts</option>
+                                <option>Aircon Spare Parts</option>
                                 <option>Refrigerator Unit</option>
+                                <option>Refrigerator Spare Parts</option>
                             </select>
                             <select id="brandFilter" onchange="filterInventory()" class="border border-gray-300 rounded-lg px-3 sm:px-4 py-2 w-full sm:flex-1 lg:w-64 text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
                                 <option value="">All Brands</option>
@@ -191,26 +192,13 @@
                     </div>
 
                     <!-- Product Grid -->
-                    <div id="inventoryGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                    <div id="inventoryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                         <!-- Items will be loaded dynamically -->
                     </div>
 
                     <!-- Pagination -->
-                    <div class="mt-6 flex items-center justify-center gap-2">
-                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">1</button>
-                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">2</button>
-                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">3</button>
-                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">4</button>
-                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
+                    <div id="paginationContainer" class="mt-6 flex items-center justify-center gap-2">
+                        <!-- Pagination will be dynamically generated -->
                     </div>
                 </div>
             </div>
@@ -384,8 +372,9 @@
                             <select id="category" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
                                 <option value="">Select Category</option>
                                 <option value="Aircon Unit">Aircon Unit</option>
-                                <option value="Spare Parts">Spare Parts</option>
+                                <option value="Aircon Spare Parts">Aircon Spare Parts</option>
                                 <option value="Refrigerator Unit">Refrigerator Unit</option>
+                                <option value="Refrigerator Spare Parts">Refrigerator Spare Parts</option>
                             </select>
                         </div>
                         <div>
@@ -491,8 +480,9 @@
                             <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Category <span class="text-red-500">*</span></label>
                             <select id="editCategory" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" style="font-family: 'Lato', sans-serif;">
                                 <option value="Aircon Unit">Aircon Unit</option>
-                                <option value="Spare Parts">Spare Parts</option>
+                                <option value="Aircon Spare Parts">Aircon Spare Parts</option>
                                 <option value="Refrigerator Unit">Refrigerator Unit</option>
+                                <option value="Refrigerator Spare Parts">Refrigerator Spare Parts</option>
                             </select>
                         </div>
                         <div>
@@ -558,8 +548,27 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Notes / Reason</label>
-                        <textarea rows="3" id="stockInReason" placeholder="e.g., Purchase order #12345, Supplier: ABC Company" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Reason for Stock In <span class="text-red-500">*</span></label>
+                        <select id="stockInReasonSelect" onchange="toggleCustomStockInReason()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
+                            <option value="">Select a reason...</option>
+                            <option value="Restock">Restock - Regular inventory replenishment</option>
+                            <option value="New Delivery">New Delivery - Fresh supplier delivery</option>
+                            <option value="Return from Customer">Return from Customer - Customer returned item</option>
+                            <option value="Found Stock">Found Stock - Discovered missing inventory</option>
+                            <option value="Transfer In">Transfer In - From another location/warehouse</option>
+                            <option value="Damaged Item Replaced">Damaged Item Replaced - Insurance/warranty replacement</option>
+                            <option value="Other">Other - Specify custom reason</option>
+                        </select>
+                    </div>
+
+                    <div id="stockInCustomReasonDiv" class="hidden">
+                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Custom Reason</label>
+                        <textarea rows="2" id="stockInCustomReason" placeholder="Please specify the custom reason..." class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Additional Notes (Optional)</label>
+                        <textarea rows="2" id="stockInNotes" placeholder="e.g., Purchase order #12345, Supplier: ABC Company" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
                     </div>
                 </div>
             </div>
@@ -615,8 +624,28 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Reason</label>
-                        <textarea rows="3" id="stockOutReason" placeholder="e.g., Used for service booking #12345, Damaged item, etc." class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Reason for Stock Out <span class="text-red-500">*</span></label>
+                        <select id="stockOutReasonSelect" onchange="toggleCustomStockOutReason()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;" required>
+                            <option value="">Select a reason...</option>
+                            <option value="Defective Item">Defective Item - Item is damaged/broken</option>
+                            <option value="Return to Supplier">Return to Supplier - Sending back to vendor</option>
+                            <option value="Used in Service">Used in Service - Consumed during job</option>
+                            <option value="Lost/Missing">Lost/Missing - Cannot locate item</option>
+                            <option value="Expired/Obsolete">Expired/Obsolete - Past useful life</option>
+                            <option value="Transfer Out">Transfer Out - Moved to another location</option>
+                            <option value="Theft/Damage">Theft/Damage - Security/accident loss</option>
+                            <option value="Other">Other - Specify custom reason</option>
+                        </select>
+                    </div>
+
+                    <div id="stockOutCustomReasonDiv" class="hidden">
+                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Custom Reason</label>
+                        <textarea rows="2" id="stockOutCustomReason" placeholder="Please specify the custom reason..." class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2" style="font-family: 'Lato', sans-serif;">Additional Notes (Optional)</label>
+                        <textarea rows="2" id="stockOutNotes" placeholder="e.g., More details about the stock removal..." class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent" style="font-family: 'Lato', sans-serif;"></textarea>
                     </div>
                 </div>
 
@@ -886,6 +915,37 @@
             document.getElementById('editModal').classList.add('hidden');
         }
 
+        // Toggle custom reason fields
+        function toggleCustomStockInReason() {
+            const select = document.getElementById('stockInReasonSelect');
+            const customDiv = document.getElementById('stockInCustomReasonDiv');
+            const customTextarea = document.getElementById('stockInCustomReason');
+
+            if (select.value === 'Other') {
+                customDiv.classList.remove('hidden');
+                customTextarea.required = true;
+            } else {
+                customDiv.classList.add('hidden');
+                customTextarea.required = false;
+                customTextarea.value = '';
+            }
+        }
+
+        function toggleCustomStockOutReason() {
+            const select = document.getElementById('stockOutReasonSelect');
+            const customDiv = document.getElementById('stockOutCustomReasonDiv');
+            const customTextarea = document.getElementById('stockOutCustomReason');
+
+            if (select.value === 'Other') {
+                customDiv.classList.remove('hidden');
+                customTextarea.required = true;
+            } else {
+                customDiv.classList.add('hidden');
+                customTextarea.required = false;
+                customTextarea.value = '';
+            }
+        }
+
         function openStockInModal() {
             // Fetch current item details first
             if (currentItemId) {
@@ -904,9 +964,17 @@
 
         function closeStockInModal() {
             document.getElementById('stockInModal').classList.add('hidden');
+            currentItemId = null;
+
             // Clear form
             document.getElementById('stockInQuantity').value = '';
-            document.getElementById('stockInReason').value = '';
+            document.getElementById('stockInReasonSelect').value = '';
+            document.getElementById('stockInCustomReason').value = '';
+            document.getElementById('stockInNotes').value = '';
+
+            // Hide custom reason field
+            document.getElementById('stockInCustomReasonDiv').classList.add('hidden');
+            document.getElementById('stockInCustomReason').required = false;
         }
 
         function openStockOutModal() {
@@ -928,26 +996,61 @@
 
         function closeStockOutModal() {
             document.getElementById('stockOutModal').classList.add('hidden');
+            currentItemId = null;
+
             // Clear form
             document.getElementById('stockOutQuantity').value = '';
             document.getElementById('stockOutBookingId').value = '';
-            document.getElementById('stockOutReason').value = '';
+            document.getElementById('stockOutReasonSelect').value = '';
+            document.getElementById('stockOutCustomReason').value = '';
+            document.getElementById('stockOutNotes').value = '';
+
+            // Hide custom reason field
+            document.getElementById('stockOutCustomReasonDiv').classList.add('hidden');
+            document.getElementById('stockOutCustomReason').required = false;
         }
 
         async function confirmStockOut() {
             try {
                 const quantity = parseInt(document.getElementById('stockOutQuantity').value);
                 const bookingId = document.getElementById('stockOutBookingId').value;
-                const reason = document.getElementById('stockOutReason').value;
+                const reasonSelect = document.getElementById('stockOutReasonSelect').value;
+                const customReason = document.getElementById('stockOutCustomReason').value;
+                const notes = document.getElementById('stockOutNotes').value;
 
+                // Validate required fields
                 if (!quantity || quantity <= 0) {
                     alert('Please enter a valid quantity');
                     return;
                 }
 
+                if (!reasonSelect) {
+                    alert('Please select a reason for stock out');
+                    return;
+                }
+
+                if (reasonSelect === 'Other' && !customReason.trim()) {
+                    alert('Please specify the custom reason');
+                    return;
+                }
+
+                // Build reason string
+                let finalReason = reasonSelect;
+                if (reasonSelect === 'Other') {
+                    finalReason = customReason.trim();
+                } else {
+                    // Remove description part, keep only the main reason
+                    finalReason = reasonSelect.split(' - ')[0];
+                }
+
+                // Add notes if provided
+                if (notes.trim()) {
+                    finalReason += ` | Notes: ${notes.trim()}`;
+                }
+
                 const data = {
                     quantity,
-                    reason: reason || 'Stock removed'
+                    reason: finalReason
                 };
 
                 if (bookingId) {
@@ -1018,6 +1121,9 @@
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let currentItemId = null;
         let allInventoryItems = []; // Store all items for filtering
+        let filteredItems = []; // Store filtered items for pagination
+        let currentPage = 1;
+        const itemsPerPage = 12;
 
         // Filter inventory based on search and filters
         function filterInventory() {
@@ -1026,7 +1132,7 @@
             const brandFilter = document.getElementById('brandFilter').value;
             const statusFilter = document.getElementById('statusFilter').value;
 
-            const filteredItems = allInventoryItems.filter(item => {
+            filteredItems = allInventoryItems.filter(item => {
                 const matchesSearch = item.name.toLowerCase().includes(searchTerm);
                 const matchesCategory = !categoryFilter || item.category === categoryFilter;
                 const matchesBrand = !brandFilter || item.brand === brandFilter;
@@ -1035,8 +1141,12 @@
                 return matchesSearch && matchesCategory && matchesBrand && matchesStatus;
             });
 
+            // Reset to page 1 when filtering
+            currentPage = 1;
+
             // Update display with filtered items
             renderInventoryItems(filteredItems);
+            renderPagination(filteredItems);
             updateStats(filteredItems);
         }
 
@@ -1050,16 +1160,38 @@
                 return;
             }
 
-            items.forEach(item => {
+            // Pagination: slice items for current page
+            const startIdx = (currentPage - 1) * itemsPerPage;
+            const endIdx = startIdx + itemsPerPage;
+            const paginatedItems = items.slice(startIdx, endIdx);
+
+            paginatedItems.forEach(item => {
                 const statusColor = item.status === 'In Stock' ? 'green' : item.status === 'Low Stock' ? 'yellow' : 'red';
                 const statusText = item.status === 'In Stock' ? 'text-green-700' : item.status === 'Low Stock' ? 'text-yellow-700' : 'text-red-700';
                 const statusBg = item.status === 'In Stock' ? 'bg-green-100' : item.status === 'Low Stock' ? 'bg-yellow-100' : 'bg-red-100';
+
+                // Category badge colors - consistent per category
+                let categoryBg = 'bg-gray-100';
+                let categoryText = 'text-gray-700';
+                if (item.category === 'Aircon Unit') {
+                    categoryBg = 'bg-yellow-100';
+                    categoryText = 'text-yellow-700';
+                } else if (item.category === 'Aircon Spare Parts') {
+                    categoryBg = 'bg-blue-100';
+                    categoryText = 'text-blue-700';
+                } else if (item.category === 'Refrigerator Unit') {
+                    categoryBg = 'bg-purple-100';
+                    categoryText = 'text-purple-700';
+                } else if (item.category === 'Refrigerator Spare Parts') {
+                    categoryBg = 'bg-green-100';
+                    categoryText = 'text-green-700';
+                }
 
                 const card = `
                     <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                         <div class="p-4 sm:p-6">
                             <div class="flex justify-between items-start mb-4">
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full ${statusBg} ${statusText}">${item.category}</span>
+                                <span class="px-3 py-1 text-xs font-semibold rounded-full ${categoryBg} ${categoryText}">${item.category}</span>
                                 <div class="relative">
                                     <button onclick="toggleDropdown('dropdown${item.id}')" class="p-1 hover:bg-gray-100 rounded-lg transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
@@ -1076,10 +1208,8 @@
                             <div class="text-center mb-4">
                                 <div class="w-20 h-20 mx-auto mb-3 flex items-center justify-center bg-gray-100 rounded-full overflow-hidden">
                                     ${item.image ?
-                                        `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` :
-                                        `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                        </svg>`
+                                        '<img src="' + item.image + '" alt="' + item.name + '" class="w-full h-full object-cover">' :
+                                        '<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>'
                                     }
                                 </div>
                                 <h3 class="text-lg font-semibold text-gray-800">${item.name}</h3>
@@ -1138,70 +1268,115 @@
                 const items = await response.json();
 
                 allInventoryItems = items; // Store for filtering
+                filteredItems = items; // Initialize filtered items
+                currentPage = 1; // Reset to page 1
                 renderInventoryItems(items);
+                renderPagination(items);
                 updateStats(items);
+                updateBrandFilter(items); // Add this to populate brand options
             } catch (error) {
                 console.error('Error loading inventory:', error);
                 document.getElementById('inventoryGrid').innerHTML = '<div class="col-span-full text-center py-8 text-red-500">Failed to load inventory items</div>';
             }
         }
-                grid.innerHTML = '';
 
-                items.forEach(item => {
-                    const statusColor = item.status === 'In Stock' ? 'green' : item.status === 'Low Stock' ? 'yellow' : 'red';
-                    const statusText = item.status === 'In Stock' ? 'text-green-700' : item.status === 'Low Stock' ? 'text-yellow-700' : 'text-red-700';
-                    const statusBg = item.status === 'In Stock' ? 'bg-green-100' : item.status === 'Low Stock' ? 'bg-yellow-100' : 'bg-red-100';
+        // Update brand filter with available brands
+        function updateBrandFilter(items) {
+            const brandFilter = document.getElementById('brandFilter');
+            const currentSelection = brandFilter.value;
 
-                    const card = `
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                            <div class="p-4 sm:p-6">
-                                <div class="flex justify-between items-start mb-4">
-                                    <span class="px-3 py-1 text-xs font-semibold rounded-full ${statusBg} ${statusText}">${item.category}</span>
-                                    <div class="relative">
-                                        <button onclick="toggleDropdown('dropdown${item.id}')" class="p-1 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                            </svg>
-                                        </button>
-                                        <div id="dropdown${item.id}" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 border border-gray-200">
-                                            <a href="#" onclick="viewItemDetails(${item.id}); return false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">View Details</a>
-                                            <a href="#" onclick="openEditItemModal(${item.id}); return false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Edit</a>
-                                            <a href="#" onclick="confirmDeleteItem(${item.id}); return false;" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-50 transition-colors">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center mb-4">
-                                    <div class="w-20 h-20 mx-auto mb-3 flex items-center justify-center bg-gray-100 rounded-full overflow-hidden">
-                                        ${item.image ?
-                                            `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` :
-                                            `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                            </svg>`
-                                        }
-                                    </div>
-                                    <h3 class="text-lg font-semibold text-gray-800">${item.name}</h3>
-                                    <p class="text-sm text-gray-500">${item.brand || 'Generic'}</p>
-                                </div>
-                                <div class="space-y-2 border-t pt-4">
-                                    <div class="flex justify-between text-sm">
-                                        <span class="text-gray-600">Price:</span>
-                                        <span class="font-semibold text-gray-800">₱${parseFloat(item.price).toFixed(2)}</span>
-                                    </div>
-                                    <div class="flex justify-between text-sm">
-                                        <span class="text-gray-600">Stock:</span>
-                                        <span class="font-semibold ${statusText}">${item.stock_quantity} units</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    grid.innerHTML += card;
-                // Update stats cards
-                updateStats(items);
-            } catch (error) {
-                console.error('Error loading inventory:', error);
-                alert('Failed to load inventory items.');
+            // Get unique brands from items
+            const brands = [...new Set(items.map(item => item.brand).filter(brand => brand && brand !== 'Generic'))].sort();
+
+            // Keep current options and add new ones
+            const existingOptions = Array.from(brandFilter.options).map(opt => opt.value).slice(1); // Skip "All Brands"
+
+            // Clear existing options except "All Brands"
+            brandFilter.innerHTML = '<option value="">All Brands</option>';
+
+            // Add all available brands
+            brands.forEach(brand => {
+                const option = document.createElement('option');
+                option.value = brand;
+                option.textContent = brand;
+                brandFilter.appendChild(option);
+            });
+
+            // Add Generic option if any items have it
+            if (items.some(item => item.brand === 'Generic' || !item.brand)) {
+                const option = document.createElement('option');
+                option.value = 'Generic';
+                option.textContent = 'Generic';
+                brandFilter.appendChild(option);
             }
+
+            // Restore previous selection if still valid
+            if (currentSelection && brands.includes(currentSelection)) {
+                brandFilter.value = currentSelection;
+            }
+        }
+
+        // Render pagination controls
+        function renderPagination(items) {
+            const container = document.getElementById('paginationContainer');
+            const totalPages = Math.ceil(items.length / itemsPerPage);
+
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+
+            // Previous button
+            html += `
+                <button onclick="changePage(${currentPage - 1})"
+                    class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    ${currentPage === 1 ? 'disabled' : ''}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    html += `
+                        <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">
+                            ${i}
+                        </button>
+                    `;
+                } else {
+                    html += `
+                        <button onclick="changePage(${i})" class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                            ${i}
+                        </button>
+                    `;
+                }
+            }
+
+            // Next button
+            html += `
+                <button onclick="changePage(${currentPage + 1})"
+                    class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    ${currentPage === totalPages ? 'disabled' : ''}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // Change page
+        function changePage(page) {
+            currentPage = page;
+            renderInventoryItems(filteredItems);
+            renderPagination(filteredItems);
+            // Smooth scroll to top of inventory grid
+            document.getElementById('inventoryGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         // View item details
@@ -1352,7 +1527,39 @@
         async function confirmStockIn() {
             try {
                 const quantity = parseInt(document.getElementById('stockInQuantity').value);
-                const reason = document.getElementById('stockInReason').value;
+                const reasonSelect = document.getElementById('stockInReasonSelect').value;
+                const customReason = document.getElementById('stockInCustomReason').value;
+                const notes = document.getElementById('stockInNotes').value;
+
+                // Validate required fields
+                if (!quantity || quantity <= 0) {
+                    alert('Please enter a valid quantity');
+                    return;
+                }
+
+                if (!reasonSelect) {
+                    alert('Please select a reason for stock in');
+                    return;
+                }
+
+                if (reasonSelect === 'Other' && !customReason.trim()) {
+                    alert('Please specify the custom reason');
+                    return;
+                }
+
+                // Build reason string
+                let finalReason = reasonSelect;
+                if (reasonSelect === 'Other') {
+                    finalReason = customReason.trim();
+                } else {
+                    // Remove description part, keep only the main reason
+                    finalReason = reasonSelect.split(' - ')[0];
+                }
+
+                // Add notes if provided
+                if (notes.trim()) {
+                    finalReason += ` | Notes: ${notes.trim()}`;
+                }
 
                 const response = await fetch(`/api/inventory/${currentItemId}/add-stock`, {
                     method: 'POST',
@@ -1361,7 +1568,7 @@
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    body: JSON.stringify({ quantity, reason })
+                    body: JSON.stringify({ quantity, reason: finalReason })
                 });
 
                 const result = await response.json();

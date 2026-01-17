@@ -26,16 +26,18 @@ class Booking extends Model
         'total_amount',
         'assigned_at',
         'completed_at',
+        'cancellation_reason',
+        'cancelled_at',
     ];
 
     protected $casts = [
         'service_date' => 'date',
-        'service_time' => 'datetime',
         'labor_cost' => 'decimal:2',
         'parts_cost' => 'decimal:2',
         'total_amount' => 'decimal:2',
         'assigned_at' => 'datetime',
         'completed_at' => 'datetime',
+        'cancelled_at' => 'datetime',
     ];
 
     /**

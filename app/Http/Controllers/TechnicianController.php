@@ -19,10 +19,18 @@ class TechnicianController extends Controller
     /**
      * Get available technicians for assignment
      */
-    public function getAvailable($appliance = null)
+    public function getAvailable(Request $request)
     {
-        $query = Technician::where('status', 'Available');
+        $query = Technician::query();
 
+        // Filter by status if provided, otherwise get all
+        $status = $request->query('status');
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        // Filter by appliance specialization if provided
+        $appliance = $request->query('appliance');
         if ($appliance) {
             $query->whereJsonContains('specializations', $appliance);
         }

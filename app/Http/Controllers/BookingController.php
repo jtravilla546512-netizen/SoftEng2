@@ -190,6 +190,19 @@ class BookingController extends Controller
     }
 
     /**
+     * Get cancelled bookings
+     */
+    public function getCancelledBookings()
+    {
+        $bookings = Booking::with(['customer', 'technician'])
+            ->where('status', 'Cancelled')
+            ->orderBy('cancelled_at', 'desc')
+            ->get();
+
+        return response()->json($bookings);
+    }
+
+    /**
      * Get booking details
      */
     public function show($id)
@@ -209,9 +222,9 @@ class BookingController extends Controller
 
         $category = match(true) {
             $booking->service_type === 'Installation' && $booking->appliance === 'Aircon'
-                => 'Aircon Units',
+                => 'Aircon Unit',
             $booking->service_type === 'Installation' && $booking->appliance === 'Refrigerator'
-                => 'Refrigerator Units',
+                => 'Refrigerator Unit',
             $booking->appliance === 'Aircon'
                 => 'Aircon Spare Parts',
             $booking->appliance === 'Refrigerator'
@@ -224,5 +237,75 @@ class BookingController extends Controller
             ->get();
 
         return response()->json($parts);
+    }
+
+    /**
+     * Get booking statistics for dashboard
+     */
+    public function getStats()
+    {
+        $pendingCount = Booking::whereIn('status', ['Pending', 'Assigned'])->count();
+        $completedCount = Booking::where('status', 'Completed')->count();
+
+        $todayRevenue = Booking::where('status', 'Completed')
+            ->whereDate('completed_at', today())
+            ->sum('total_amount');
+
+        $totalRevenue = Booking::where('status', 'Completed')
+            ->sum('total_amount');
+
+        return response()->json([
+            'pending_count' => $pendingCount,
+            'completed_count' => $completedCount,
+            'today_revenue' => $todayRevenue,
+            'total_revenue' => $totalRevenue,
+        ]);
+    }
+
+    /**
+     * Cancel a booking
+     */
+    public function cancelBooking(Request $request, $id)
+    {
+        try {
+            $validated = $request->validate([
+                'cancellation_reason' => 'required|string|max:255',
+            ]);
+
+            $booking = Booking::findOrFail($id);
+
+            // Check if booking can be cancelled
+            if ($booking->status === 'Completed') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Cannot cancel a completed booking.'
+                ], 400);
+            }
+
+            if ($booking->status === 'Cancelled') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Booking is already cancelled.'
+                ], 400);
+            }
+
+            // Update booking status and add cancellation reason
+            $booking->update([
+                'status' => 'Cancelled',
+                'cancellation_reason' => $validated['cancellation_reason'],
+                'cancelled_at' => now(),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Booking cancelled successfully.'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while cancelling the booking.'
+            ], 500);
+        }
     }
 }

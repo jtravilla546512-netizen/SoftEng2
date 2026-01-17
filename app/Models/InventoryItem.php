@@ -85,6 +85,13 @@ class InventoryItem extends Model
         $this->save();
         $this->updateStockStatus();
 
+        // Default to "Used in Service" if no reason provided and booking ID exists
+        if (!$reason && $bookingId) {
+            $reason = 'Used in Service';
+        } elseif (!$reason) {
+            $reason = 'Stock removed';
+        }
+
         // Log stock movement
         StockMovement::create([
             'inventory_item_id' => $this->id,
@@ -93,8 +100,8 @@ class InventoryItem extends Model
             'quantity' => $quantity,
             'previous_stock' => $previousStock,
             'new_stock' => $this->quantity,
-            'reason' => $reason ?? 'Used in booking',
-            'performed_by' => 'System',
+            'reason' => $reason,
+            'performed_by' => $bookingId ? 'System' : 'Admin User',
         ]);
 
         return $this;

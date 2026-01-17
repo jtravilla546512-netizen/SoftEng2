@@ -34,12 +34,15 @@ Route::get('/admin/settings', [SettingsController::class, 'index'])->name('admin
 
 // Booking API routes
 Route::prefix('api/bookings')->group(function () {
+    Route::get('/stats', [BookingController::class, 'getStats']); // Get booking statistics
     Route::post('/', [BookingController::class, 'store']); // Create booking
     Route::get('/pending', [BookingController::class, 'getPendingBookings']); // Get pending bookings
     Route::get('/completed', [BookingController::class, 'getCompletedBookings']); // Get completed bookings
+    Route::get('/cancelled', [BookingController::class, 'getCancelledBookings']); // Get cancelled bookings
     Route::get('/{id}', [BookingController::class, 'show']); // Get booking details
     Route::post('/{id}/assign', [BookingController::class, 'assignTechnician']); // Assign technician
     Route::post('/{id}/complete', [BookingController::class, 'complete']); // Complete booking
+    Route::post('/{id}/cancel', [BookingController::class, 'cancelBooking']); // Cancel booking
     Route::get('/{id}/parts', [BookingController::class, 'getAvailableParts']); // Get available parts
 });
 

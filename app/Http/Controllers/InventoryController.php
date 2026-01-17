@@ -71,6 +71,7 @@ class InventoryController extends Controller
             $item = InventoryItem::create([
                 'item_code' => $itemCode,
                 'name' => $validated['name'],
+                'brand' => $validated['brand'] ?? 'Generic',
                 'category' => $validated['category'],
                 'description' => $validated['description'] ?? null,
                 'quantity' => $validated['stock_quantity'],

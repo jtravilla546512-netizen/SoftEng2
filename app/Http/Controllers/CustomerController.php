@@ -21,7 +21,9 @@ class CustomerController extends Controller
      */
     public function getCustomers(Request $request)
     {
-        $query = Customer::query();
+        $query = Customer::with(['bookings' => function($q) {
+            $q->select('customer_id', 'status')->orderBy('service_date', 'desc');
+        }]);
 
         if ($request->has('search')) {
             $query->where(function($q) use ($request) {
@@ -39,6 +41,12 @@ class CustomerController extends Controller
         }
 
         $customers = $query->orderBy('name')->get();
+
+        // Add latest service status to each customer
+        $customers->each(function($customer) {
+            $latestBooking = $customer->bookings->first();
+            $customer->latest_service_status = $latestBooking ? $latestBooking->status : 'No Service';
+        });
 
         return response()->json($customers);
     }

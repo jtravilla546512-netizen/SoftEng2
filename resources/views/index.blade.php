@@ -1217,6 +1217,22 @@
                     'maintenance': 'Maintenance'
                 };
 
+                // Convert 12-hour time format to 24-hour format
+                function convertTo24Hour(time12h) {
+                    const [time, modifier] = time12h.split(' ');
+                    let [hours, minutes] = time.split(':');
+
+                    if (hours === '12') {
+                        hours = '00';
+                    }
+
+                    if (modifier === 'PM') {
+                        hours = parseInt(hours, 10) + 12;
+                    }
+
+                    return `${hours}:${minutes}:00`;
+                }
+
                 // Prepare booking data for API
                 const bookingPayload = {
                     name: bookingData.userInfo.fullName,
@@ -1227,7 +1243,7 @@
                     issue_description: bookingData.userInfo.applianceIssue || '',
                     location: bookingData.userInfo.location,
                     service_date: bookingData.schedule.date,
-                    service_time: bookingData.schedule.timeslot
+                    service_time: convertTo24Hour(bookingData.schedule.timeslot)
                 };
 
                 console.log('Sending booking data:', bookingPayload);

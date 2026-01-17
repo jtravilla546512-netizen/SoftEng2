@@ -213,15 +213,26 @@
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 sm:px-6 py-4 border-b gap-4 sm:gap-0">
                         <div class="flex space-x-4 sm:space-x-6 overflow-x-auto w-full sm:w-auto">
                             <button id="pendingTab" class="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-900 font-semibold relative border-b-4 border-[#2B9DD1] whitespace-nowrap">
-                                Pending Bookings <span class="ml-1 sm:ml-2 bg-yellow-400 text-white px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-bold">6</span>
+                                Pending Bookings <span id="pendingCount" class="ml-1 sm:ml-2 bg-yellow-400 text-white px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-bold">0</span>
                             </button>
                             <button id="completedTab" class="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-900 font-semibold relative whitespace-nowrap">
                                 Completed Transactions
                             </button>
+                            <button id="cancelledTab" class="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-900 font-semibold relative whitespace-nowrap">
+                                Cancelled Bookings <span id="cancelledCount" class="ml-1 sm:ml-2 bg-red-500 text-white px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-bold">0</span>
+                            </button>
                         </div>
-                        <a href="/" class="w-full sm:w-auto text-center px-4 sm:px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-sm sm:text-base font-semibold rounded-lg shadow-md transition-colors inline-block">
-                            + New Booking
-                        </a>
+                        <div class="flex gap-2 w-full sm:w-auto">
+                            <button onclick="refreshData()" class="px-3 sm:px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm sm:text-base font-semibold rounded-lg shadow-md transition-colors flex items-center" title="Refresh Data">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                                <span class="hidden sm:inline ml-1">Refresh</span>
+                            </button>
+                            <a href="/" class="text-center px-4 sm:px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-sm sm:text-base font-semibold rounded-lg shadow-md transition-colors inline-block">
+                                + New Booking
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Completed Transactions Table (Hidden by default) -->
@@ -240,64 +251,34 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
-                                <tr class="border-b border-gray-200">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">RP001</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Robin Scherbatsky</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">James Caraan</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">₱225.00</td>
-                                    <td class="px-3 sm:px-6 py-4 text-sm">
-                                        <button onclick="openCompletedDetailsModal()" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded transition-colors">
-                                            View Details
-                                        </button>
+                                <tr>
+                                    <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+                                        Loading bookings...
                                     </td>
                                 </tr>
-                                <tr class="border-b border-gray-200">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">INS001</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Ted Mosby</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Ryan Rems</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Installation</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">₱80.00</td>
-                                    <td class="px-3 sm:px-6 py-4 text-sm">
-                                        <button onclick="openCompletedDetailsModal()" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded transition-colors">
-                                            View Details
-                                        </button>
-                                    </td>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Cancelled Bookings Table (Hidden by default) -->
+                    <div id="cancelledContent" class="overflow-x-auto hidden">
+                        <table class="w-full min-w-[900px]" id="cancelledBookingsTable">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Booking #</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Customer</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Service Type</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Technician</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Location</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Date Cancelled</th>
+                                    <th class="px-3 sm:px-6 py-3 text-left text-xs sm:text-sm font-bold text-gray-900">Cancellation Reason</th>
+                                    <th class="px-3 sm:px-6 py-3"></th>
                                 </tr>
-                                <tr class="border-b border-gray-200">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">MN001</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Marshall Eriksen</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Nonong Balinan</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Maintenance</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">₱125.00</td>
-                                    <td class="px-3 sm:px-6 py-4 text-sm">
-                                        <button onclick="openCompletedDetailsModal()" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded transition-colors">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="border-b border-gray-200">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">RP002</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barnabas Stinson</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">James Caraan, GB Labrador</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">₱275.00</td>
-                                    <td class="px-3 sm:px-6 py-4 text-sm">
-                                        <button onclick="openCompletedDetailsModal()" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded transition-colors">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="border-b border-gray-200">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">RP003</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Lily Aldrin</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">GB Labrador, Muman Reyes</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">₱340.00</td>
-                                    <td class="px-3 sm:px-6 py-4 text-sm">
-                                        <button onclick="openCompletedDetailsModal()" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded transition-colors">
-                                            View Details
-                                        </button>
+                            </thead>
+                            <tbody class="bg-white">
+                                <tr>
+                                    <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+                                        No cancelled bookings yet
                                     </td>
                                 </tr>
                             </tbody>
@@ -320,130 +301,9 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
-                                <!-- Row 1: Assigned Technician -->
-                                <tr class="border-b border-gray-200 hover:bg-gray-50" data-booking-id="RP001" data-assigned="true">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">RP001</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Robin Scherbatsky</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                                            </svg>
-                                            James Caraan
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barangay 1-A</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">10:00 AM</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Oct. 01, 2025</td>
-                                    <td class="px-3 sm:px-6 py-4 text-sm">
-                                        <select class="action-select w-44 border border-gray-300 rounded px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this, 'RP001', true)">
-                                            <option value="" selected disabled hidden>Action</option>
-                                            <option value="change">Change Technician</option>
-                                            <option value="complete">Complete Job</option>
-                                            <option value="view">View Details</option>
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 2: Unassigned -->
-                                <tr class="border-b border-gray-200 hover:bg-gray-50" data-booking-id="INS001" data-assigned="false">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">INS001</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Ted Mosby</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Installation</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                            </svg>
-                                            Unassigned
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barangay 2-A</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">12:00 PM</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Oct. 01, 2025</td>
-                                    <td class="px-3 sm:px-6 py-4 text-sm">
-                                        <select class="action-select w-44 border border-gray-300 rounded px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this, 'INS001', false)">
-                                            <option value="" selected disabled hidden>Action</option>
-                                            <option value="assign">Assign Tech</option>
-                                            <option value="view">View Details</option>
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 3: Assigned Technician -->
-                                <tr class="border-b border-gray-200 hover:bg-gray-50" data-booking-id="RP002" data-assigned="true">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">RP002</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Marshall Eriksen</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                                            </svg>
-                                            GB Labrador
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barangay 3-A</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">01:00 PM</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Oct. 01, 2025</td>
-                                    <td class="px-3 sm:px-6 py-4 text-sm">
-                                        <select class="action-select w-44 border border-gray-300 rounded px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this, 'RP002', true)">
-                                            <option value="" selected disabled hidden>Action</option>
-                                            <option value="change">Change Technician</option>
-                                            <option value="complete">Complete Job</option>
-                                            <option value="view">View Details</option>
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 4: Unassigned -->
-                                <tr class="border-b border-gray-200 hover:bg-gray-50" data-booking-id="MN001" data-assigned="false">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">MN001</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barnabas Stinson</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Maintenance</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                            </svg>
-                                            Unassigned
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barangay 4-A</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">10:00 AM</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Oct. 02, 2025</td>
-                                    <td class="px-3 sm:px-6 py-4 text-sm">
-                                        <select class="action-select w-44 border border-gray-300 rounded px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this, 'MN001', false)">
-                                            <option value="" selected disabled hidden>Action</option>
-                                            <option value="assign">Assign Tech</option>
-                                            <option value="view">View Details</option>
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 5: Unassigned -->
-                                <tr class="border-b border-gray-200 hover:bg-gray-50" data-booking-id="RP003" data-assigned="false">
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">RP003</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Lily Aldrin</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Repair</td>
-                                    <td class="px-3 sm:px-6 py-4">
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                            </svg>
-                                            Unassigned
-                                        </span>
-                                    </td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Barangay 5-A</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">11:00 AM</td>
-                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">Oct. 02, 2025</td>
-                                    <td class="px-3 sm:px-6 py-4 text-sm">
-                                        <select class="action-select w-44 border border-gray-300 rounded px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent" onchange="handleActionChange(this, 'RP003', false)">
-                                            <option value="" selected disabled hidden>Action</option>
-                                            <option value="assign">Assign Tech</option>
-                                            <option value="view">View Details</option>
-                                        </select>
+                                <tr>
+                                    <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+                                        Loading bookings...
                                     </td>
                                 </tr>
                             </tbody>
@@ -451,31 +311,8 @@
                     </div>
 
                     <!-- Pagination -->
-                    <div class="px-4 sm:px-6 py-4 bg-gray-50 border-t flex items-center justify-center">
-                        <div class="flex items-center gap-2">
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">
-                                1
-                            </button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                                2
-                            </button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                                3
-                            </button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                                4
-                            </button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </div>
+                    <div id="mainTablePagination" class="px-4 sm:px-6 py-4 bg-gray-50 border-t flex items-center justify-center">
+                        <!-- Dynamic pagination will be rendered here -->
                     </div>
                 </div>
             </div>
@@ -498,19 +335,19 @@
                     <div class="grid grid-cols-2 gap-4 text-sm">
                         <div>
                             <span class="font-semibold text-gray-700">Service Type:</span>
-                            <span class="text-gray-900 ml-2">Repair</span>
+                            <span class="text-gray-900 ml-2" id="assignServiceType">Repair</span>
                         </div>
                         <div>
                             <span class="font-semibold text-gray-700">Booking ID:</span>
-                            <span class="text-gray-900 ml-2">RP001</span>
+                            <span class="text-gray-900 ml-2" id="assignBookingNumber">RP001</span>
                         </div>
                         <div>
                             <span class="font-semibold text-gray-700">Customer:</span>
-                            <span class="text-gray-900 ml-2">Robin Scherbatsky</span>
+                            <span class="text-gray-900 ml-2" id="assignCustomerName">Robin Scherbatsky</span>
                         </div>
                         <div>
-                            <span class="font-semibold text-gray-700">Labor Cost:</span>
-                            <span class="text-gray-900 ml-2">₱80.00</span>
+                            <span class="font-semibold text-gray-700">Appliance:</span>
+                            <span class="text-gray-900 ml-2" id="assignAppliance">Aircon</span>
                         </div>
                     </div>
                 </div>
@@ -575,29 +412,8 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="flex items-center justify-center mt-6 gap-2">
-                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">
-                        1
-                    </button>
-                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                        2
-                    </button>
-                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                        3
-                    </button>
-                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                        4
-                    </button>
-                    <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
+                <div id="assignTechPagination" class="flex items-center justify-center mt-6 gap-2">
+                    <!-- Dynamic pagination will be rendered here -->
                 </div>
             </div>
 
@@ -608,6 +424,64 @@
                 </button>
                 <button onclick="confirmAssignment()" class="px-6 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-sm font-semibold rounded-md transition-colors">
                     Assign Technician
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Booking Modal -->
+    <div id="cancelBookingModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl max-w-md w-full">
+            <!-- Modal Header -->
+            <div class="bg-red-600 text-white px-6 py-4">
+                <h2 class="text-xl font-bold">Cancel Booking</h2>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-6">
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Booking Information</h3>
+                    <div class="text-sm space-y-2">
+                        <div>
+                            <span class="font-semibold text-gray-700">Booking ID:</span>
+                            <span class="text-gray-900 ml-2" id="cancelBookingNumber">RP001</span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-gray-700">Customer:</span>
+                            <span class="text-gray-900 ml-2" id="cancelCustomerName">Robin Scherbatsky</span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-gray-700">Service Type:</span>
+                            <span class="text-gray-900 ml-2" id="cancelServiceType">Repair</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Cancellation Reason</label>
+                    <select id="cancellationReason" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option value="" disabled selected>Select reason...</option>
+                        <option value="customer_request">Customer Request</option>
+                        <option value="no_show">Customer No-Show</option>
+                        <option value="parts_unavailable">Parts Unavailable</option>
+                        <option value="technician_unavailable">Technician Unavailable</option>
+                        <option value="scheduling_conflict">Scheduling Conflict</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <p class="text-sm text-gray-600">Are you sure you want to cancel this booking? This action cannot be undone.</p>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="flex justify-end space-x-3 px-6 py-4 bg-gray-50">
+                <button onclick="closeCancelModal()" class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 transition-colors">
+                    Cancel
+                </button>
+                <button onclick="confirmCancelBooking()" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
+                    Cancel Booking
                 </button>
             </div>
         </div>
@@ -632,27 +506,31 @@
                             <div class="space-y-2 text-sm">
                                 <div class="flex justify-between">
                                     <span class="text-gray-700">Service Type:</span>
-                                    <span class="text-gray-900 font-semibold">Repair</span>
+                                    <span class="text-gray-900 font-semibold" id="recordServiceType">Repair</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-gray-700">Booking ID:</span>
-                                    <span class="text-gray-900 font-semibold">RP001</span>
+                                    <span class="text-gray-900 font-semibold" id="recordBookingNumber">RP001</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-gray-700">Customer:</span>
-                                    <span class="text-gray-900 font-semibold">Robin Scherbatsky</span>
+                                    <span class="text-gray-900 font-semibold" id="recordCustomerName">Robin Scherbatsky</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-700">Appliance:</span>
+                                    <span class="text-gray-900 font-semibold" id="recordAppliance">Aircon</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-gray-700">Labor Cost:</span>
-                                    <span class="text-gray-900 font-semibold">₱80.00</span>
+                                    <span class="text-gray-900 font-semibold" id="recordLaborCost">₱80.00</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Air-con Parts -->
+                        <!-- Spare Parts -->
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900 mb-4">Air-con Parts</h3>
-                            <div class="space-y-3" id="partsList">
+                            <h3 class="text-lg font-bold text-gray-900 mb-4">Spare Parts</h3>
+                            <div class="space-y-3" id="partsList" style="min-height: 400px;">
                                 <!-- Air Filter -->
                                 <div class="flex items-center justify-between py-2 border-b border-gray-200" data-part-id="air-filter" data-part-name="Air Filter" data-part-price="25.00">
                                     <div class="flex-1">
@@ -732,17 +610,8 @@
                                 </div>
                             </div>
 
-                            <!-- Pagination -->
-                            <div class="flex items-center justify-center mt-4 space-x-1">
-                                <button class="px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">&lt;&lt;</button>
-                                <button class="px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">&lt;</button>
-                                <button class="px-3 py-1 text-sm bg-gray-200 text-gray-900 rounded font-semibold">1</button>
-                                <button class="px-3 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">2</button>
-                                <button class="px-3 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">3</button>
-                                <button class="px-3 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">4</button>
-                                <button class="px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">&gt;</button>
-                                <button class="px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">&gt;&gt;</button>
-                            </div>
+                            <!-- Pagination - Dynamically generated -->
+                            <div id="partsPagination" class="mt-4"></div>
                         </div>
                     </div>
 
@@ -967,27 +836,27 @@
                     <div class="space-y-4">
                         <div>
                             <span class="font-bold text-gray-900 block mb-1">Booking ID:</span>
-                            <span class="text-gray-700">RP001</span>
+                            <span class="text-gray-700" id="detailBookingNumber">RP001</span>
                         </div>
                         <div>
                             <span class="font-bold text-gray-900 block mb-1">Customer Name:</span>
-                            <span class="text-gray-700">Robin Scherbatsky</span>
+                            <span class="text-gray-700" id="detailCustomerName">Robin Scherbatsky</span>
                         </div>
                         <div>
                             <span class="font-bold text-gray-900 block mb-1">Location</span>
-                            <span class="text-gray-700">Mandaluyong City</span>
+                            <span class="text-gray-700" id="detailLocation">Mandaluyong City</span>
                         </div>
                         <div>
                             <span class="font-bold text-gray-900 block mb-1">Contact Number:</span>
-                            <span class="text-gray-700">+63912-345-6789</span>
+                            <span class="text-gray-700" id="detailContactNumber">+63912-345-6789</span>
                         </div>
                         <div>
                             <span class="font-bold text-gray-900 block mb-1">Landmark:</span>
-                            <span class="text-gray-700">N/A</span>
+                            <span class="text-gray-700" id="detailLandmark">N/A</span>
                         </div>
                         <div>
                             <span class="font-bold text-gray-900 block mb-1">Description of Issue:</span>
-                            <span class="text-gray-700 block break-words">RP001</span>
+                            <span class="text-gray-700 block break-words" id="detailIssueDescription">RP001</span>
                         </div>
                     </div>
 
@@ -995,19 +864,19 @@
                     <div class="space-y-4">
                         <div>
                             <span class="font-bold text-gray-900 block mb-1">Appliance Type:</span>
-                            <span class="text-gray-700">Air Conditioner</span>
+                            <span class="text-gray-700" id="detailAppliance">Air Conditioner</span>
                         </div>
                         <div>
                             <span class="font-bold text-gray-900 block mb-1">Service Type:</span>
-                            <span class="text-gray-700">Repair</span>
+                            <span class="text-gray-700" id="detailServiceType">Repair</span>
                         </div>
                         <div>
                             <span class="font-bold text-gray-900 block mb-1">Date:</span>
-                            <span class="text-gray-700">October 6, 2025</span>
+                            <span class="text-gray-700" id="detailServiceDate">October 6, 2025</span>
                         </div>
                         <div>
                             <span class="font-bold text-gray-900 block mb-1">Time:</span>
-                            <span class="text-gray-700">11:00 AM</span>
+                            <span class="text-gray-700" id="detailServiceTime">11:00 AM</span>
                         </div>
                     </div>
                 </div>
@@ -1023,6 +892,18 @@
     </div>
 
     <script>
+        // Pagination variables
+        let allPendingBookings = [];
+        let allCompletedBookings = [];
+        let allCancelledBookings = [];
+        let allTechnicians = [];
+        let currentPendingPage = 1;
+        let currentCompletedPage = 1;
+        let currentCancelledPage = 1;
+        let currentTechPage = 1;
+        const bookingsPerPage = 5;
+        const techniciansPerPage = 5;
+
         // Update dashboard statistics
         async function updateDashboardStats() {
             try {
@@ -1095,8 +976,52 @@
             // Tab switching functionality
             const pendingTab = document.getElementById('pendingTab');
             const completedTab = document.getElementById('completedTab');
+            const cancelledTab = document.getElementById('cancelledTab');
             const pendingContent = document.getElementById('pendingContent');
             const completedContent = document.getElementById('completedContent');
+            const cancelledContent = document.getElementById('cancelledContent');
+
+            pendingTab.addEventListener('click', function() {
+                // Show pending content
+                pendingContent.classList.remove('hidden');
+                completedContent.classList.add('hidden');
+                cancelledContent.classList.add('hidden');
+
+                // Update tab styles
+                pendingTab.classList.add('border-b-4', 'border-[#2B9DD1]');
+                completedTab.classList.remove('border-b-4', 'border-[#2B9DD1]');
+                cancelledTab.classList.remove('border-b-4', 'border-[#2B9DD1]');
+            });
+
+            completedTab.addEventListener('click', function() {
+                // Show completed content
+                completedContent.classList.remove('hidden');
+                pendingContent.classList.add('hidden');
+                cancelledContent.classList.add('hidden');
+
+                // Update tab styles
+                completedTab.classList.add('border-b-4', 'border-[#2B9DD1]');
+                pendingTab.classList.remove('border-b-4', 'border-[#2B9DD1]');
+                cancelledTab.classList.remove('border-b-4', 'border-[#2B9DD1]');
+
+                // Render pagination for completed bookings
+                renderTablePagination(currentCompletedPage, allCompletedBookings.length, bookingsPerPage, 'mainTablePagination', 'changeCompletedPage');
+            });
+
+            cancelledTab.addEventListener('click', function() {
+                // Show cancelled content
+                cancelledContent.classList.remove('hidden');
+                pendingContent.classList.add('hidden');
+                completedContent.classList.add('hidden');
+
+                // Update tab styles
+                cancelledTab.classList.add('border-b-4', 'border-[#2B9DD1]');
+                pendingTab.classList.remove('border-b-4', 'border-[#2B9DD1]');
+                completedTab.classList.remove('border-b-4', 'border-[#2B9DD1]');
+
+                // Render pagination for cancelled bookings
+                renderTablePagination(currentCancelledPage, allCancelledBookings.length, bookingsPerPage, 'mainTablePagination', 'changeCancelledPage');
+            });
 
             pendingTab.addEventListener('click', function() {
                 // Show pending content
@@ -1106,16 +1031,9 @@
                 // Update tab styles
                 pendingTab.classList.add('border-b-4', 'border-[#2B9DD1]');
                 completedTab.classList.remove('border-b-4', 'border-[#2B9DD1]');
-            });
 
-            completedTab.addEventListener('click', function() {
-                // Show completed content
-                completedContent.classList.remove('hidden');
-                pendingContent.classList.add('hidden');
-
-                // Update tab styles
-                completedTab.classList.add('border-b-4', 'border-[#2B9DD1]');
-                pendingTab.classList.remove('border-b-4', 'border-[#2B9DD1]');
+                // Render pagination for pending bookings
+                renderTablePagination(currentPendingPage, allPendingBookings.length, bookingsPerPage, 'mainTablePagination', 'changePendingPage');
             });
         });
 
@@ -1129,6 +1047,8 @@
                 openRecordDetailsModal(bookingId);
             } else if (value === 'view') {
                 openBookingDetailsModal(bookingId);
+            } else if (value === 'cancel') {
+                openCancelBookingModal(bookingId);
             }
 
             // Reset dropdown to default "Action" text
@@ -1153,6 +1073,84 @@
             // Reset radio button selection
             const radios = document.querySelectorAll('input[name="technician"]');
             radios.forEach(radio => radio.checked = false);
+        }
+
+        // Cancel Booking Modal Functions
+        let currentCancelBookingId = null;
+
+        function openCancelBookingModal(bookingId) {
+            currentCancelBookingId = bookingId;
+
+            // Find the booking data
+            const booking = allPendingBookings.find(b => b.id == bookingId);
+            if (booking) {
+                document.getElementById('cancelBookingNumber').textContent = booking.booking_number;
+                document.getElementById('cancelCustomerName').textContent = booking.customer.name;
+                document.getElementById('cancelServiceType').textContent = booking.service_type;
+            }
+
+            // Reset reason selection
+            document.getElementById('cancellationReason').selectedIndex = 0;
+
+            document.getElementById('cancelBookingModal').classList.remove('hidden');
+        }
+
+        function closeCancelModal() {
+            document.getElementById('cancelBookingModal').classList.add('hidden');
+            currentCancelBookingId = null;
+            document.getElementById('cancellationReason').selectedIndex = 0;
+        }
+
+        function confirmCancelBooking() {
+            const reason = document.getElementById('cancellationReason').value;
+
+            if (!reason) {
+                alert('Please select a cancellation reason.');
+                return;
+            }
+
+            if (!currentCancelBookingId) {
+                alert('No booking selected for cancellation.');
+                return;
+            }
+
+            // Show loading state
+            const confirmBtn = event.target;
+            const originalText = confirmBtn.textContent;
+            confirmBtn.textContent = 'Cancelling...';
+            confirmBtn.disabled = true;
+
+            // Make API call to cancel booking
+            fetch(`/api/bookings/${currentCancelBookingId}/cancel`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    cancellation_reason: reason
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message || 'Booking cancelled successfully!');
+                    closeCancelModal();
+
+                    // Refresh both pending and completed bookings to reflect the change
+                    refreshData();
+                } else {
+                    alert(data.message || 'Failed to cancel booking.');
+                }
+            })
+            .catch(error => {
+                console.error('Error cancelling booking:', error);
+                alert('An error occurred while cancelling the booking.');
+            })
+            .finally(() => {
+                confirmBtn.textContent = originalText;
+                confirmBtn.disabled = false;
+            });
         }
 
         // Confirm Technician Assignment
@@ -1209,21 +1207,50 @@
             closeAssignTechModal();
         }
 
-        // Open Record Details Modal
-        function openRecordDetailsModal(bookingId = null) {
-            currentBookingId = bookingId;
-            document.getElementById('recordDetailsModal').classList.remove('hidden');
-        }
-
         // Close Record Details Modal
         function closeRecordDetailsModal() {
             document.getElementById('recordDetailsModal').classList.add('hidden');
         }
 
-        // Open Booking Details Modal
-        function openBookingDetailsModal(bookingId = null) {
-            currentBookingId = bookingId;
-            document.getElementById('bookingDetailsModal').classList.remove('hidden');
+        // Open Booking Details Modal - Load real data from API
+        async function openBookingDetailsModal(bookingId = null) {
+            try {
+                currentBookingId = bookingId;
+                const response = await fetch(`/api/bookings/${bookingId}`);
+                const booking = await response.json();
+
+                // Populate Booking Information
+                document.getElementById('detailBookingNumber').textContent = booking.booking_number;
+                document.getElementById('detailCustomerName').textContent = booking.customer.name;
+                document.getElementById('detailLocation').textContent = booking.location;
+                document.getElementById('detailContactNumber').textContent = booking.customer.phone;
+                document.getElementById('detailLandmark').textContent = booking.customer.address || 'N/A';
+                document.getElementById('detailIssueDescription').textContent = booking.issue_description || 'N/A';
+
+                // Populate Service Details
+                document.getElementById('detailAppliance').textContent = booking.appliance;
+                document.getElementById('detailServiceType').textContent = booking.service_type;
+                const serviceDate = new Date(booking.service_date).toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'long', day: '2-digit'
+                });
+                document.getElementById('detailServiceDate').textContent = serviceDate;
+
+                // Format time
+                const formatTime = (timeStr) => {
+                    if (!timeStr) return 'N/A';
+                    const [hours, minutes] = timeStr.split(':');
+                    const hour = parseInt(hours);
+                    const ampm = hour >= 12 ? 'PM' : 'AM';
+                    const displayHour = hour % 12 || 12;
+                    return `${displayHour}:${minutes} ${ampm}`;
+                };
+                document.getElementById('detailServiceTime').textContent = formatTime(booking.service_time);
+
+                document.getElementById('bookingDetailsModal').classList.remove('hidden');
+            } catch (error) {
+                console.error('Error loading booking details:', error);
+                alert('Failed to load booking details. Please try again.');
+            }
         }
 
         // Close Booking Details Modal
@@ -1299,14 +1326,21 @@
             }
         });
 
-        // Parts Management Functions
+        // Parts Management Functions - Track quantities across all pages
+        let partQuantities = {}; // Store quantities for all parts
+
         function incrementPart(partId) {
             const partDiv = document.querySelector(`[data-part-id="${partId}"]`);
             const qtyInput = partDiv.querySelector('.part-qty');
+            const maxQty = parseInt(partDiv.dataset.maxQty);
             let currentQty = parseInt(qtyInput.value);
-            currentQty++;
-            qtyInput.value = currentQty;
-            updateReceipt();
+
+            if (currentQty < maxQty) {
+                currentQty++;
+                qtyInput.value = currentQty;
+                partQuantities[partId] = currentQty;
+                updateReceipt();
+            }
         }
 
         function decrementPart(partId) {
@@ -1316,31 +1350,30 @@
             if (currentQty > 0) {
                 currentQty--;
                 qtyInput.value = currentQty;
+                partQuantities[partId] = currentQty;
                 updateReceipt();
             }
         }
 
         function updateReceipt() {
-            const partItems = document.querySelectorAll('#partsList > div');
             const receiptList = document.getElementById('receiptPartsList');
             let partsSubtotal = 0;
 
             // Clear current receipt
             receiptList.innerHTML = '';
 
-            // Add each part with quantity > 0
-            partItems.forEach(item => {
-                const qty = parseInt(item.querySelector('.part-qty').value);
+            // Add each part with quantity > 0 from all pages
+            allPartsData.forEach(part => {
+                const qty = partQuantities[part.id] || 0;
                 if (qty > 0) {
-                    const partName = item.dataset.partName;
-                    const partPrice = parseFloat(item.dataset.partPrice);
+                    const partPrice = parseFloat(part.selling_price);
                     const lineTotal = qty * partPrice;
                     partsSubtotal += lineTotal;
 
                     const lineItem = document.createElement('div');
                     lineItem.className = 'flex justify-between py-1';
                     lineItem.innerHTML = `
-                        <span class="text-gray-700">${partName} (x${qty})</span>
+                        <span class="text-gray-700">${part.name} (x${qty})</span>
                         <span class="text-gray-900 font-semibold">₱ ${lineTotal.toFixed(2)}</span>
                     `;
                     receiptList.appendChild(lineItem);
@@ -1356,13 +1389,411 @@
             document.getElementById('grandTotal').textContent = `₱ ${grandTotal.toFixed(2)}`;
         }
 
+        // Auto-refresh variables
+        let refreshInterval;
+        let isRefreshing = false;
+
         // Initialize receipt on page load
         document.addEventListener('DOMContentLoaded', function() {
             updateReceipt();
             loadPendingBookings();
             loadCompletedBookings();
+            loadCancelledBookings();
             updateDashboardStats();
+
+            // Start auto-refresh every 30 seconds
+            refreshInterval = setInterval(refreshData, 30000);
         });
+
+        // Check if auto-refresh should be paused
+        function shouldPauseAutoRefresh() {
+            // Check if any modal is open
+            const modals = [
+                document.getElementById('assignTechModal'),
+                document.getElementById('recordDetailsModal'),
+                document.getElementById('receiptConfirmModal'),
+                document.getElementById('completedDetailsModal')
+            ];
+
+            const isModalOpen = modals.some(modal => modal && !modal.classList.contains('hidden'));
+
+            // Check if user is actively interacting with dropdowns or forms
+            const activeDropdowns = document.querySelectorAll('select:focus, input:focus, textarea:focus');
+            const isUserInteracting = activeDropdowns.length > 0;
+
+            // Check if there's an ongoing API request (assign/complete operations)
+            const loadingButtons = document.querySelectorAll('button:disabled');
+            const isAPICallInProgress = Array.from(loadingButtons).some(btn =>
+                btn.textContent.includes('Assigning') ||
+                btn.textContent.includes('Completing') ||
+                btn.textContent.includes('Loading')
+            );
+
+            return isModalOpen || isUserInteracting || isAPICallInProgress;
+        }
+
+        // Manual refresh function
+        async function refreshData() {
+            if (isRefreshing) return;
+
+            // Skip auto-refresh if user is actively interacting
+            if (shouldPauseAutoRefresh()) {
+                console.log('Auto-refresh paused - user is interacting with the system');
+                return;
+            }
+
+            isRefreshing = true;
+            try {
+                // Show loading indicator if available
+                const refreshBtn = document.querySelector('button[onclick="refreshData()"]');
+                if (refreshBtn) {
+                    refreshBtn.disabled = true;
+                    refreshBtn.innerHTML = '<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span class="hidden sm:inline ml-1">Refreshing...</span>';
+                }
+
+                // Refresh all data
+                await Promise.all([
+                    loadPendingBookings(),
+                    loadCompletedBookings(),
+                    loadCancelledBookings(),
+                    updateDashboardStats()
+                ]);
+
+            } catch (error) {
+                console.error('Error refreshing data:', error);
+            } finally {
+                isRefreshing = false;
+
+                // Restore refresh button
+                const refreshBtn = document.querySelector('button[onclick="refreshData()"]');
+                if (refreshBtn) {
+                    refreshBtn.disabled = false;
+                    refreshBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg><span class="hidden sm:inline ml-1">Refresh</span>';
+                }
+            }
+        }
+
+        // Clear interval when page unloads
+        window.addEventListener('beforeunload', function() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+        });
+
+        // Render pagination for tables
+        function renderTablePagination(currentPage, totalItems, itemsPerPage, containerId, changePageFunction) {
+            const container = document.getElementById(containerId);
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = '<div class="flex items-center gap-2">';
+
+            // Previous button
+            html += `
+                <button onclick="${changePageFunction}(${currentPage - 1})"
+                    ${currentPage === 1 ? 'disabled' : ''}
+                    class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    html += `<button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">${i}</button>`;
+                } else {
+                    html += `<button onclick="${changePageFunction}(${i})" class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">${i}</button>`;
+                }
+            }
+
+            // Next button
+            html += `
+                <button onclick="${changePageFunction}(${currentPage + 1})"
+                    ${currentPage === totalPages ? 'disabled' : ''}
+                    class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // Change pending bookings page
+        function changePendingPage(page) {
+            const totalPages = Math.ceil(allPendingBookings.length / bookingsPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentPendingPage = page;
+                renderPendingBookings();
+            }
+        }
+
+        // Change completed bookings page
+        function changeCompletedPage(page) {
+            const totalPages = Math.ceil(allCompletedBookings.length / bookingsPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentCompletedPage = page;
+                renderCompletedBookings();
+            }
+        }
+
+        // Change cancelled bookings page
+        function changeCancelledPage(page) {
+            const totalPages = Math.ceil(allCancelledBookings.length / bookingsPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentCancelledPage = page;
+                renderCancelledBookings();
+            }
+        }
+
+        // Change technician page
+        function changeTechPage(page) {
+            const totalPages = Math.ceil(allTechnicians.length / techniciansPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentTechPage = page;
+                renderTechnicians();
+            }
+        }
+
+        // Render pending bookings
+        function renderPendingBookings() {
+            const tbody = document.querySelector('#pendingBookingsTable tbody');
+            tbody.innerHTML = '';
+
+            if (allPendingBookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="px-6 py-8 text-center text-gray-500">No pending bookings at the moment</td></tr>';
+
+                // Only render pagination if pending tab is currently active
+                const pendingTab = document.getElementById('pendingTab');
+                const isPendingTabActive = pendingTab && pendingTab.classList.contains('border-b-4');
+
+                if (isPendingTabActive) {
+                    renderTablePagination(1, 0, bookingsPerPage, 'mainTablePagination', 'changePendingPage');
+                }
+                return;
+            }
+
+            const startIdx = (currentPendingPage - 1) * bookingsPerPage;
+            const endIdx = startIdx + bookingsPerPage;
+            const pageBookings = allPendingBookings.slice(startIdx, endIdx);
+
+            pageBookings.forEach(booking => {
+                const isAssigned = booking.technician_id !== null;
+                const technicianDisplay = isAssigned
+                    ? `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                        </svg>
+                        ${booking.technician.name}
+                    </span>`
+                    : `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                        Not Assigned
+                    </span>`;
+
+                const actionOptions = isAssigned
+                    ? `<option value="" selected disabled hidden>Action</option>
+                       <option value="change">Change Technician</option>
+                       <option value="complete">Record Details</option>
+                       <option value="view">View Details</option>
+                       <option value="cancel">Cancel Booking</option>`
+                    : `<option value="" selected disabled hidden>Action</option>
+                       <option value="assign">Assign Technician</option>
+                       <option value="view">View Details</option>
+                       <option value="cancel">Cancel Booking</option>`;
+
+                const serviceDate = new Date(booking.service_date).toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'short', day: '2-digit'
+                });
+
+                const formatTime = (timeStr) => {
+                    if (!timeStr) return 'N/A';
+                    const [hours, minutes] = timeStr.split(':');
+                    const hour = parseInt(hours);
+                    const ampm = hour >= 12 ? 'PM' : 'AM';
+                    const displayHour = hour % 12 || 12;
+                    return `${displayHour}:${minutes} ${ampm}`;
+                };
+                const formattedTime = formatTime(booking.service_time);
+
+                const row = `
+                    <tr class="border-b border-gray-200 hover:bg-gray-50" data-booking-id="${booking.id}" data-assigned="${isAssigned}">
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.booking_number}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.customer.name}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.service_type}</td>
+                        <td class="px-6 py-4 text-sm">${technicianDisplay}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.location}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${formattedTime}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${serviceDate}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <select class="action-select px-3 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#2B9DD1]"
+                                    onchange="handleActionChange(this, '${booking.id}', ${isAssigned})">
+                                ${actionOptions}
+                            </select>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            // Only render pagination if pending tab is currently active
+            const pendingTab = document.getElementById('pendingTab');
+            const isPendingTabActive = pendingTab && pendingTab.classList.contains('border-b-4');
+
+            if (isPendingTabActive) {
+                renderTablePagination(currentPendingPage, allPendingBookings.length, bookingsPerPage, 'mainTablePagination', 'changePendingPage');
+            }
+
+            // Update pending bookings count in tab
+            const pendingCount = document.getElementById('pendingCount');
+            if (pendingCount) {
+                pendingCount.textContent = allPendingBookings.length;
+            }
+        }
+
+        // Render completed bookings
+        function renderCompletedBookings() {
+            const tbody = document.querySelector('#completedBookingsTable tbody');
+            tbody.innerHTML = '';
+
+            if (allCompletedBookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="px-6 py-8 text-center text-gray-500">No completed bookings yet</td></tr>';
+
+                // Only render pagination if completed tab is currently active
+                const completedTab = document.getElementById('completedTab');
+                const isCompletedTabActive = completedTab && completedTab.classList.contains('border-b-4');
+
+                if (isCompletedTabActive) {
+                    renderTablePagination(1, 0, bookingsPerPage, 'mainTablePagination', 'changeCompletedPage');
+                }
+                return;
+            }
+
+            const startIdx = (currentCompletedPage - 1) * bookingsPerPage;
+            const endIdx = startIdx + bookingsPerPage;
+            const pageBookings = allCompletedBookings.slice(startIdx, endIdx);
+
+            pageBookings.forEach(booking => {
+                // Handle different completion dates for completed vs cancelled bookings
+                const isCompleted = booking.status === 'Completed';
+                const isCancelled = booking.status === 'Cancelled';
+
+                let dateDisplay = 'N/A';
+                if (isCompleted && booking.completed_at) {
+                    dateDisplay = new Date(booking.completed_at).toLocaleDateString('en-US', {
+                        year: 'numeric', month: 'short', day: '2-digit'
+                    });
+                } else if (isCancelled && booking.cancelled_at) {
+                    dateDisplay = new Date(booking.cancelled_at).toLocaleDateString('en-US', {
+                        year: 'numeric', month: 'short', day: '2-digit'
+                    });
+                }
+
+                // Create status badge for cancelled bookings
+                const statusBadge = isCancelled ?
+                    '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Cancelled</span>' :
+                    '';
+
+                const row = `
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.booking_number}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">
+                            ${booking.customer.name}
+                            ${statusBadge}
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.service_type}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.technician ? booking.technician.name : 'N/A'}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${dateDisplay}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">₱${parseFloat(booking.total_amount || 0).toFixed(2)}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.location}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <button onclick="viewCompletedDetails('${booking.id}')" class="px-3 py-1.5 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs font-semibold rounded-md transition-colors">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            // Only render pagination if completed tab is currently active
+            const completedTab = document.getElementById('completedTab');
+            const isCompletedTabActive = completedTab && completedTab.classList.contains('border-b-4');
+
+            if (isCompletedTabActive) {
+                renderTablePagination(currentCompletedPage, allCompletedBookings.length, bookingsPerPage, 'mainTablePagination', 'changeCompletedPage');
+            }
+        }
+
+        // Render cancelled bookings
+        function renderCancelledBookings() {
+            const tbody = document.querySelector('#cancelledBookingsTable tbody');
+            tbody.innerHTML = '';
+
+            if (allCancelledBookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="px-6 py-8 text-center text-gray-500">No cancelled bookings yet</td></tr>';
+
+                // Only render pagination if cancelled tab is currently active
+                const cancelledTab = document.getElementById('cancelledTab');
+                const isCancelledTabActive = cancelledTab && cancelledTab.classList.contains('border-b-4');
+
+                if (isCancelledTabActive) {
+                    renderTablePagination(1, 0, bookingsPerPage, 'mainTablePagination', 'changeCancelledPage');
+                }
+                return;
+            }
+
+            const startIdx = (currentCancelledPage - 1) * bookingsPerPage;
+            const endIdx = startIdx + bookingsPerPage;
+            const pageBookings = allCancelledBookings.slice(startIdx, endIdx);
+
+            pageBookings.forEach(booking => {
+                const cancelledDate = booking.cancelled_at ? new Date(booking.cancelled_at).toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'short', day: '2-digit'
+                }) : 'N/A';
+
+                // Format cancellation reason for display
+                const reasonDisplay = booking.cancellation_reason ?
+                    booking.cancellation_reason.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) :
+                    'N/A';
+
+                const row = `
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.booking_number}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.customer.name}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.service_type}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.technician ? booking.technician.name : 'N/A'}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${booking.location}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${cancelledDate}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${reasonDisplay}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <button onclick="viewCancelledDetails('${booking.id}')" class="px-3 py-1.5 bg-gray-600 hover:bg-gray-700 text-white text-xs font-semibold rounded-md transition-colors">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            // Only render pagination if cancelled tab is currently active
+            const cancelledTab = document.getElementById('cancelledTab');
+            const isCancelledTabActive = cancelledTab && cancelledTab.classList.contains('border-b-4');
+
+            if (isCancelledTabActive) {
+                renderTablePagination(currentCancelledPage, allCancelledBookings.length, bookingsPerPage, 'mainTablePagination', 'changeCancelledPage');
+            }
+        }
 
         // Load Pending Bookings from API
         async function loadPendingBookings() {
@@ -1370,59 +1801,13 @@
                 const response = await fetch('/api/bookings/pending');
                 const bookings = await response.json();
 
-                const tbody = document.querySelector('#pendingBookingsTable tbody');
-                tbody.innerHTML = '';
-
-                bookings.forEach(booking => {
-                    const isAssigned = booking.technician_id !== null;
-                    const technicianDisplay = isAssigned
-                        ? `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                            </svg>
-                            ${booking.technician.name}
-                        </span>`
-                        : `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                            </svg>
-                            Unassigned
-                        </span>`;
-
-                    const actionOptions = isAssigned
-                        ? `<option value="" selected disabled hidden>Action</option>
-                           <option value="change">Change Technician</option>
-                           <option value="complete">Complete Job</option>
-                           <option value="view">View Details</option>`
-                        : `<option value="" selected disabled hidden>Action</option>
-                           <option value="assign">Assign Tech</option>
-                           <option value="view">View Details</option>`;
-
-                    const serviceDate = new Date(booking.service_date).toLocaleDateString('en-US', {
-                        year: 'numeric', month: 'short', day: '2-digit'
-                    });
-
-                    const row = `
-                        <tr class="border-b border-gray-200 hover:bg-gray-50" data-booking-id="${booking.id}" data-assigned="${isAssigned}">
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">${booking.booking_number}</td>
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">${booking.customer.name}</td>
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">${booking.service_type}</td>
-                            <td class="px-3 sm:px-6 py-4">${technicianDisplay}</td>
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">${booking.location}</td>
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">${booking.service_time}</td>
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">${serviceDate}</td>
-                            <td class="px-3 sm:px-6 py-4 text-sm">
-                                <select class="action-select w-44 border border-gray-300 rounded px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-[#2B9DD1] focus:border-transparent"
-                                        onchange="handleActionChange(this, ${booking.id}, ${isAssigned})">
-                                    ${actionOptions}
-                                </select>
-                            </td>
-                        </tr>
-                    `;
-                    tbody.innerHTML += row;
-                });
+                allPendingBookings = bookings;
+                currentPendingPage = 1;
+                renderPendingBookings();
             } catch (error) {
                 console.error('Error loading pending bookings:', error);
+                const tbody = document.querySelector('#pendingBookingsTable tbody');
+                tbody.innerHTML = '<tr><td colspan="8" class="px-6 py-8 text-center text-red-500">Failed to load bookings. Please refresh the page.</td></tr>';
             }
         }
 
@@ -1432,35 +1817,31 @@
                 const response = await fetch('/api/bookings/completed');
                 const bookings = await response.json();
 
-                const tbody = document.querySelector('#completedBookingsTable tbody');
-                tbody.innerHTML = '';
-
-                bookings.forEach(booking => {
-                    const completedDate = new Date(booking.completed_at).toLocaleDateString('en-US', {
-                        year: 'numeric', month: 'short', day: '2-digit'
-                    });
-
-                    const row = `
-                        <tr class="border-b border-gray-200 hover:bg-gray-50">
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm font-semibold text-gray-900">${booking.booking_number}</td>
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">${booking.customer.name}</td>
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">${booking.service_type}</td>
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">${booking.technician.name}</td>
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">${booking.location}</td>
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">${completedDate}</td>
-                            <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-900">₱ ${parseFloat(booking.total_amount).toFixed(2)}</td>
-                            <td class="px-3 sm:px-6 py-4 text-sm">
-                                <button onclick="viewCompletedDetails(${booking.id})"
-                                        class="px-4 py-2 bg-[#2B9DD1] hover:bg-[#1e7ba8] text-white text-xs sm:text-sm font-semibold rounded transition-colors">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                    tbody.innerHTML += row;
-                });
+                allCompletedBookings = bookings;
+                currentCompletedPage = 1;
+                renderCompletedBookings();
             } catch (error) {
                 console.error('Error loading completed bookings:', error);
+            }
+        }
+
+        // Load Cancelled Bookings from API
+        async function loadCancelledBookings() {
+            try {
+                const response = await fetch('/api/bookings/cancelled');
+                const bookings = await response.json();
+
+                allCancelledBookings = bookings;
+                currentCancelledPage = 1;
+                renderCancelledBookings();
+
+                // Update cancelled count badge
+                const cancelledCount = document.getElementById('cancelledCount');
+                if (cancelledCount) {
+                    cancelledCount.textContent = bookings.length;
+                }
+            } catch (error) {
+                console.error('Error loading cancelled bookings:', error);
             }
         }
 
@@ -1485,7 +1866,17 @@
                     year: 'numeric', month: 'long', day: '2-digit'
                 });
                 document.getElementById('completedServiceDate').textContent = serviceDate;
-                document.getElementById('completedServiceTime').textContent = booking.service_time;
+
+                // Format time to 12-hour format
+                const formatTime = (timeStr) => {
+                    if (!timeStr) return 'N/A';
+                    const [hours, minutes] = timeStr.split(':');
+                    const hour = parseInt(hours);
+                    const ampm = hour >= 12 ? 'PM' : 'AM';
+                    const displayHour = hour % 12 || 12;
+                    return `${displayHour}:${minutes} ${ampm}`;
+                };
+                document.getElementById('completedServiceTime').textContent = formatTime(booking.service_time);
 
                 // Populate Receipt Summary
                 const partsList = document.getElementById('completedPartsList');
@@ -1516,7 +1907,65 @@
             }
         }
 
-        // Override openAssignTechModal to load available technicians
+        // View Cancelled Booking Details
+        function viewCancelledDetails(bookingId) {
+            const booking = allCancelledBookings.find(b => b.id == bookingId);
+            if (booking) {
+                const cancelledDate = booking.cancelled_at ? new Date(booking.cancelled_at).toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'long', day: '2-digit'
+                }) : 'N/A';
+
+                const reasonDisplay = booking.cancellation_reason ?
+                    booking.cancellation_reason.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) :
+                    'N/A';
+
+                alert(`Booking Details:\n\nBooking #: ${booking.booking_number}\nCustomer: ${booking.customer.name}\nService: ${booking.service_type}\nLocation: ${booking.location}\nCancelled: ${cancelledDate}\nReason: ${reasonDisplay}`);
+            } else {
+                alert('Booking details not found.');
+            }
+        }
+
+        // Render technicians with pagination
+        function renderTechnicians() {
+            const tbody = document.querySelector('#assignTechModal tbody');
+            tbody.innerHTML = '';
+
+            if (allTechnicians.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="2" class="px-4 py-8 text-center text-gray-500">No technicians available</td></tr>';
+                renderTablePagination(1, 0, techniciansPerPage, 'assignTechPagination', 'changeTechPage');
+                return;
+            }
+
+            const startIdx = (currentTechPage - 1) * techniciansPerPage;
+            const endIdx = startIdx + techniciansPerPage;
+            const pageTechs = allTechnicians.slice(startIdx, endIdx);
+
+            pageTechs.forEach(tech => {
+                const isAvailable = tech.status === 'Available';
+                const isOffDuty = tech.status === 'Off Duty';
+                const isOnJob = tech.status === 'On Job';
+                const row = `
+                    <tr class="border-b border-gray-200 ${isAvailable ? 'hover:bg-gray-50' : ''}">
+                        <td class="px-4 py-3">
+                            <label class="flex items-center ${isAvailable ? 'cursor-pointer' : 'cursor-not-allowed'}">
+                                <input type="radio" name="technician" value="${tech.id}" data-name="${tech.name}"
+                                       class="mr-3 w-4 h-4 text-[#2B9DD1] focus:ring-[#2B9DD1]"
+                                       ${!isAvailable ? 'disabled' : ''}>
+                                <span class="text-sm ${isAvailable ? 'text-gray-900' : 'text-gray-400'}">${tech.name}</span>
+                            </label>
+                        </td>
+                        <td class="px-4 py-3 text-sm ${isAvailable ? 'text-gray-900' : 'text-gray-400'}">
+                            ${isAvailable ? 'Available' : isOffDuty ? 'Off Duty' : 'On Job'}
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            renderTablePagination(currentTechPage, allTechnicians.length, techniciansPerPage, 'assignTechPagination', 'changeTechPage');
+        }
+
+        // Override openAssignTechModal to load all technicians
         const originalOpenAssignTechModal = openAssignTechModal;
         async function openAssignTechModal(bookingId = null, isReassignment = false) {
             currentBookingId = bookingId;
@@ -1527,34 +1976,18 @@
                 const bookingResponse = await fetch(`/api/bookings/${bookingId}`);
                 const booking = await bookingResponse.json();
 
-                // Load available technicians for this appliance
-                const techResponse = await fetch(`/api/technicians?appliance=${booking.appliance}`);
-                const technicians = await techResponse.json();
+                // Populate service information
+                document.getElementById('assignServiceType').textContent = booking.service_type;
+                document.getElementById('assignBookingNumber').textContent = booking.booking_number;
+                document.getElementById('assignCustomerName').textContent = booking.customer.name;
+                document.getElementById('assignAppliance').textContent = booking.appliance;
 
-                // Populate technician list
-                const tbody = document.querySelector('#assignTechModal tbody');
-                tbody.innerHTML = '';
+                // Load ALL technicians (not filtered by appliance or status)
+                const techResponse = await fetch(`/api/technicians`);
+                allTechnicians = await techResponse.json();
+                currentTechPage = 1;
 
-                technicians.forEach(tech => {
-                    const isAvailable = tech.status === 'Available';
-                    const row = `
-                        <tr class="border-b border-gray-200 hover:bg-gray-50">
-                            <td class="px-4 py-3">
-                                <label class="flex items-center cursor-pointer">
-                                    <input type="radio" name="technician" value="${tech.id}" data-name="${tech.name}"
-                                           class="mr-3 w-4 h-4 text-[#2B9DD1] focus:ring-[#2B9DD1]"
-                                           ${!isAvailable ? 'disabled' : ''}>
-                                    <span class="text-sm ${isAvailable ? 'text-gray-900' : 'text-gray-500'}">${tech.name}</span>
-                                </label>
-                            </td>
-                            <td class="px-4 py-3 text-sm ${isAvailable ? 'text-gray-900' : 'text-gray-500'}">
-                                ${tech.status === 'Available' ? 'Available' : tech.status === 'Off Duty' ? 'Off' : 'On Job'}
-                            </td>
-                        </tr>
-                    `;
-                    tbody.innerHTML += row;
-                });
-
+                renderTechnicians();
                 document.getElementById('assignTechModal').classList.remove('hidden');
             } catch (error) {
                 console.error('Error loading technicians:', error);
@@ -1607,40 +2040,33 @@
             }
         }
 
-        // Override openRecordDetailsModal to load available parts
+        // Override openRecordDetailsModal to load available parts with pagination
+        let allPartsData = [];
+        let currentPartsPage = 1;
+        const partsPerPage = 5;
+
         async function openRecordDetailsModal(bookingId = null) {
             currentBookingId = bookingId;
+            currentPartsPage = 1;
+            partQuantities = {}; // Reset quantities
 
             try {
+                // Load booking details
+                const bookingResponse = await fetch(`/api/bookings/${bookingId}`);
+                const booking = await bookingResponse.json();
+
+                // Populate service information
+                document.getElementById('recordServiceType').textContent = booking.service_type;
+                document.getElementById('recordBookingNumber').textContent = booking.booking_number;
+                document.getElementById('recordCustomerName').textContent = booking.customer.name;
+                document.getElementById('recordAppliance').textContent = booking.appliance;
+                document.getElementById('recordLaborCost').textContent = '₱' + parseFloat(booking.labor_cost).toFixed(2);
+
                 // Load available parts for this booking
-                const response = await fetch(`/api/bookings/${bookingId}/parts`);
-                const parts = await response.json();
+                const partsResponse = await fetch(`/api/bookings/${bookingId}/parts`);
+                allPartsData = await partsResponse.json();
 
-                // Populate parts list
-                const partsList = document.getElementById('partsList');
-                partsList.innerHTML = '';
-
-                parts.forEach(part => {
-                    const partDiv = `
-                        <div class="flex items-center justify-between py-2 border-b border-gray-200"
-                             data-part-id="${part.id}"
-                             data-part-name="${part.name}"
-                             data-part-price="${part.selling_price}"
-                             data-max-qty="${part.quantity}">
-                            <div class="flex-1">
-                                <div class="font-semibold text-sm text-gray-900">${part.name}</div>
-                                <div class="text-xs text-gray-600">Unit: ₱ ${parseFloat(part.selling_price).toFixed(2)} (Stock: ${part.quantity})</div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <button onclick="decrementPart('${part.id}')" class="w-7 h-7 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded text-gray-700 font-bold">-</button>
-                                <input type="text" value="0" class="part-qty w-12 h-7 text-center border border-gray-300 rounded text-sm" readonly>
-                                <button onclick="incrementPart('${part.id}')" class="w-7 h-7 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded text-gray-700 font-bold">+</button>
-                            </div>
-                        </div>
-                    `;
-                    partsList.innerHTML += partDiv;
-                });
-
+                renderPartsPage();
                 updateReceipt();
                 document.getElementById('recordDetailsModal').classList.remove('hidden');
             } catch (error) {
@@ -1649,34 +2075,110 @@
             }
         }
 
-        // Update incrementPart to check stock
-        function incrementPart(partId) {
-            const partDiv = document.querySelector(`[data-part-id="${partId}"]`);
-            const qtyInput = partDiv.querySelector('.part-qty');
-            const maxQty = parseInt(partDiv.dataset.maxQty);
-            let currentQty = parseInt(qtyInput.value);
+        function renderPartsPage() {
+            const startIdx = (currentPartsPage - 1) * partsPerPage;
+            const endIdx = startIdx + partsPerPage;
+            const pageParts = allPartsData.slice(startIdx, endIdx);
 
-            if (currentQty < maxQty) {
-                currentQty++;
-                qtyInput.value = currentQty;
-                updateReceipt();
+            // Populate parts list
+            const partsList = document.getElementById('partsList');
+            partsList.innerHTML = '';
+
+            pageParts.forEach(part => {
+                const savedQty = partQuantities[part.id] || 0;
+                const partDiv = `
+                    <div class="flex items-center justify-between py-2 border-b border-gray-200"
+                         data-part-id="${part.id}"
+                         data-part-name="${part.name}"
+                         data-part-price="${part.selling_price}"
+                         data-max-qty="${part.quantity}">
+                        <div class="flex-1">
+                            <div class="font-semibold text-sm text-gray-900">${part.name}</div>
+                            <div class="text-xs text-gray-600">Unit: ₱ ${parseFloat(part.selling_price).toFixed(2)} (Stock: ${part.quantity})</div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="decrementPart('${part.id}')" class="w-7 h-7 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded text-gray-700 font-bold">-</button>
+                            <input type="text" value="${savedQty}" class="part-qty w-12 h-7 text-center border border-gray-300 rounded text-sm" readonly>
+                            <button onclick="incrementPart('${part.id}')" class="w-7 h-7 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded text-gray-700 font-bold">+</button>
+                        </div>
+                    </div>
+                `;
+                partsList.innerHTML += partDiv;
+            });
+
+            // Update pagination controls
+            const totalPages = Math.ceil(allPartsData.length / partsPerPage);
+            const paginationDiv = document.getElementById('partsPagination');
+
+            if (totalPages > 1) {
+                let paginationHTML = `<div class="flex items-center justify-center gap-2">`;
+
+                // Previous button
+                paginationHTML += `
+                    <button onclick="changePartsPage(${currentPartsPage - 1})"
+                            ${currentPartsPage === 1 ? 'disabled' : ''}
+                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                `;
+
+                // Page number buttons
+                for (let i = 1; i <= totalPages; i++) {
+                    if (i === currentPartsPage) {
+                        paginationHTML += `
+                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-white bg-[#2B9DD1] hover:bg-[#1e7ba8] transition-colors">
+                                ${i}
+                            </button>
+                        `;
+                    } else {
+                        paginationHTML += `
+                            <button onclick="changePartsPage(${i})"
+                                    class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                                ${i}
+                            </button>
+                        `;
+                    }
+                }
+
+                // Next button
+                paginationHTML += `
+                    <button onclick="changePartsPage(${currentPartsPage + 1})"
+                            ${currentPartsPage === totalPages ? 'disabled' : ''}
+                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                `;
+
+                paginationHTML += `</div>`;
+                paginationDiv.innerHTML = paginationHTML;
             } else {
-                alert('Insufficient stock available');
+                paginationDiv.innerHTML = '';
+            }
+        }
+
+        function changePartsPage(newPage) {
+            const totalPages = Math.ceil(allPartsData.length / partsPerPage);
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPartsPage = newPage;
+                renderPartsPage();
             }
         }
 
         // Override confirmGenerateReceipt to call complete API
         async function confirmGenerateReceipt() {
             try {
-                // Collect parts data
-                const partItems = document.querySelectorAll('#partsList > div');
+                // Collect parts data from partQuantities object
                 const parts = [];
 
-                partItems.forEach(item => {
-                    const qty = parseInt(item.querySelector('.part-qty').value);
+                Object.keys(partQuantities).forEach(partId => {
+                    const qty = partQuantities[partId];
                     if (qty > 0) {
                         parts.push({
-                            inventory_item_id: item.dataset.partId,
+                            inventory_item_id: partId,
                             quantity: qty
                         });
                     }
